@@ -1,7 +1,8 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
+import styled, { ServerStyleSheet } from 'styled-components';
 import { ServerStyleSheets } from '@material-ui/core/styles';
+
 
 type Props = {
     styleTags: any;
@@ -34,7 +35,7 @@ export default class MyDocument extends Document<Props> {
 
                     {this.props.styleTags}
                 </Head>
-                <body>
+                <body style={{ backgroundColor: "#f9f9f9" }}>
                     <Main />
                     <NextScript />
                 </body>

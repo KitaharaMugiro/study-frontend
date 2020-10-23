@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import MyAppBar from '../components/templates/MyAppBar';
 import Spacer from '../components/atoms/Spacer';
+import styled from 'styled-components';
 
 export default function MyApp(props: AppProps) {
     const { Component, pageProps } = props;

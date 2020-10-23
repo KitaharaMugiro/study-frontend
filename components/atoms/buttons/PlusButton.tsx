@@ -2,14 +2,14 @@ import { makeStyles } from "@material-ui/core"
 import { MyColors } from "../../../const/MyColors"
 import AddIcon from '@material-ui/icons/Add';
 import styled from "styled-components";
+import { ComponentsStyle } from "../../../const/ComponentsStyle";
 //TODO: タップエフェクト、マウスオーバーエフェクト
 const Border = styled.div`
-    margin: 10px;
     border-radius: 25px;
+    margin:5px;
     border: 2px dotted ${MyColors.silver};
-    padding: 20px;
-    width: 100px;
-    height: 100px;
+    width: ${ComponentsStyle.CardWidth}px;
+    height: ${ComponentsStyle.CardHeight}px;
     display: grid;
     place-content: center;
     cursor: pointer;
