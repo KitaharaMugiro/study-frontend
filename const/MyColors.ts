@@ -1,3 +1,5 @@
 export const MyColors = {
-    theme: ""
+    theme: "",
+    gray: "#8c92ac",
+    silver: "#C0C0C0"
 }

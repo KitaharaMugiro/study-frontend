@@ -5,10 +5,8 @@ export default () => {
 
   return (
     <div className="example">
-      <Button variant="contained" color="primary">
-        Hello World!
-      </Button>
-      {/* <PlusButton /> */}
+
+      <PlusButton />
     </div>
   )
 }
