@@ -14,9 +14,14 @@ const Border = styled.div`
     place-content: center;
     cursor: pointer;
 `
-export default () => {
+
+interface Props {
+    onClick: () => void
+}
+
+export default (props: Props) => {
     return (
-        <Border>
+        <Border onClick={props.onClick}>
             <AddIcon style={{ color: MyColors.silver, fontSize: 40 }} />
         </Border>
     )

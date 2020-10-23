@@ -4,14 +4,19 @@ import React from "react"
 import styled from "styled-components"
 import { ComponentsStyle } from "../../const/ComponentsStyle"
 
-export default () => {
+interface Props {
+    title: string
+    onClickStartStudy: () => void
+}
+
+export default (props: Props) => {
     return (
         <Card>
             <Paper elevation={3} style={{ flexGrow: 1, padding: 10 }} >
-                英単語を覚える
+                {props.title}
 
                 <RightBottom>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={props.onClickStartStudy}>
                         学習を始める
                     </Button>
                 </RightBottom>
