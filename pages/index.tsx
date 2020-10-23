@@ -1,12 +1,14 @@
-import Button from '@material-ui/core/Button';
-import PlusButton from '../components/buttons/PlusButton';
+import PlusButton from '../components/atoms/buttons/PlusButton';
+import { FlexBox } from '../components/container/FlexBox';
 
 export default () => {
 
   return (
-    <div className="example">
+    <div>
+      <FlexBox>
+        <PlusButton />      <PlusButton />      <PlusButton />      <PlusButton />      <PlusButton />      <PlusButton />
+      </FlexBox>
 
-      <PlusButton />
     </div>
   )
 }
