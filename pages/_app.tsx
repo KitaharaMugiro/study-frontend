@@ -1,6 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
+import MyAppBar from '../components/templates/MyAppBar';
+import Spacer from '../components/atoms/Spacer';
 
 export default function MyApp(props: AppProps) {
     const { Component, pageProps } = props;
@@ -19,7 +21,8 @@ export default function MyApp(props: AppProps) {
                 <title>My page</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
             </Head>
-
+            <MyAppBar />
+            <Spacer space={50} />
             <Component {...pageProps} />
         </React.Fragment>
     );

@@ -36,5 +36,5 @@ AWS_SECRET_ACCESS_KEY=sshhh
 
 ② コマンド`serverless`でデプロイする
 
-# React Shardsの追加
-https://designrevision.com/docs/shards-react/getting-started
+# Material UIの追加
+https://material-ui.com/getting-started/usage/
