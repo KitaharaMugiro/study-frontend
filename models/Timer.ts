@@ -1,27 +1,36 @@
 export class Timer {
     startTime: Date;
     intervalId: number = 0;
+    insetSeconds: number = 0
 
-    constructor(injectedStartTime?: Date) {
-        if (injectedStartTime) {
-            this.startTime = injectedStartTime
-        } else {
-            this.startTime = new Date();
-        }
+    constructor(injectedStartTime?: Date, insetSeconds?: number) {
+        this.insetSeconds = insetSeconds || 0
+        this.startTime = injectedStartTime || new Date()
+    }
+
+    displayMiliSecondValue() {
+        const now = new Date();
+        const milliSeconds = now.getTime() - this.startTime.getTime() + this.insetSeconds
+        return milliSeconds
+    }
+
+    substantialSecondValue() {
+        const now = new Date();
+        const milliSeconds = now.getTime() - this.startTime.getTime()
+        const second = milliSeconds / 1000
+        return second
     }
 
     start(callback: (seconds: number) => void) {
         this.intervalId = window.setInterval(() => {
-            const now = new Date();
-            const milliSeconds = now.getTime() - this.startTime.getTime()
-            const second = milliSeconds / 1000
-            callback(second)
+            callback(this.displayMiliSecondValue() / 1000)
         }, 1000)
     }
 
-    reset() {
+    stop() {
         clearInterval(this.intervalId);
         this.intervalId = 0;
+        return this.displayMiliSecondValue()
     }
 
     static format(seconds: number) {

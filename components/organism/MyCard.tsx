@@ -6,6 +6,7 @@ import { ComponentsStyle } from "../../const/ComponentsStyle"
 
 interface Props {
     title: string
+    studyThemeId: string
     onClickStartStudy: () => void
 }
 

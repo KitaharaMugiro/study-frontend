@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import MyAppBar from '../components/templates/MyAppBar';
 import Spacer from '../components/atoms/Spacer';
-import styled from 'styled-components';
+import { createClient } from '../graphQL/ApolloClient';
+import { ApolloProvider } from '@apollo/client';
 
 export default function MyApp(props: AppProps) {
     const { Component, pageProps } = props;
+    const [client, setClient] = useState<any>(null)
+    useEffect(() => {
+        const client = createClient(null)
+        setClient(client)
+    }, [])
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side');
         if (jssStyles) {
@@ -16,6 +22,9 @@ export default function MyApp(props: AppProps) {
         }
     }, []);
 
+
+    if (client === null) return "wait"
+    console.log(client)
     return (
         <React.Fragment>
             <Head>
@@ -24,7 +33,9 @@ export default function MyApp(props: AppProps) {
             </Head>
             <MyAppBar />
             <Spacer space={50} />
-            <Component {...pageProps} />
+            <ApolloProvider client={client}>
+                <Component {...pageProps} />
+            </ApolloProvider>
         </React.Fragment>
     );
 }
