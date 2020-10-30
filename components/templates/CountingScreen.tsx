@@ -1,50 +1,61 @@
-import Fade from "@material-ui/core/Fade";
-import Dialog from "@material-ui/core/Dialog"
-import React, { useEffect, useState } from "react"
 import { Button } from "@material-ui/core";
-import Progress from "../atoms/Progress";
+import Dialog from "@material-ui/core/Dialog";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { VerticalCenter } from "../container/VerticalCenter";
-import Spacer from "../atoms/Spacer";
-import { Center } from "../container/Center";
+import Time from "../../models/Time";
 import { Timer } from "../../models/Timer";
-import CircleProgress from "../atoms/CircleProgress";
-import { Divider } from "material-ui";
 import StartStopButton, { StartStopButtonStatus } from "../atoms/buttons/StartStopButton";
+import CircleProgress from "../atoms/CircleProgress";
+import Spacer from "../atoms/Spacer";
+import { MaxWidth } from "../container/MaxWidth";
+import { VerticalCenterColumn, VerticalCenterRow } from "../container/VerticalCenter";
 
 interface Props {
     open: boolean
     onClose: () => void
     onFinish: (title: string) => void
+    goalTime: Time //外から値を注入することも可能
 }
 
 export default (props: Props) => {
-    const [seconds, setSeconds] = useState(0)
+    const [seconds, setSeconds] = useState<Time>(new Time(0))
     const [timer, setTimer] = useState<Timer | undefined>(undefined)
-    const [showResult, setShowResult] = useState(false)
+    const [canFinish, setCanFinish] = useState(false)
     const [insetSeconds, setInsetSeconds] = useState(0)
+    const [topStateMessage, setTopStateMessage] = useState("")
+    const [goalTime, setGoalTime] = useState<Time>(new Time(0))
 
     const onFinish = () => {
-        timer?.stop()
         props.onFinish("") //TODO: IDなどを渡す
-        setShowResult(true)
+        onGainMoney()
     }
 
     const onGainMoney = () => {
-        setShowResult(false)
         props.onClose()
+    }
+
+    const initialize = () => {
+        console.log("CountingScreen-initialize")
+        setTopStateMessage("スタートボタンを押して勉強を始めよう")
+        setSeconds(new Time(0))
+        setCanFinish(false)
+        setInsetSeconds(0)
     }
 
     useEffect(() => {
         if (props.open) {
-            setSeconds(0)
+            initialize()
         }
     }, [props.open])
+
+    useEffect(() => {
+        setGoalTime(props.goalTime)
+    }, [props.goalTime])
 
     const startTimer = () => {
         const timer = new Timer(new Date(), insetSeconds)
         timer?.start((second) => {
-            setSeconds(second)
+            setSeconds(new Time(second))
         })
         setTimer(timer)
     }
@@ -56,79 +67,58 @@ export default (props: Props) => {
 
     const onClickStartButton = (status: StartStopButtonStatus) => {
         if (status == "PLAY") {
+            setTopStateMessage("集中して勉強中")
             startTimer()
+            setCanFinish(false)
         } else if (status == "PAUSE") {
+            setTopStateMessage("スタートボタンを押して再開")
             pauseTimer()
+            setCanFinish(true)
         }
     }
 
     const renderMain = () => {
-        if (showResult) {
-            return (
-                <VerticalCenter>
-                    <TopStatement>
-                        お疲れ様！
+        return (
+            <VerticalCenterColumn>
+                <TopStatement>
+                    {topStateMessage}
                 </TopStatement>
 
-                    <TimeStatement>
-                        勉強時間: {Timer.format(seconds)}
-                        <br />
-                        時給: 750円
-                    </TimeStatement>
-                    <TopStatement>
-                        {Math.floor(750 * seconds / 60 / 60)} 円稼いだよ！
-                </TopStatement>
+                <VerticalCenterColumn>
+                    <StartStopButton onClick={onClickStartButton} />
+                </VerticalCenterColumn>
 
-                    <Spacer space={50} />
-                </VerticalCenter>
-            )
-        } else {
-            return (
-                <VerticalCenter>
-                    <TopStatement>
-                        スタートボタンを押して勉強を始めよう
-                    </TopStatement>
+                <Spacer space={10} />
 
-                    {/* <Button color="primary" variant="contained" onClick={onFinish} >
-                        スタート
-                    </Button> */}
-                    <VerticalCenter>
-                        <StartStopButton onClick={onClickStartButton} />
-                    </VerticalCenter>
-                    <TimeStatement>
-                        {Timer.format(seconds)} / 1:00:00
-                    </TimeStatement>
+                <VerticalCenterRow style={{ visibility: !canFinish ? "hidden" : "visible" }}>
+                    <Button color="primary" variant="contained" onClick={onFinish} >
+                        勉強終了して記録する
+                    </Button>
+                </VerticalCenterRow>
 
-                    <Spacer space={50} />
+                <TimeStatement>
+                    {seconds.format()} / {goalTime.format()}
+                </TimeStatement>
+
+                <Spacer space={20} />
+
+                <div style={{ position: "relative" }}>
                     <div style={{ width: "80%", left: "10%", position: "relative" }}>
-                        <CircleProgress progress={seconds / 60 / 60} />
+                        <CircleProgress progress={seconds.getValue() / goalTime.getValue()} />
                     </div>
-                    <Spacer space={50} />
-                </VerticalCenter>
-            )
-        }
+                </div>
+            </VerticalCenterColumn>
+        )
+
     }
 
     return (
         <Dialog fullScreen open={props.open} onClose={props.onClose} >
-            <VerticalCenter>
-                <div style={{ height: 400 }}>
+            <VerticalCenterRow style={FullScreenStyle} className="shallowblue-background">
+                <MaxWidth>
                     {renderMain()}
-                </div>
-                {/* 
-                <Center>
-                    {showResult ?
-                        <Button color="primary" variant="contained" onClick={onGainMoney} >
-                            受け取る
-                        </Button>
-                        :
-                        <Button color="primary" variant="contained" onClick={onFinish} >
-                            勉強を終える
-                        </Button>
-                    }
-                </Center> */}
-
-            </VerticalCenter>
+                </MaxWidth>
+            </VerticalCenterRow>
         </Dialog>
     )
 }
@@ -136,9 +126,15 @@ export default (props: Props) => {
 const TopStatement = styled.h1`
     margin-top:60px;
     text-align:center;
+    display: inline-block;
+    height:2.5em;
 `
 
 const TimeStatement = styled.h3`
-    margin-top:60px;
+    margin-top:20px;
     text-align:center;
 `
+
+const FullScreenStyle = {
+    minHeight: "100vh"
+}

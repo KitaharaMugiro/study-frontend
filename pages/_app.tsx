@@ -5,6 +5,7 @@ import MyAppBar from '../components/templates/MyAppBar';
 import Spacer from '../components/atoms/Spacer';
 import { createClient } from '../graphQL/ApolloClient';
 import { ApolloProvider } from '@apollo/client';
+import "../css/background.css"
 
 export default function MyApp(props: AppProps) {
     const { Component, pageProps } = props;

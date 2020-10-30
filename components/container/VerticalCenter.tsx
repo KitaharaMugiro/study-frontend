@@ -1,7 +1,13 @@
 import styled from "styled-components";
 
-export const VerticalCenter = styled.div`
+export const VerticalCenterColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content:center;
+`
+export const VerticalCenterRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  background-color:transparent;
 `

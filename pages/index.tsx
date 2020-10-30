@@ -11,6 +11,7 @@ import LoginFormDialog from '../components/templates/LoginFormDialog';
 import useLocal from '../models/hooks/useLocal';
 import { useMutation, useQuery } from "@apollo/client";
 import { CreateStudyThemeMutation, ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
+import Time from '../models/Time';
 
 export default () => {
   const [openCreateCard, setOpenCreateCard] = useState(false)
@@ -55,7 +56,11 @@ export default () => {
   return (
     <div>
       <LoginFormDialog open={openLogin} handleOpen={setOpenLogin} />
-      <CountingScreen open={openCountingTime} onClose={() => setOpenCoutingTime(false)} onFinish={() => { }} />
+      <CountingScreen
+        open={openCountingTime}
+        onClose={() => setOpenCoutingTime(false)}
+        onFinish={() => { }}
+        goalTime={new Time(1 * 60)} />
       <CreateCardModal
         open={openCreateCard}
         onClose={() => setOpenCreateCard(false)}

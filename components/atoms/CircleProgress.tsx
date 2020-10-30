@@ -6,10 +6,11 @@ interface Props {
 }
 
 export default (props: Props) => {
+    const percent = props.progress * 100
     return (
         <CircularProgressbar
             circleRatio={0.5}
-            value={props.progress} text={`${Math.floor(props.progress)}%`}
+            value={percent} text={`${Math.floor(percent)}%`}
             styles={buildStyles({
                 // Rotation of path and trail, in number of turns (0-1)
                 rotation: 0.75,
