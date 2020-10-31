@@ -5,8 +5,9 @@ import { StudyTheme } from "../../graphQL/generated/types";
 import { CreateStudyThemeMutation } from "../../graphQL/StudyThemeStatements";
 import useLocal from "../../models/hooks/useLocal";
 import Time from "../../models/Time";
+import { ArrowLeftButton, ArrowRightButton } from "../atoms/buttons/ArrowButton";
 import PlusButton from "../atoms/buttons/PlusButton";
-import { VerticalCenterColumn } from "../container/VerticalCenter";
+import { VerticalCenterColumn, VerticalCenterRow } from "../container/VerticalCenter";
 import CountingScreen from "../templates/CountingScreen";
 import CreateCardModal from "../templates/CreateCardModal";
 import MyCard from "./MyCard";
@@ -23,11 +24,15 @@ interface Props {
 export default (props: Props) => {
     const [openCreateCard, setOpenCreateCard] = useState(false)
     const [openCountingScreen, setOpenCountingScreen] = useState(false)
-
     const [createStudyThemes] = useMutation(CreateStudyThemeMutation)
 
     const onClickPlus = () => {
         setOpenCreateCard(true)
+    }
+
+    const changeStatus = (cardId: string) => {
+        console.log(`${cardId} status change from ${props.listId} to ...`)
+
     }
 
     const onRegister = async (title: string) => {
@@ -53,12 +58,17 @@ export default (props: Props) => {
                 {renderPlusButton()}
 
                 {props.cards.map((card, index) => (
-                    <MyCard
-                        key={card.studyThemeId!}
-                        title={card.title!}
-                        studyThemeId={card.studyThemeId!}
-                        onClickStartStudy={() => { setOpenCountingScreen(true) }}
-                    />
+                    <VerticalCenterRow>
+                        {props.listId !== "TODO" && <ArrowLeftButton onClick={() => changeStatus(card.studyThemeId)} />}
+                        <MyCard
+                            key={card.studyThemeId!}
+                            title={card.title!}
+                            status={props.listId}
+                            studyThemeId={card.studyThemeId!}
+                            onClickStartStudy={() => { setOpenCountingScreen(true) }}
+                        />
+                        {props.listId !== "DONE" && <ArrowRightButton onClick={() => changeStatus(card.studyThemeId)} />}
+                    </VerticalCenterRow>
                 ))}
             </VerticalCenterColumn>
 
@@ -80,7 +90,7 @@ export default (props: Props) => {
 const List = styled.div`
     background: #dfe3e6;
     flex-shrink: 0;
-    width: 272px;
+    width: 300px;
     height: fit-content;
     margin: 10px;
     margin-right: 0;

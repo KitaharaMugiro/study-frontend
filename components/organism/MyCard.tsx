@@ -9,6 +9,7 @@ import CardEditer from "./CardEditer"
 import CountingScreen from "../templates/CountingScreen"
 interface Props {
     title: string
+    status: "TODO" | "DOING" | "DONE"
     studyThemeId: string
     onClickStartStudy: () => void
 }
@@ -31,8 +32,11 @@ export default (props: Props) => {
             />
         )
     }
+
+    const height = props.status === "DONE" ? ComponentsStyle.CardDoneHeight : ComponentsStyle.CardHeight
+
     return (
-        <Card>
+        <Card style={{ height }}>
             {props.title}
 
             <CardIcons>
@@ -41,11 +45,15 @@ export default (props: Props) => {
                 </CardIcon>
             </CardIcons>
 
-            <RightBottom>
-                <Button variant="contained" color="primary" onClick={props.onClickStartStudy}>
-                    学習を始める
-                    </Button>
-            </RightBottom>
+            {
+                props.status !== "DONE" && (
+                    <RightBottom>
+                        <Button variant="contained" color="primary" onClick={props.onClickStartStudy}>
+                            学習を始める
+                        </Button>
+                    </RightBottom>
+                )
+            }
 
 
         </Card>
@@ -57,7 +65,6 @@ const Card = styled.div`
     cursor: pointer;
     background: white;
     display: flex;
-    height: ${ComponentsStyle.CardHeight}px;
     width: ${ComponentsStyle.CardWidth}px;
     margin:5px;
     padding:10px;
@@ -67,6 +74,7 @@ const Card = styled.div`
     box-shadow: 0 1px 0 rgba(9, 45, 66, 0.25);
     font-size: 15px;
     overflow-wrap: break-word;
+    overflow-y: hidden;
     /* min-height: 18px; */
 
     :hover {

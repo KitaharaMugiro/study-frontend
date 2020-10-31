@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -9,7 +9,7 @@ import CircleProgress from "../atoms/CircleProgress";
 import Spacer from "../atoms/Spacer";
 import { MaxWidth } from "../container/MaxWidth";
 import { VerticalCenterColumn, VerticalCenterRow } from "../container/VerticalCenter";
-
+import CloseIcon from '@material-ui/icons/Close';
 interface Props {
     open: boolean
     onClose: () => void
@@ -114,6 +114,12 @@ export default (props: Props) => {
 
     return (
         <Dialog fullScreen open={props.open} onClose={props.onClose} >
+            <RightTop>
+                <IconButton aria-label="close" onClick={props.onClose}>
+                    <CloseIcon fontSize="large" />
+                </IconButton>
+
+            </RightTop>
             <VerticalCenterRow style={FullScreenStyle} className="shallowblue-background">
                 <MaxWidth>
                     {renderMain()}
@@ -122,6 +128,12 @@ export default (props: Props) => {
         </Dialog>
     )
 }
+
+const RightTop = styled.div`
+position:absolute;
+right:10px;
+top:10px;
+`
 
 const TopStatement = styled.h1`
     margin-top:60px;
