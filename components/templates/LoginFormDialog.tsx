@@ -37,10 +37,15 @@ export default (props: Props) => {
         } else {
             console.log("login失敗/会員登録を開始")
             const result = await register({ variables: { email, password, name: email } })
-            const user = result.data
-            console.log("会員登録成功")
-            useLocal("USER_ID", user.userId)
-            useLocal("Name", user.name)
+            const user = result.data.registerUser
+            if (user) {
+                console.log("会員登録成功")
+                useLocal("USER_ID", user.userId)
+                useLocal("Name", user.name)
+            } else {
+                console.log("会員登録失敗")
+                console.log(result)
+            }
         }
         handleClose()
     }

@@ -7,12 +7,16 @@ import { ComponentsStyle } from "../../../const/ComponentsStyle";
 const Border = styled.div`
     border-radius: 25px;
     margin:5px;
+    padding:10px;
     border: 2px dotted ${MyColors.silver};
     width: ${ComponentsStyle.CardWidth}px;
     height: ${ComponentsStyle.CardHeight}px;
     display: grid;
     place-content: center;
     cursor: pointer;
+    :hover {
+        background-color:${MyColors.hoverGray};
+    }
 `
 
 interface Props {

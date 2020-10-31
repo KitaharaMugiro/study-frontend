@@ -1,0 +1,8 @@
+overwrite: true
+schema: "https://mojybntbl2.execute-api.ap-northeast-1.amazonaws.com/dev/graphql"
+generates:
+  graphql/generated/types.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"

@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "deploy": "serverless",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "repository": {
     "type": "git",
@@ -38,8 +39,10 @@
     "next": "^9.5.5",
     "react": "^16.14.0",
     "react-apollo": "^3.1.5",
+    "react-beautiful-dnd": "^13.0.0",
     "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.14.0",
+    "react-textarea-autosize": "^8.2.0",
     "styled-components": "^5.2.0",
     "subscriptions-transport-ws": "^0.9.18",
     "typescript": "^4.0.2"
@@ -75,5 +78,11 @@
         ]
       }
     }
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "1.19.0",
+    "@graphql-codegen/typescript-react-apollo": "2.0.7",
+    "@graphql-codegen/typescript": "1.17.11",
+    "@graphql-codegen/typescript-operations": "1.17.8"
   }
 }
