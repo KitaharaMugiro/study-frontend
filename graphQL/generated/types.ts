@@ -12,30 +12,84 @@ export type Scalars = {
   Upload: any;
 };
 
-export type DummyInput = {
-  firstInput: Scalars['String'];
-  secondInput: Scalars['String'];
+export type LoginInput = {
+  email?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
 };
 
-export enum StudyThemeStatus {
-  Create = 'CREATE',
+export type LoginOutput = {
+  __typename?: 'LoginOutput';
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+  user?: Maybe<User>;
+};
+
+export type RegisterInput = {
+  name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+};
+
+export type CreateStudyThemeInput = {
+  userId: Scalars['String'];
+  title: Scalars['String'];
+  listId: ListId;
+  clientUpdatedAt: Scalars['String'];
+};
+
+export type DeleteStudyThemeInput = {
+  userId: Scalars['String'];
+  studyThemeId: Scalars['String'];
+};
+
+export type UpdateStudyThemeInput = {
+  userId: Scalars['String'];
+  studyThemeId: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
+  listId?: Maybe<ListId>;
+  clientUpdatedAt?: Maybe<Scalars['String']>;
+};
+
+export type StartStudyInput = {
+  userId: Scalars['String'];
+  studyThemeId: Scalars['String'];
+};
+
+export type PauseStudyInput = {
+  userId: Scalars['String'];
+  studyThemeId: Scalars['String'];
+  studyRecordId: Scalars['String'];
+};
+
+export type EndStudyInput = {
+  userId: Scalars['String'];
+  studyThemeId: Scalars['String'];
+  studyRecordId: Scalars['String'];
+};
+
+export type ResumeStudyInput = {
+  userId: Scalars['String'];
+  studyThemeId: Scalars['String'];
+  studyRecordId: Scalars['String'];
+};
+
+export enum StudyStatusOperation {
   Start = 'START',
   End = 'END',
-  Delete = 'DELETE'
+  Pause = 'PAUSE',
+  Resume = 'RESUME'
 }
-
-export type DummyObject = {
-  __typename?: 'DummyObject';
-  firstItem: Scalars['String'];
-  secondItem: Scalars['String'];
-};
 
 export type User = {
   __typename?: 'User';
-  userId?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  hourlyWage?: Maybe<Scalars['String']>;
-  totalMoney?: Maybe<Scalars['String']>;
+  userId: Scalars['String'];
+  name: Scalars['String'];
+  totalStudyTime: Scalars['Int'];
+};
+
+export type StudyList = {
+  __typename?: 'StudyList';
+  listId?: Maybe<ListId>;
 };
 
 export type StudyTheme = {
@@ -43,40 +97,90 @@ export type StudyTheme = {
   studyThemeId?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   startDate?: Maybe<Scalars['String']>;
+  listId?: Maybe<ListId>;
+  clientUpdatedAt?: Maybe<Scalars['String']>;
+  studyingTime?: Maybe<Scalars['Int']>;
+  records?: Maybe<Array<Maybe<StudyRecord>>>;
 };
+
+export type StudyRecord = {
+  __typename?: 'StudyRecord';
+  studyRecordId?: Maybe<Scalars['String']>;
+  studyThemeId?: Maybe<Scalars['String']>;
+  learned?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  studyTime?: Maybe<Scalars['Int']>;
+};
+
+export enum ListId {
+  Todo = 'TODO',
+  Doing = 'DOING',
+  Done = 'DONE'
+}
 
 export type Mutation = {
   __typename?: 'Mutation';
-  login?: Maybe<User>;
-  registerUser?: Maybe<User>;
-  StudyTheme?: Maybe<StudyTheme>;
+  login?: Maybe<LoginOutput>;
+  registerUser?: Maybe<LoginOutput>;
+  createStudyTheme?: Maybe<StudyTheme>;
+  deleteStudyTheme?: Maybe<StudyTheme>;
+  updateStudyTheme?: Maybe<StudyTheme>;
+  startStudy?: Maybe<StudyRecord>;
+  pauseStudy?: Maybe<StudyRecord>;
+  resumeStudy?: Maybe<StudyRecord>;
+  endStudy?: Maybe<StudyRecord>;
 };
 
 
 export type MutationLoginArgs = {
-  email?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
+  input?: Maybe<LoginInput>;
 };
 
 
 export type MutationRegisterUserArgs = {
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
+  input?: Maybe<RegisterInput>;
 };
 
 
-export type MutationStudyThemeArgs = {
-  userId?: Maybe<Scalars['String']>;
-  studyThemeId?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  status?: Maybe<StudyThemeStatus>;
+export type MutationCreateStudyThemeArgs = {
+  input: Maybe<CreateStudyThemeInput>;
+};
+
+
+export type MutationDeleteStudyThemeArgs = {
+  input?: Maybe<DeleteStudyThemeInput>;
+};
+
+
+export type MutationUpdateStudyThemeArgs = {
+  input?: Maybe<UpdateStudyThemeInput>;
+};
+
+
+export type MutationStartStudyArgs = {
+  input?: Maybe<StartStudyInput>;
+};
+
+
+export type MutationPauseStudyArgs = {
+  input?: Maybe<PauseStudyInput>;
+};
+
+
+export type MutationResumeStudyArgs = {
+  input?: Maybe<ResumeStudyInput>;
+};
+
+
+export type MutationEndStudyArgs = {
+  input?: Maybe<EndStudyInput>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  user?: Maybe<User>;
-  studyThemes?: Maybe<Array<Maybe<StudyTheme>>>;
+  User?: Maybe<User>;
+  StudyThemes?: Maybe<Array<Maybe<StudyTheme>>>;
+  StudyRecord?: Maybe<StudyRecord>;
 };
 
 
@@ -87,6 +191,12 @@ export type QueryUserArgs = {
 
 export type QueryStudyThemesArgs = {
   userId?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryStudyRecordArgs = {
+  studyThemeId?: Maybe<Scalars['String']>;
+  studyRecordId?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {

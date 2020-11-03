@@ -1,3 +1,4 @@
+//milisec撲滅 getTimeは/1000
 export class Timer {
     startTime: Date;
     intervalId: number = 0;
@@ -8,29 +9,28 @@ export class Timer {
         this.startTime = injectedStartTime || new Date()
     }
 
-    displayMiliSecondValue() {
+    displaySecondValue() {
         const now = new Date();
-        const milliSeconds = now.getTime() - this.startTime.getTime() + this.insetSeconds
-        return milliSeconds
+        const second = now.getTime() / 1000 - this.startTime.getTime() / 1000 + this.insetSeconds
+        return second
     }
 
     substantialSecondValue() {
         const now = new Date();
-        const milliSeconds = now.getTime() - this.startTime.getTime()
-        const second = milliSeconds / 1000
+        const second = now.getTime() / 1000 - this.startTime.getTime() / 1000
         return second
     }
 
     start(callback: (seconds: number) => void) {
         this.intervalId = window.setInterval(() => {
-            callback(this.displayMiliSecondValue() / 1000)
+            callback(this.displaySecondValue())
         }, 1000)
     }
 
     stop() {
         clearInterval(this.intervalId);
         this.intervalId = 0;
-        return this.displayMiliSecondValue()
+        return this.displaySecondValue()
     }
 
     static format(seconds: number) {

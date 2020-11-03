@@ -7,27 +7,60 @@ import { MyColors } from "../../const/MyColors"
 import CreateIcon from '@material-ui/icons/Create';
 import CardEditer from "./CardEditer"
 import CountingScreen from "../templates/CountingScreen"
+import { useMutation } from "@apollo/client"
+import { DeleteStudyThemeMutation, UpdateStudyThemeMutation } from "../../graphQL/StudyThemeStatements"
+import { DeleteStudyThemeInput, UpdateStudyThemeInput } from "../../graphQL/generated/types"
+import useLocal from "../../models/hooks/useLocal"
 interface Props {
     title: string
     status: "TODO" | "DOING" | "DONE"
     studyThemeId: string
-    onClickStartStudy: () => void
+    onClickStartStudy: (studyThemeId: string) => void
+    refetch: () => void
 }
 
 export default (props: Props) => {
-
-    const [openCountingTime, setOpenCoutingTime] = useState(false)
     const [editing, setEditing] = useState(false)
+
+    const [updateTitle] = useMutation(UpdateStudyThemeMutation)
+    const [deleteStudyTheme] = useMutation(DeleteStudyThemeMutation)
+
     const startEditing = () => {
         setEditing(true)
     }
+
+    const onSave = async (text: string) => {
+        const userId = useLocal("USER_ID")!
+        const input: UpdateStudyThemeInput = {
+            userId,
+            studyThemeId: props.studyThemeId,
+            title: text
+        }
+        updateTitle({ variables: { input } }).then(() => {
+            props.refetch()
+            setEditing(false)
+        })
+    }
+
+    const onDelete = () => {
+        const userId = useLocal("USER_ID")!
+        const input: DeleteStudyThemeInput = {
+            userId,
+            studyThemeId: props.studyThemeId,
+        }
+        deleteStudyTheme({ variables: { input } }).then(() => {
+            props.refetch()
+            setEditing(false)
+        })
+    }
+
     if (editing) {
         return (
             <CardEditer
                 text={props.title}
-                onSave={() => setEditing(false)}
+                onSave={onSave}
                 onCancel={() => setEditing(false)}
-                onDelete={() => setEditing(false)}
+                onDelete={onDelete}
                 adding={false}
             />
         )
@@ -48,14 +81,12 @@ export default (props: Props) => {
             {
                 props.status !== "DONE" && (
                     <RightBottom>
-                        <Button variant="contained" color="primary" onClick={props.onClickStartStudy}>
+                        <Button variant="contained" color="primary" onClick={() => props.onClickStartStudy(props.studyThemeId)}>
                             学習を始める
                         </Button>
                     </RightBottom>
                 )
             }
-
-
         </Card>
     )
 }

@@ -1,19 +1,17 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from 'react';
 import Board from '../components/organism/Board';
-import MyCard from '../components/organism/MyCard';
-import CountingScreen from '../components/templates/CountingScreen';
-import CreateCardModal from '../components/templates/CreateCardModal';
 import LoginFormDialog from '../components/templates/LoginFormDialog';
 import { Query, StudyTheme } from '../graphQL/generated/types';
-import { CreateStudyThemeMutation, ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
+import { ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
+import { aggregateCards } from "../models/aggregateCards";
 import useLocal from '../models/hooks/useLocal';
-import Time from '../models/Time';
 
 export default () => {
   const [openLogin, setOpenLogin] = useState(false)
   const { data, loading, refetch: refetchStudyThemes } = useQuery<Query>(ListStudyThemeQuery)
-  const cards = (data?.studyThemes || []) as Required<StudyTheme[]>
+  const cards = (data?.StudyThemes || []) as Required<StudyTheme[]>
+  const lists = aggregateCards(cards)
 
   useEffect(() => {
     const userId = useLocal("USER_ID")
@@ -37,23 +35,7 @@ export default () => {
       <LoginFormDialog open={openLogin} handleOpen={setOpenLogin} />
       <Board
         refetch={refetch}
-        lists={[
-          {
-            listId: "TODO",
-            listTitle: "TODO",
-            cards: cards
-          },
-          {
-            listId: "DOING",
-            listTitle: "DOING",
-            cards: cards
-          },
-          {
-            listId: "DONE",
-            listTitle: "DONE",
-            cards: cards
-          }
-        ]}></Board>
+        lists={lists}></Board>
     </div>
   )
 }

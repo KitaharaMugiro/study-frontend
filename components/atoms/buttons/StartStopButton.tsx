@@ -4,12 +4,13 @@ export type StartStopButtonStatus = "PLAY" | "STOP" | "PAUSE"
 interface Props {
     initialStatus?: StartStopButtonStatus
     size?: number
-    onClick: (status: StartStopButtonStatus) => void
+    onClick: (prev: StartStopButtonStatus, now: StartStopButtonStatus) => void
 }
 
 export default (props: Props) => {
     const [status, setStatus] = useState<StartStopButtonStatus>("PLAY")
     useEffect(() => {
+        console.log(`button initial status = ${props.initialStatus}`)
         setStatus(props.initialStatus || "PLAY")
     }, [props.initialStatus])
 
@@ -47,12 +48,15 @@ export default (props: Props) => {
     }
 
     const onClick = () => {
-        props.onClick(status)
+        const prevStatus = status
+        let nowStatus = status
         if (status == "PLAY") {
-            setStatus("PAUSE")
+            nowStatus = "PAUSE"
         } else if (status == "PAUSE") {
-            setStatus("PLAY")
+            nowStatus = "PLAY"
         }
+        setStatus(nowStatus)
+        props.onClick(prevStatus, nowStatus)
     }
 
     return (

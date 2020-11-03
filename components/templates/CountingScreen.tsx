@@ -10,36 +10,68 @@ import Spacer from "../atoms/Spacer";
 import { MaxWidth } from "../container/MaxWidth";
 import { VerticalCenterColumn, VerticalCenterRow } from "../container/VerticalCenter";
 import CloseIcon from '@material-ui/icons/Close';
+import { useMutation } from "@apollo/client";
+import { EndStudyMutation, PauseStudyMutation, ResumeStudyMutation, StartStudyMutation } from "../../graphQL/StudyThemeStatements";
+import { PauseStudyInput, ResumeStudyInput, StartStudyInput } from "../../graphQL/generated/types";
+import useLocal from "../../models/hooks/useLocal";
+import { StudyStatus } from "../../models/StudyStatus";
 interface Props {
     open: boolean
+    studyStatus: StudyStatus
     onClose: () => void
     onFinish: (title: string) => void
     goalTime: Time //外から値を注入することも可能
 }
 
 export default (props: Props) => {
-    const [seconds, setSeconds] = useState<Time>(new Time(0))
+    //timer
     const [timer, setTimer] = useState<Timer | undefined>(undefined)
-    const [canFinish, setCanFinish] = useState(false)
-    const [insetSeconds, setInsetSeconds] = useState(0)
+
+    //描画系
     const [topStateMessage, setTopStateMessage] = useState("")
+    const [canFinish, setCanFinish] = useState(false)
+
+    //状態？描画？両方？
+    const [buttonStatus, setButtonStatus] = useState<StartStopButtonStatus>("PLAY")
+    const [seconds, setSeconds] = useState<Time>(new Time(0))
     const [goalTime, setGoalTime] = useState<Time>(new Time(0))
 
-    const onFinish = () => {
-        props.onFinish("") //TODO: IDなどを渡す
-        onGainMoney()
-    }
+    //状態系
+    const userId = useLocal("USER_ID")!
 
-    const onGainMoney = () => {
+    //mutation
+    const [pauseStudy] = useMutation(PauseStudyMutation)
+    const [resumeStudy] = useMutation(ResumeStudyMutation)
+    const [endStudy] = useMutation(EndStudyMutation)
+
+    const onFinish = () => {
+        console.log("on finish")
+        props.studyStatus.finish()
+        props.onFinish("") //TODO: IDなどを渡す
         props.onClose()
     }
 
     const initialize = () => {
         console.log("CountingScreen-initialize")
         setTopStateMessage("スタートボタンを押して勉強を始めよう")
-        setSeconds(new Time(0))
         setCanFinish(false)
-        setInsetSeconds(0)
+
+        if (props.studyStatus.isStudying()) {
+            //set study status
+            setGoalTime(props.studyStatus.goalTime)
+            setButtonStatus(props.studyStatus.playStatus)
+
+            //計測中であればタイマーを動かす
+            if (props.studyStatus.playStatus === "PAUSE") {
+                startTimer(props.studyStatus.clickedPlayButtonDate)
+            } else {
+                setSeconds(props.studyStatus.insetSeconds)
+                setCanFinish(true)
+            }
+        } else {
+            setSeconds(new Time(0))
+            setButtonStatus("PLAY")
+        }
     }
 
     useEffect(() => {
@@ -49,28 +81,56 @@ export default (props: Props) => {
     }, [props.open])
 
     useEffect(() => {
+        //Statusが持つべき内容むにゃあ
         setGoalTime(props.goalTime)
     }, [props.goalTime])
 
-    const startTimer = () => {
-        const timer = new Timer(new Date(), insetSeconds)
+    //ただTimerを動かす
+    const startTimer = (startDate: Date = new Date()) => {
+        //timerを再作成してスタートする
+        const timer = new Timer(startDate, props.studyStatus.insetSeconds.seconds)
         timer?.start((second) => {
+            //props.studyStatus.setSeconds(new Time(second)) //バグりやすいので注意
             setSeconds(new Time(second))
         })
         setTimer(timer)
     }
 
-    const pauseTimer = () => {
-        const seconds = timer?.stop()
-        setInsetSeconds(seconds || 0)
+    //pause状態からtimerを動かす
+    const resumeTimer = () => {
+        //api
+        const input: ResumeStudyInput = {
+            userId,
+            studyThemeId: props.studyStatus.nowStudyTheme!,
+            studyRecordId: props.studyStatus.nowStudyRecord!
+        }
+        console.log({ input })
+        resumeStudy({ variables: { input } })
+
+        startTimer()
     }
 
-    const onClickStartButton = (status: StartStopButtonStatus) => {
-        if (status == "PLAY") {
+    const pauseTimer = () => {
+        //API
+        const input: PauseStudyInput = {
+            userId,
+            studyThemeId: props.studyStatus.nowStudyTheme!,
+            studyRecordId: props.studyStatus.nowStudyRecord!
+        }
+        pauseStudy({ variables: { input } })
+
+        //ここまでの秒数を記録する
+        const seconds = timer?.stop()
+        props.studyStatus.setInsetSeconds(new Time(seconds || 0))
+    }
+
+    const onClickStartButton = (prevStatus: StartStopButtonStatus, nowStatus: StartStopButtonStatus) => {
+        props.studyStatus.setPlayStatus(nowStatus)
+        if (prevStatus == "PLAY") {
             setTopStateMessage("集中して勉強中")
-            startTimer()
+            resumeTimer()
             setCanFinish(false)
-        } else if (status == "PAUSE") {
+        } else if (prevStatus == "PAUSE") {
             setTopStateMessage("スタートボタンを押して再開")
             pauseTimer()
             setCanFinish(true)
@@ -85,7 +145,7 @@ export default (props: Props) => {
                 </TopStatement>
 
                 <VerticalCenterColumn>
-                    <StartStopButton onClick={onClickStartButton} />
+                    <StartStopButton onClick={onClickStartButton} initialStatus={buttonStatus} />
                 </VerticalCenterColumn>
 
                 <Spacer space={10} />
@@ -118,8 +178,8 @@ export default (props: Props) => {
                 <IconButton aria-label="close" onClick={props.onClose}>
                     <CloseIcon fontSize="large" />
                 </IconButton>
-
             </RightTop>
+
             <VerticalCenterRow style={FullScreenStyle} className="shallowblue-background">
                 <MaxWidth>
                     {renderMain()}

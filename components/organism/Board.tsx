@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { StudyTheme } from "../../graphQL/generated/types";
+import { ListId, StudyTheme } from "../../graphQL/generated/types";
 import List from "./List";
 
 interface Props {
     lists: {
-        listId: "TODO" | "DOING" | "DONE",
+        listId: ListId,
         listTitle: string,
         cards: StudyTheme[]
     }[]

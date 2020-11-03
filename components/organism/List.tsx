@@ -1,9 +1,11 @@
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { StudyTheme } from "../../graphQL/generated/types";
-import { CreateStudyThemeMutation } from "../../graphQL/StudyThemeStatements";
+import { CreateStudyThemeInput, ListId, MutationCreateStudyThemeArgs, MutationStartStudyArgs, StartStudyInput, StudyRecord, StudyTheme, UpdateStudyThemeInput } from "../../graphQL/generated/types";
+import { CreateStudyThemeMutation, StartStudyMutation, UpdateStudyThemeMutation } from "../../graphQL/StudyThemeStatements";
+import { getNowDateISOString } from "../../models/getNowDateISOString";
 import useLocal from "../../models/hooks/useLocal";
+import { StudyStatus } from "../../models/StudyStatus";
 import Time from "../../models/Time";
 import { ArrowLeftButton, ArrowRightButton } from "../atoms/buttons/ArrowButton";
 import PlusButton from "../atoms/buttons/PlusButton";
@@ -13,7 +15,7 @@ import CreateCardModal from "../templates/CreateCardModal";
 import MyCard from "./MyCard";
 
 interface Props {
-    listId: "TODO" | "DOING" | "DONE"
+    listId: ListId
     listTitle: string
     cards: StudyTheme[]
     index: number
@@ -24,20 +26,85 @@ interface Props {
 export default (props: Props) => {
     const [openCreateCard, setOpenCreateCard] = useState(false)
     const [openCountingScreen, setOpenCountingScreen] = useState(false)
-    const [createStudyThemes] = useMutation(CreateStudyThemeMutation)
+    const [createStudyTheme] = useMutation(CreateStudyThemeMutation)
+
+    const [studyStatus, setStudyStatus] = useState(new StudyStatus())
+
+    const [startStudy] = useMutation(StartStudyMutation)
+    const [updateStudyTheme] = useMutation(UpdateStudyThemeMutation)
+    const userId = useLocal("USER_ID")!
+
+    const onFinishStudy = () => {
+        //学習の終了
+        setStudyStatus(new StudyStatus())
+    }
+
+    const onCloseCountingScreen = () => {
+        console.log("close screen")
+        setOpenCountingScreen(false)
+    }
+
+    useEffect(() => {
+        //リストの回数だけ開いちゃうの注意
+        console.log("check is studying")
+        const themeIdList = props.cards.map(c => c.studyThemeId as string)
+        if (studyStatus.isStudyingTheThemes(themeIdList)) {
+            setOpenCountingScreen(true)
+        }
+    }, [props.cards])
 
     const onClickPlus = () => {
         setOpenCreateCard(true)
     }
 
-    const changeStatus = (cardId: string) => {
-        console.log(`${cardId} status change from ${props.listId} to ...`)
+    const changeStatus = async (studyThemeId: string, direction: number) => {
+        const listIds = [ListId.Todo, ListId.Doing, ListId.Done]
+        const nowIndex = listIds.indexOf(props.listId)
+        const nextIndex = nowIndex + direction
+        const newListId = listIds[nextIndex]
 
+        console.log(`${studyThemeId} status change from ${props.listId} to ${newListId}`)
+
+        //api
+        const input: UpdateStudyThemeInput = {
+            userId,
+            studyThemeId: studyThemeId,
+            listId: newListId,
+            clientUpdatedAt: getNowDateISOString()
+        }
+        // レスポンスが悪そうな気がする・・・
+        updateStudyTheme({ variables: { input } }).then(() => {
+            props.refetch()
+        })
+        //ローカルでカードを操作できないかな
+    }
+
+    const onClickStartStudy = async (studyThemeId: string) => {
+        //api
+        const input: MutationStartStudyArgs = { input: { userId, studyThemeId } }
+        const output = await startStudy({ variables: input })
+        const data: StudyRecord = output.data.startStudy
+        console.log(`set record id = ${data.studyRecordId!}`)
+
+        //学習の開始
+        studyStatus.start(studyThemeId, data.studyRecordId!)
+        console.log("open counting screen by cliecked button")
+        setOpenCountingScreen(true)
     }
 
     const onRegister = async (title: string) => {
-        const userId = useLocal("USER_ID")
-        await createStudyThemes({ variables: { userId, title } })
+        const userId = useLocal("USER_ID")!
+        const input: MutationCreateStudyThemeArgs = {
+            input: {
+                userId,
+                title,
+                listId: props.listId,
+                clientUpdatedAt: getNowDateISOString()
+            }
+        }
+        console.log("createStudyTheme")
+        const result = await createStudyTheme({ variables: input })
+        console.log(result)
         props.refetch()
     }
 
@@ -59,15 +126,16 @@ export default (props: Props) => {
 
                 {props.cards.map((card, index) => (
                     <VerticalCenterRow>
-                        {props.listId !== "TODO" && <ArrowLeftButton onClick={() => changeStatus(card.studyThemeId)} />}
+                        {props.listId !== "TODO" && <ArrowLeftButton onClick={() => changeStatus(card.studyThemeId!, -1)} />}
                         <MyCard
                             key={card.studyThemeId!}
                             title={card.title!}
                             status={props.listId}
                             studyThemeId={card.studyThemeId!}
-                            onClickStartStudy={() => { setOpenCountingScreen(true) }}
+                            onClickStartStudy={onClickStartStudy}
+                            refetch={props.refetch}
                         />
-                        {props.listId !== "DONE" && <ArrowRightButton onClick={() => changeStatus(card.studyThemeId)} />}
+                        {props.listId !== "DONE" && <ArrowRightButton onClick={() => changeStatus(card.studyThemeId!, 1)} />}
                     </VerticalCenterRow>
                 ))}
             </VerticalCenterColumn>
@@ -79,9 +147,10 @@ export default (props: Props) => {
             />
 
             <CountingScreen
+                studyStatus={studyStatus}
                 open={openCountingScreen}
-                onClose={() => setOpenCountingScreen(false)}
-                onFinish={() => { }}
+                onClose={onCloseCountingScreen}
+                onFinish={onFinishStudy}
                 goalTime={new Time(1 * 60)} />
         </List>
     );
