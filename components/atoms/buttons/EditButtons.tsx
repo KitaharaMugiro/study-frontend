@@ -18,6 +18,7 @@ const EditButtons = ({ handleSave, saveLabel, handleDelete, handleCancel }: Prop
             tabIndex={0}
             variant="contained"
             color="primary"
+
             onClick={handleSave}
             startIcon={<SaveIcon />}
         >

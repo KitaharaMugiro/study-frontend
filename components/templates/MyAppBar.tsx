@@ -3,6 +3,7 @@ import React, { useEffect } from "react"
 import MenuIcon from '@material-ui/icons/Menu';
 import { AppInformation } from "../../const/AppInfomation";
 import styled from "styled-components";
+import { MyColors } from "../../const/MyColors";
 
 
 export default () => {
@@ -16,7 +17,7 @@ export default () => {
 
     return (
         <FlexGrow>
-            <AppBar position="fixed">
+            <AppBar position="fixed" color="primary">
                 <Toolbar>
                     {/* <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />

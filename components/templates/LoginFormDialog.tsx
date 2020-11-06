@@ -10,6 +10,7 @@ import useForm from '../../models/hooks/useForm';
 import { useQuery, useMutation } from "@apollo/client";
 import { LoginMutation, RegisterMutation } from '../../graphQL/LoginStatements';
 import useLocal from '../../models/hooks/useLocal';
+import { LoginInput, LoginOutput, RegisterInput } from '../../graphQL/generated/types';
 
 interface Props {
     open: boolean
@@ -28,20 +29,23 @@ export default (props: Props) => {
 
     const onClickLoginOrRegister = async () => {
         console.log("login挑戦")
-        const { data } = await login({ variables: { email, password } })
-        const user = data?.login
-        if (user) {
-            console.log("login成功！")
-            useLocal("USER_ID", user.userId)
-            useLocal("Name", user.name)
+        const input: LoginInput = { email, password }
+        const { data } = await login({ variables: { input } })
+        const user: LoginOutput = data?.login
+        console.log(user)
+        if (user.success) {
+            console.log(`login成功！ id =  ${user.user?.userId}`)
+            useLocal("USER_ID", user?.user?.userId)
+            useLocal("Name", user?.user?.name)
         } else {
             console.log("login失敗/会員登録を開始")
-            const result = await register({ variables: { email, password, name: email } })
-            const user = result.data.registerUser
+            const input: RegisterInput = { email, password, name: email }
+            const result = await register({ variables: { input } })
+            const user: LoginOutput = result.data.registerUser
             if (user) {
-                console.log("会員登録成功")
-                useLocal("USER_ID", user.userId)
-                useLocal("Name", user.name)
+                console.log(`会員登録成功 id =  ${user.user?.userId}`)
+                useLocal("USER_ID", user.user?.userId)
+                useLocal("Name", user.user?.name)
             } else {
                 console.log("会員登録失敗")
                 console.log(result)

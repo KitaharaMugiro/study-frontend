@@ -1,6 +1,8 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from 'react';
-import Board from '../components/organism/Board';
+import styled from "styled-components";
+import Board from '../components/organism/Board/Board';
+import VerticalIcons from "../components/molecule/VerticalIcons";
 import LoginFormDialog from '../components/templates/LoginFormDialog';
 import { Query, StudyTheme } from '../graphQL/generated/types';
 import { ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
@@ -33,9 +35,20 @@ export default () => {
   return (
     <div>
       <LoginFormDialog open={openLogin} handleOpen={setOpenLogin} />
+
       <Board
         refetch={refetch}
         lists={lists}></Board>
+
+      <RightBottom>
+        <VerticalIcons />
+      </RightBottom>
     </div>
   )
 }
+
+const RightBottom = styled.div`
+  position:fixed;
+  right:20px;
+  bottom:0px;
+`

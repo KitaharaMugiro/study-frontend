@@ -1,8 +1,8 @@
 import React, { Component, useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
-import { MyColors } from "../../const/MyColors";
-import EditButtons from "../atoms/buttons/EditButtons";
+import { MyColors } from "../../../const/MyColors";
+import EditButtons from "../../atoms/buttons/EditButtons";
 
 interface Props {
     text: string

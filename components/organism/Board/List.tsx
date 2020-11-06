@@ -1,17 +1,18 @@
 import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { CreateStudyThemeInput, ListId, MutationCreateStudyThemeArgs, MutationStartStudyArgs, StartStudyInput, StudyRecord, StudyTheme, UpdateStudyThemeInput } from "../../graphQL/generated/types";
-import { CreateStudyThemeMutation, StartStudyMutation, UpdateStudyThemeMutation } from "../../graphQL/StudyThemeStatements";
-import { getNowDateISOString } from "../../models/getNowDateISOString";
-import useLocal from "../../models/hooks/useLocal";
-import { StudyStatus } from "../../models/StudyStatus";
-import Time from "../../models/Time";
-import { ArrowLeftButton, ArrowRightButton } from "../atoms/buttons/ArrowButton";
-import PlusButton from "../atoms/buttons/PlusButton";
-import { VerticalCenterColumn, VerticalCenterRow } from "../container/VerticalCenter";
-import CountingScreen from "../templates/CountingScreen";
-import CreateCardModal from "../templates/CreateCardModal";
+import { CreateStudyThemeInput, ListId, MutationCreateStudyThemeArgs, MutationStartStudyArgs, StartStudyInput, StudyRecord, StudyTheme, UpdateStudyThemeInput } from "../../../graphQL/generated/types";
+import { CreateStudyThemeMutation, StartStudyMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
+import { getNowDateISOString } from "../../../models/getNowDateISOString";
+import useLocal from "../../../models/hooks/useLocal";
+import { StudyStatus } from "../../../models/StudyStatus";
+import Time from "../../../models/Time";
+import { ArrowLeftButton, ArrowRightButton } from "../../atoms/buttons/ArrowButton";
+import PlusButton from "../../atoms/buttons/PlusButton";
+import { VerticalCenterColumn, VerticalCenterRow } from "../../container/VerticalCenter";
+import CountingScreen from "../../templates/CountingScreen";
+import CreateCardModal from "../../templates/CreateCardModal";
+import GoalSettingModal from "../../templates/GoalSettingModal";
 import MyCard from "./MyCard";
 
 interface Props {
@@ -26,6 +27,7 @@ interface Props {
 export default (props: Props) => {
     const [openCreateCard, setOpenCreateCard] = useState(false)
     const [openCountingScreen, setOpenCountingScreen] = useState(false)
+    const [openGoalSettingScreen, setOpenGoalSettingScreen] = useState(false)
     const [createStudyTheme] = useMutation(CreateStudyThemeMutation)
 
     const [studyStatus, setStudyStatus] = useState(new StudyStatus())
@@ -108,11 +110,19 @@ export default (props: Props) => {
         props.refetch()
     }
 
+    const onCloseGoalSettingScreen = () => {
+        setOpenGoalSettingScreen(false)
+    }
+
     const renderPlusButton = () => {
         if (props.listId == "TODO" || props.listId == "DOING") {
             return <PlusButton onClick={onClickPlus} />
         }
         return <div />
+    }
+
+    const onClickCard = (cardId: string) => {
+        setOpenGoalSettingScreen(true)
     }
 
     return (
@@ -125,16 +135,18 @@ export default (props: Props) => {
                 {renderPlusButton()}
 
                 {props.cards.map((card, index) => (
-                    <VerticalCenterRow>
+                    <VerticalCenterRow key={card.studyThemeId}>
                         {props.listId !== "TODO" && <ArrowLeftButton onClick={() => changeStatus(card.studyThemeId!, -1)} />}
-                        <MyCard
-                            key={card.studyThemeId!}
-                            title={card.title!}
-                            status={props.listId}
-                            studyThemeId={card.studyThemeId!}
-                            onClickStartStudy={onClickStartStudy}
-                            refetch={props.refetch}
-                        />
+                        <div onClick={() => onClickCard(card.studyThemeId!)}>
+                            <MyCard
+                                key={card.studyThemeId!}
+                                title={card.title!}
+                                status={props.listId}
+                                studyThemeId={card.studyThemeId!}
+                                onClickStartStudy={onClickStartStudy}
+                                refetch={props.refetch}
+                            />
+                        </div>
                         {props.listId !== "DONE" && <ArrowRightButton onClick={() => changeStatus(card.studyThemeId!, 1)} />}
                     </VerticalCenterRow>
                 ))}
@@ -152,7 +164,12 @@ export default (props: Props) => {
                 onClose={onCloseCountingScreen}
                 onFinish={onFinishStudy}
                 goalTime={new Time(1 * 60)} />
-        </List>
+
+            <GoalSettingModal
+                open={openGoalSettingScreen}
+                onClose={onCloseGoalSettingScreen}
+            />
+        </List >
     );
 }
 

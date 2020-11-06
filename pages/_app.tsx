@@ -6,6 +6,32 @@ import Spacer from '../components/atoms/Spacer';
 import { createClient } from '../graphQL/ApolloClient';
 import { ApolloProvider } from '@apollo/client';
 import "../css/background.css"
+import styled from 'styled-components';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { MyColors } from '../const/MyColors';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: MyColors.theme,
+            contrastText: "#fff"
+        }
+    },
+    typography: {
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+    },
+});
 
 export default function MyApp(props: AppProps) {
     const { Component, pageProps } = props;
@@ -32,11 +58,22 @@ export default function MyApp(props: AppProps) {
                 <title>My page</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
             </Head>
-            <MyAppBar />
-            <Spacer space={50} />
-            <ApolloProvider client={client}>
-                <Component {...pageProps} />
-            </ApolloProvider>
+            <ThemeProvider theme={theme}>
+                <MyAppBar />
+
+                <Spacer space={50} />
+                <Flex>
+                    <ApolloProvider client={client}>
+                        <Component {...pageProps} />
+                    </ApolloProvider>
+                </Flex>
+            </ThemeProvider>
         </React.Fragment>
     );
 }
+
+const Flex = styled.div`
+display : flex;
+flex-grow: 2;
+
+`

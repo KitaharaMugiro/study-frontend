@@ -1,8 +1,11 @@
 export const MyColors = {
-    theme: "",
+    theme: "#33BFFB",
     gray: "#8c92ac",
+    textBoldGray: "#172b4d",
+    textShallowGray: "#5e6c84",
     silver: "#C0C0C0",
     background: "",
+    cardBackground: "#F4F5F7",
     hoverWhite: "#f5f6f7",
     hoverGray: "#DCDCDC",
     white: "white"

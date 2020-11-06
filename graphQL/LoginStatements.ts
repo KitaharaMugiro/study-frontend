@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 export const LoginMutation = gql`
-    mutation($LoginInput:LoginInput) {
-      login(input:$LoginInput) {
+    mutation($input:LoginInput) {
+      login(input:$input) {
         message,
         success,
         user {
@@ -14,8 +14,8 @@ export const LoginMutation = gql`
 `;
 
 export const RegisterMutation = gql`
-    mutation($RegisterInput: RegisterInput) {
-        registerUser(input: RegisterInput) {
+    mutation($input: RegisterInput) {
+        registerUser(input: $input) {
           message,
           success,
           user {

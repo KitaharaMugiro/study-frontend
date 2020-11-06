@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ListId, StudyTheme } from "../../graphQL/generated/types";
+import { ListId, StudyTheme } from "../../../graphQL/generated/types";
 import List from "./List";
 
 interface Props {
@@ -25,12 +25,14 @@ export default (props: Props) => {
                     index={index}
                     toggleEditingTitle={() => { }} />;
             })}
+
         </Board>
     )
 }
 
 const Board = styled.div`
-  height: 92%;
+  height: 100%;
+  /* height: 92%; */
   display: flex;
   overflow-x: auto;
   -webkit-scroll-snap-type: x mandatory;
