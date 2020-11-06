@@ -16,6 +16,7 @@ interface Props {
     status: "TODO" | "DOING" | "DONE"
     studyThemeId: string
     onClickStartStudy: (studyThemeId: string) => void
+    onClick: (cardId: string) => void
     refetch: () => void
 }
 
@@ -25,7 +26,8 @@ export default (props: Props) => {
     const [updateTitle] = useMutation(UpdateStudyThemeMutation)
     const [deleteStudyTheme] = useMutation(DeleteStudyThemeMutation)
 
-    const startEditing = () => {
+    const startEditing = (event: any) => {
+        event.stopPropagation()
         setEditing(true)
     }
 
@@ -36,6 +38,7 @@ export default (props: Props) => {
             studyThemeId: props.studyThemeId,
             title: text
         }
+
         updateTitle({ variables: { input } }).then(() => {
             props.refetch()
             setEditing(false)
@@ -66,10 +69,15 @@ export default (props: Props) => {
         )
     }
 
+    const onClickStartStudy = (event: any) => {
+        event.stopPropagation()
+        props.onClickStartStudy(props.studyThemeId)
+    }
+
     const height = props.status === "DONE" ? ComponentsStyle.CardDoneHeight : ComponentsStyle.CardHeight
 
     return (
-        <Card style={{ height }}>
+        <Card style={{ height }} onClick={() => props.onClick(props.studyThemeId)}>
             {props.title}
 
             <CardIcons>
@@ -81,7 +89,7 @@ export default (props: Props) => {
             {
                 props.status !== "DONE" && (
                     <RightBottom>
-                        <Button variant="contained" color="primary" onClick={() => props.onClickStartStudy(props.studyThemeId)}>
+                        <Button variant="contained" color="primary" onClick={onClickStartStudy}>
                             学習を始める
                         </Button>
                     </RightBottom>

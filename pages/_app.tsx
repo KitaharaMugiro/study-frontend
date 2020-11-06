@@ -9,6 +9,7 @@ import "../css/background.css"
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { MyColors } from '../const/MyColors';
+import { Provider as JotaiProvider } from 'jotai'
 
 const theme = createMuiTheme({
     palette: {
@@ -59,14 +60,16 @@ export default function MyApp(props: AppProps) {
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
             </Head>
             <ThemeProvider theme={theme}>
-                <MyAppBar />
-
-                <Spacer space={50} />
-                <Flex>
+                <JotaiProvider>
                     <ApolloProvider client={client}>
-                        <Component {...pageProps} />
+                        <MyAppBar />
+
+                        <Spacer space={50} />
+                        <Flex>
+                            <Component {...pageProps} />
+                        </Flex>
                     </ApolloProvider>
-                </Flex>
+                </JotaiProvider>
             </ThemeProvider>
         </React.Fragment>
     );

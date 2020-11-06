@@ -3,17 +3,19 @@ import 'react-circular-progressbar/dist/styles.css';
 
 interface Props {
     progress: number
+    centerText: string
 }
 
 export default (props: Props) => {
     const percent = props.progress * 100
     return (
         <CircularProgressbar
-            circleRatio={0.5}
-            value={percent} text={`${Math.floor(percent)}%`}
-            styles={buildStyles({
-                // Rotation of path and trail, in number of turns (0-1)
-                rotation: 0.75,
-            })} />
+            circleRatio={1}
+            value={percent} text={props.centerText}
+        // styles={buildStyles({
+        //     // Rotation of path and trail, in number of turns (0-1)
+        //     rotation: 0.75,
+        // })} 
+        />
     )
 }

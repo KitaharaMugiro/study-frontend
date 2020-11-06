@@ -1,26 +1,29 @@
+import { useMutation } from "@apollo/client";
 import { Button, IconButton } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import CloseIcon from '@material-ui/icons/Close';
+import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { MyColors } from "../../const/MyColors";
+import { PauseStudyInput, ResumeStudyInput } from "../../graphQL/generated/types";
+import { EndStudyMutation, PauseStudyMutation, ResumeStudyMutation } from "../../graphQL/StudyThemeStatements";
+import { fetchResponse } from "../../models/atoms/TestAtom";
+import useLocal from "../../models/hooks/useLocal";
+import { StudyStatus } from "../../models/StudyStatus";
 import Time from "../../models/Time";
 import { Timer } from "../../models/Timer";
 import StartStopButton, { StartStopButtonStatus } from "../atoms/buttons/StartStopButton";
 import CircleProgress from "../atoms/CircleProgress";
 import Spacer from "../atoms/Spacer";
-import { MaxWidth } from "../container/MaxWidth";
+import { Center } from "../container/Center";
 import { VerticalCenterColumn, VerticalCenterRow } from "../container/VerticalCenter";
-import CloseIcon from '@material-ui/icons/Close';
-import { useMutation } from "@apollo/client";
-import { EndStudyMutation, PauseStudyMutation, ResumeStudyMutation, StartStudyMutation } from "../../graphQL/StudyThemeStatements";
-import { PauseStudyInput, ResumeStudyInput, StartStudyInput } from "../../graphQL/generated/types";
-import useLocal from "../../models/hooks/useLocal";
-import { StudyStatus } from "../../models/StudyStatus";
+import DoubleTriangles from "../molecule/DoubleTriangles";
 interface Props {
     open: boolean
     studyStatus: StudyStatus
     onClose: () => void
     onFinish: (title: string) => void
-    goalTime: Time //外から値を注入することも可能
 }
 
 export default (props: Props) => {
@@ -80,11 +83,6 @@ export default (props: Props) => {
         }
     }, [props.open])
 
-    useEffect(() => {
-        //Statusが持つべき内容むにゃあ
-        setGoalTime(props.goalTime)
-    }, [props.goalTime])
-
     //ただTimerを動かす
     const startTimer = (startDate: Date = new Date()) => {
         //timerを再作成してスタートする
@@ -137,76 +135,86 @@ export default (props: Props) => {
         }
     }
 
-    const renderMain = () => {
-        return (
-            <VerticalCenterColumn>
-                <TopStatement>
-                    {topStateMessage}
-                </TopStatement>
-
-                <VerticalCenterColumn>
-                    <StartStopButton onClick={onClickStartButton} initialStatus={buttonStatus} />
-                </VerticalCenterColumn>
-
-                <Spacer space={10} />
-
-                <VerticalCenterRow style={{ visibility: !canFinish ? "hidden" : "visible" }}>
-                    <Button color="primary" variant="contained" onClick={onFinish} >
-                        勉強終了して記録する
-                    </Button>
-                </VerticalCenterRow>
-
-                <TimeStatement>
-                    {seconds.format()} / {goalTime.format()}
-                </TimeStatement>
-
-                <Spacer space={20} />
-
-                <div style={{ position: "relative" }}>
-                    <div style={{ width: "80%", left: "10%", position: "relative" }}>
-                        <CircleProgress progress={seconds.getValue() / goalTime.getValue()} />
-                    </div>
-                </div>
-            </VerticalCenterColumn>
-        )
-
-    }
-
     return (
         <Dialog fullScreen open={props.open} onClose={props.onClose} >
-            <RightTop>
-                <IconButton aria-label="close" onClick={props.onClose}>
-                    <CloseIcon fontSize="large" />
-                </IconButton>
-            </RightTop>
+            <Background>
+                <Center>
 
-            <VerticalCenterRow style={FullScreenStyle} className="shallowblue-background">
-                <MaxWidth>
-                    {renderMain()}
-                </MaxWidth>
-            </VerticalCenterRow>
+                    <Card>
+                        <RightTop>
+                            <IconButton aria-label="close" onClick={props.onClose}>
+                                <CloseIcon fontSize="large" />
+                            </IconButton>
+                        </RightTop>
+
+                        <VerticalCenterColumn>
+                            <Spacer space={60} />
+                            <TopStatement>
+                                {"タイトルを取得"}
+                            </TopStatement>
+
+                            <Spacer space={20} />
+
+                            <div style={{ position: "relative", width: "100%" }}>
+                                <VerticalCenterColumn style={{ width: "10%", left: "3%", height: "100%", position: "absolute" }}>
+                                    <DoubleTriangles />
+                                </VerticalCenterColumn>
+                                <div style={{ width: "70%", left: "15%", position: "relative" }}>
+                                    <CircleProgress progress={seconds.getValue() / goalTime.getValue()} centerText={"25:00"} />
+                                </div>
+                            </div>
+
+                            <Spacer space={20} />
+
+                            <VerticalCenterColumn>
+                                <StartStopButton onClick={onClickStartButton} initialStatus={buttonStatus} />
+                            </VerticalCenterColumn>
+                            <Spacer space={10} />
+
+                            <VerticalCenterRow style={{ visibility: !canFinish ? "hidden" : "visible" }}>
+                                <Button color="primary" variant="contained" onClick={onFinish} >
+                                    勉強終了して記録する
+                                </Button>
+                            </VerticalCenterRow>
+                        </VerticalCenterColumn>
+                    </Card>
+
+                </Center>
+            </Background>
+
         </Dialog>
     )
 }
+const Background = styled.div`
+    width:100%;
+    height:100%;
+    background: #159957;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #155799, #159957);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #155799, #159957); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+`
+
+const Card = styled.div`
+    position:relative;
+    background-color:white;
+    width:95vw;
+    height:100vh;
+    max-width:400px;
+    max-height:700px;
+    filter: drop-shadow(0.4rem 0.4rem 0.7rem rgba(0, 0, 0, 0.8));
+`
 
 const RightTop = styled.div`
-position:absolute;
-right:10px;
-top:10px;
+    position:absolute;
+    right:10px;
+    top:10px;
 `
 
 const TopStatement = styled.h1`
-    margin-top:60px;
+    margin-left:60px;
+    margin-right:60px;
     text-align:center;
     display: inline-block;
-    height:2.5em;
+    color: ${MyColors.textBoldGray};
+    font-size:20px;
+    font-weight:600;
 `
-
-const TimeStatement = styled.h3`
-    margin-top:20px;
-    text-align:center;
-`
-
-const FullScreenStyle = {
-    minHeight: "100vh"
-}

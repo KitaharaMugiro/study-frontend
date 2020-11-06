@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { MyColors } from "../../../const/MyColors"
 
 export type StartStopButtonStatus = "PLAY" | "STOP" | "PAUSE"
 interface Props {
@@ -20,7 +21,7 @@ export default (props: Props) => {
             return (
                 <svg xmlns="http://www.w3.org/2000/svg" width={widthHeight} height={widthHeight} viewBox="0 0 36 36">
                     <g fill="none" fillRule="evenodd">
-                        <rect width="36" height="36" fill="#E57CD8" rx="18"></rect>
+                        <rect width="36" height="36" fill={MyColors.theme} rx="18"></rect>
                         <path fill="#fff" d="M13 11.994c0-1.101.773-1.553 1.745-.997l10.51 6.005c.964.55.972 1.439 0 1.994l-10.51 6.007c-.964.55-1.745.102-1.745-.997V11.994z"></path>
                     </g>
                 </svg>

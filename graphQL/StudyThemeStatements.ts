@@ -28,6 +28,7 @@ export const DeleteStudyThemeMutation = gql`
 `
 
 
+
 export const ListStudyThemeQuery = gql`
     query($userId: String) {
         StudyThemes(userId:$userId) {
