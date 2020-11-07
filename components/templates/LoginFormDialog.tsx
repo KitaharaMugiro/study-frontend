@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import { useMutation } from "@apollo/client";
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import useForm from '../../models/hooks/useForm';
-import { useQuery, useMutation } from "@apollo/client";
-import { LoginMutation, RegisterMutation } from '../../graphQL/LoginStatements';
-import useLocal from '../../models/hooks/useLocal';
+import TextField from '@material-ui/core/TextField';
+import React from 'react';
 import { LoginInput, LoginOutput, RegisterInput } from '../../graphQL/generated/types';
+import { LoginMutation, RegisterMutation } from '../../graphQL/LoginStatements';
+import useForm from '../../models/hooks/useForm';
+import useLocal from '../../models/hooks/useLocal';
 
 interface Props {
     open: boolean

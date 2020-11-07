@@ -1,9 +1,6 @@
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
+import { gql, request } from 'graphql-request'
 import { atom } from 'jotai'
-import { Query } from '../../graphQL/generated/types'
-import { ListStudyThemeQuery } from '../../graphQL/StudyThemeStatements'
 
-import { request, gql } from 'graphql-request'
 
 const query = gql`
   {

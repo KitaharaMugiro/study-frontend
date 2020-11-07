@@ -6,7 +6,7 @@ import { ComponentsStyle } from "../../../const/ComponentsStyle"
 import { MyColors } from "../../../const/MyColors"
 import CreateIcon from '@material-ui/icons/Create';
 import CardEditer from "./CardEditer"
-import CountingScreen from "../../templates/CountingScreen"
+import CountingScreen from "../../molecule/CountingScreenCard"
 import { useMutation } from "@apollo/client"
 import { DeleteStudyThemeMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements"
 import { DeleteStudyThemeInput, UpdateStudyThemeInput } from "../../../graphQL/generated/types"

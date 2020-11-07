@@ -41,6 +41,29 @@ export const ListStudyThemeQuery = gql`
     }
 `
 
+
+export const StudyThemeQuery = gql`
+    query($userId: String, $studyThemeId: String) {
+        StudyTheme(userId:$userId, studyThemeId:$studyThemeId) {
+            studyThemeId,
+            title,
+            listId
+            clientUpdatedAt,
+            studyingTime
+        }
+    }
+`
+
+export const StudyRecordQuery = gql`
+    query($studyRecordId: String, $studyThemeId: String) {
+        StudyRecord(studyRecordId:$studyRecordId, studyThemeId:$studyThemeId) {
+            learned,
+            studyTime,
+            createdAt
+        }
+    }
+`
+
 export const StartStudyMutation = gql`
     mutation($input:StartStudyInput) {
         startStudy(input: $input) {

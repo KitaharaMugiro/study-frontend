@@ -2,10 +2,9 @@ import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ListId, MutationStartStudyArgs, StudyRecord, StudyTheme } from "../../../graphQL/generated/types";
-import { CreateStudyThemeMutation, StartStudyMutation } from "../../../graphQL/StudyThemeStatements";
-import useLocal, { useLocalJson } from "../../../models/hooks/useLocal";
+import { StartStudyMutation } from "../../../graphQL/StudyThemeStatements";
+import useLocal from "../../../models/hooks/useLocal";
 import { StudyStatus } from "../../../models/StudyStatus";
-import Time from "../../../models/Time";
 import CountingScreen from "../../templates/CountingScreen";
 import GoalSettingModal from "../../templates/GoalSettingModal";
 import List from "./List";
@@ -24,20 +23,26 @@ export default (props: Props) => {
     const [openCountingScreen, setOpenCountingScreen] = useState(false)
     const [openGoalSettingScreen, setOpenGoalSettingScreen] = useState(false)
     const [startStudy] = useMutation(StartStudyMutation)
+
     const onCloseCountingScreen = () => {
         setOpenCountingScreen(false)
     }
+
     const onCloseGoalSettingScreen = () => {
         setOpenGoalSettingScreen(false)
     }
+
     const onClickCard = (cardId: string) => {
         //ここまでpropsが伝播してくるのやだな〜
         setOpenGoalSettingScreen(true)
     }
+
     const onFinishStudy = () => {
-        //学習が終了したらStudyStatusを作り直す(why?)
+        //学習が終了したらLocalStorageから消して作り直す
+        studyStatus.finish()
         setStudyStatus(new StudyStatus())
     }
+
     const onClickStartStudy = async (studyThemeId: string) => {
         //api
         const userId = useLocal("USER_ID")!
@@ -57,7 +62,7 @@ export default (props: Props) => {
 
     //勉強中であればモーダルを開く
     useEffect(() => {
-        if (studyStatus.isStudying()) {
+        if (studyStatus.isStudying() || studyStatus.isResting()) {
             setOpenCountingScreen(true)
         }
     }, [props.lists])
@@ -85,7 +90,7 @@ export default (props: Props) => {
                 open={openCountingScreen}
                 onClose={onCloseCountingScreen}
                 onFinish={onFinishStudy}
-                goalTime={new Time(1 * 60)} />
+            />
 
             <GoalSettingModal
                 open={openGoalSettingScreen}

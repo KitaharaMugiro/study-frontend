@@ -143,7 +143,7 @@ export type MutationRegisterUserArgs = {
 
 
 export type MutationCreateStudyThemeArgs = {
-  input: Maybe<CreateStudyThemeInput>;
+  input?: Maybe<CreateStudyThemeInput>;
 };
 
 
@@ -180,6 +180,7 @@ export type Query = {
   __typename?: 'Query';
   User?: Maybe<User>;
   StudyThemes?: Maybe<Array<Maybe<StudyTheme>>>;
+  StudyTheme?: Maybe<StudyTheme>;
   StudyRecord?: Maybe<StudyRecord>;
 };
 
@@ -191,6 +192,12 @@ export type QueryUserArgs = {
 
 export type QueryStudyThemesArgs = {
   userId?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryStudyThemeArgs = {
+  userId?: Maybe<Scalars['String']>;
+  studyThemeId?: Maybe<Scalars['String']>;
 };
 
 

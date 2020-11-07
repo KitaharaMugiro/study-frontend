@@ -7,10 +7,13 @@ export class StudyStatus {
     nowStudyTheme?: string
     nowStudyRecord?: string
     playStatus: StartStopButtonStatus = "PLAY"
-    goalTime: Time = new Time(60)
+    goalTime: Time = new Time(60 * 25)
+    restGoalTime: Time = new Time(60 * 5) //何分休憩するか
     insetSeconds: Time = new Time(0)
     fromPersistFlag: boolean = false
     clickedPlayButtonDate: Date = new Date()
+    isRestTime: boolean = false
+    startRestDate: Date | null = null
 
     constructor() {
         this.fromPersist()
@@ -33,6 +36,15 @@ export class StudyStatus {
         this.persist()
     }
 
+    //勉強時間をゼロに初期化する
+    setInitialStudyTime() {
+        this.insetSeconds = new Time(0)
+        this.startRestDate = null
+        this.playStatus = "PLAY"
+        this.clickedPlayButtonDate = new Date()
+        this.persist()
+    }
+
     //Pauseしたときに記録 done
     setInsetSeconds(insetSeconds: Time) {
         this.insetSeconds = insetSeconds
@@ -44,6 +56,22 @@ export class StudyStatus {
         this.goalTime = goalTime
         this.persist()
     }
+
+    setRestTime(restTime: Time) {
+        this.restGoalTime = restTime
+        this.persist()
+    }
+
+    setIsRestTime(isRestTime: boolean) {
+        this.isRestTime = isRestTime
+        this.persist()
+    }
+
+    setStartRestDate() {
+        this.startRestDate = new Date()
+        this.persist()
+    }
+
 
     //終了したら記録を削除 done
     finish() {
@@ -58,15 +86,18 @@ export class StudyStatus {
             playStatus: this.playStatus,
             insetSeconds: this.insetSeconds.seconds,
             goalTime: this.goalTime.seconds,
-            clickedPlayButtonDate: this.clickedPlayButtonDate.toISOString()
+            restTime: this.restGoalTime.seconds,
+            clickedPlayButtonDate: this.clickedPlayButtonDate.toISOString(),
+            startRestDate: this.startRestDate?.toISOString() || "",
+            isRestTime: this.isRestTime
         })
     }
 
     private fromPersist() {
-        console.log("from persist")
+        console.log("check from persist")
         const obj = useLocalJson("StudyStatus")
         if (obj) {
-            console.log("学習途中判定")
+            console.log("from persist")
             this.fromPersistFlag = true
 
             this.nowStudyTheme = obj.nowStudyTheme
@@ -74,22 +105,22 @@ export class StudyStatus {
             this.insetSeconds = new Time(obj.insetSeconds)
             this.playStatus = obj.playStatus
             this.goalTime = new Time(obj.goalTime)
+            this.restGoalTime = new Time(obj.restTime)
             this.clickedPlayButtonDate = new Date(obj.clickedPlayButtonDate)
+            this.startRestDate = obj.startRestDate === "" ? this.startRestDate = null : new Date(obj.startRestDate)
+            this.isRestTime = obj.isRestTime
         } else {
-            console.log("学習途中ではない判定")
+            console.log("Not from persist")
             this.fromPersistFlag = false
         }
     }
 
-    isStudyingTheThemes(themeIdList: string[]) {
-        if (!themeIdList) return false
-        if (!this.fromPersistFlag) return false
-        console.log(themeIdList)
-        console.log(`が${this.nowStudyTheme}を含んでいるならstudying`)
-        return themeIdList.includes(this.nowStudyTheme!)
+    isStudying() {
+        console.log({ fromPersist: this.fromPersistFlag, isRestTime: this.isRestTime })
+        return this.fromPersistFlag && !this.isRestTime
     }
 
-    isStudying() {
-        return this.fromPersistFlag
+    isResting() {
+        return this.fromPersistFlag && this.isRestTime
     }
 }

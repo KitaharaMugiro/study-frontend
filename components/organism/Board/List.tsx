@@ -1,18 +1,14 @@
 import { useMutation } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { ListId, MutationCreateStudyThemeArgs, MutationStartStudyArgs, StudyRecord, StudyTheme, UpdateStudyThemeInput } from "../../../graphQL/generated/types";
-import { CreateStudyThemeMutation, StartStudyMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
+import { ListId, MutationCreateStudyThemeArgs, StudyTheme, UpdateStudyThemeInput } from "../../../graphQL/generated/types";
+import { CreateStudyThemeMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
 import { getNowDateISOString } from "../../../models/getNowDateISOString";
 import useLocal from "../../../models/hooks/useLocal";
-import { StudyStatus } from "../../../models/StudyStatus";
-import Time from "../../../models/Time";
 import { ArrowLeftButton, ArrowRightButton } from "../../atoms/buttons/ArrowButton";
 import PlusButton from "../../atoms/buttons/PlusButton";
 import { VerticalCenterColumn, VerticalCenterRow } from "../../container/VerticalCenter";
-import CountingScreen from "../../templates/CountingScreen";
 import CreateCardModal from "../../templates/CreateCardModal";
-import GoalSettingModal from "../../templates/GoalSettingModal";
 import MyCard from "./MyCard";
 
 interface Props {
