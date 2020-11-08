@@ -24,9 +24,6 @@ export default (props: Props) => {
     const [openGoalSettingScreen, setOpenGoalSettingScreen] = useState(false)
     const [startStudy] = useMutation(StartStudyMutation)
 
-    const onCloseCountingScreen = () => {
-        setOpenCountingScreen(false)
-    }
 
     const onCloseGoalSettingScreen = () => {
         setOpenGoalSettingScreen(false)
@@ -39,6 +36,7 @@ export default (props: Props) => {
 
     const onFinishStudy = () => {
         //学習が終了したらLocalStorageから消して作り直す
+        setOpenCountingScreen(false)
         studyStatus.finish()
         setStudyStatus(new StudyStatus())
     }
@@ -88,7 +86,6 @@ export default (props: Props) => {
             <CountingScreen
                 studyStatus={studyStatus}
                 open={openCountingScreen}
-                onClose={onCloseCountingScreen}
                 onFinish={onFinishStudy}
             />
 

@@ -1,21 +1,29 @@
+import { useMutation } from "@apollo/client";
 import Dialog from "@material-ui/core/Dialog";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { MutationEndStudyArgs } from "../../graphQL/generated/types";
+import { EndStudyMutation } from "../../graphQL/StudyThemeStatements";
+import useLocal from "../../models/hooks/useLocal";
 import { StudyStatus } from "../../models/StudyStatus";
-import Time from "../../models/Time";
 import { Center } from "../container/Center";
+import LearnedDialog from "../organism/CountingScreen/LearnedDialog";
 import RestingCard from "../organism/CountingScreen/RestingCard";
 import StudyingCard from "../organism/CountingScreen/StudyingCard";
 
 interface Props {
     open: boolean
     studyStatus: StudyStatus
-    onClose: () => void
     onFinish: () => void
 }
 
 export default (props: Props) => {
     const [studyOrRest, setStudyOrRest] = useState<"STUDY" | "REST">("STUDY")
+    const [openLearnedDialog, setOpenLearnedDialog] = useState(false)
+
+    //api
+    const [endStudy] = useMutation(EndStudyMutation)
+
 
     useEffect(() => {
         if (props.studyStatus.isStudying()) {
@@ -41,14 +49,8 @@ export default (props: Props) => {
         props.studyStatus.setInitialStudyTime()
     }
 
-    const onClickClose = () => {
-        //勉強時間 > 0なら確認する
-        props.onClose()
-    }
-
     const onClickFinish = () => {
-        //記録するかしないか確認するモーダルにする
-        props.onFinish()
+        setOpenLearnedDialog(true)
     }
 
     const renderCard = () => {
@@ -56,7 +58,7 @@ export default (props: Props) => {
             console.log("")
             return (<StudyingCard
                 open={props.open}
-                onClose={onClickClose}
+                onClose={onClickFinish}
                 onFinish={onClickFinish}
                 studyStatus={props.studyStatus}
                 onFinishGoalTime={onFinishGoalTime}
@@ -64,20 +66,42 @@ export default (props: Props) => {
         } else {
             return (<RestingCard
                 open={props.open}
-                onClose={onClickClose}
+                onClose={onClickFinish}
                 studyStatus={props.studyStatus}
                 onFinishRest={onFinishRest}
             />)
         }
     }
 
+    const onLearnedRegister = async (text: string) => {
+        console.log(`Learned = ${text}`)
+        const userId = useLocal("USER_ID")!
+        const input: MutationEndStudyArgs = {
+            input: {
+                userId,
+                studyThemeId: props.studyStatus.nowStudyTheme!,
+                studyRecordId: props.studyStatus.nowStudyRecord!,
+                learned: text
+            }
+        }
+        const output = await endStudy({ variables: input })
+        setOpenLearnedDialog(false)
+        props.onFinish()
+    }
+
     return (
-        <Dialog fullScreen open={props.open} onClose={props.onClose} >
+        <Dialog fullScreen open={props.open} onClose={onClickFinish} >
             <Background>
                 <Center>
                     {renderCard()}
                 </Center>
             </Background>
+
+            <LearnedDialog
+                open={openLearnedDialog}
+                onClose={() => setOpenLearnedDialog(false)}
+                onRegister={onLearnedRegister}
+            />
         </Dialog>
     )
 }

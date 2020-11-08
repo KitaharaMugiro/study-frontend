@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { PauseStudyInput, ResumeStudyInput, StudyRecord, StudyTheme } from "../../../graphQL/generated/types";
 import { EndStudyMutation, PauseStudyMutation, ResumeStudyMutation, StudyRecordQuery, StudyThemeQuery } from "../../../graphQL/StudyThemeStatements";
 import useLocal from "../../../models/hooks/useLocal";
+import { SoundPlayer } from "../../../models/SoundPlayer";
 import { StudyStatus } from "../../../models/StudyStatus";
 import Time from "../../../models/Time";
 import { Timer } from "../../../models/Timer";
@@ -39,9 +40,11 @@ export default (props: Props) => {
     const { data: studyRecordData, refetch: refetchStudyRecord } = useQuery(StudyRecordQuery, { variables: { studyThemeId: props.studyStatus.nowStudyTheme, studyRecordId: props.studyStatus.nowStudyRecord } })
     const studyRecord = studyRecordData?.StudyRecord as Required<StudyRecord>
     const studyTimeOnServer = new Time((studyRecord?.studyTime || 0) / 1000)
-    const centerMessageWhenPlay = `総勉強時間: 約${seconds.formatJapanese()}`
+    //const centerMessageWhenPlay = `総勉強時間: 約${seconds.formatJapanese()}` //これだと休憩後におかしいことになる
+    const centerMessageWhenPlay = `` //一旦勉強中は何も表示しない
     const centerMessageWhenPause = `総勉強時間: 約${studyTimeOnServer.formatJapanese()}`
     const centerMessage = props.studyStatus.playStatus === "PAUSE" ? centerMessageWhenPlay : centerMessageWhenPause
+
     //query
     //studyThemeを取得
     const { data: studyThemeData } = useQuery(StudyThemeQuery, {
@@ -52,7 +55,6 @@ export default (props: Props) => {
     //mutation
     const [pauseStudy] = useMutation(PauseStudyMutation)
     const [resumeStudy] = useMutation(ResumeStudyMutation)
-    const [endStudy] = useMutation(EndStudyMutation)
 
     const onFinish = () => {
         console.log("on finish")
@@ -69,6 +71,8 @@ export default (props: Props) => {
 
     const onFinishGoalTime = () => {
         console.log("勉強時間終わったよ〜")
+        const player = new SoundPlayer()
+        player.playWhenStudyEnd()
         //強制的にpauseしてAPI飛ばす
         pauseTimer()
         props.onFinishGoalTime()
@@ -114,6 +118,9 @@ export default (props: Props) => {
 
     //ただTimerを動かす
     const startTimer = (startDate: Date = new Date()) => {
+        const player = new SoundPlayer()
+        player.playWhenStartStudy()
+
         //timerを再作成してスタートする
         const timer = new Timer(startDate, props.studyStatus.insetSeconds.seconds)
         timer?.start((second) => {

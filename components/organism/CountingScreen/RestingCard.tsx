@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { SoundPlayer } from "../../../models/SoundPlayer";
 import { StudyStatus } from "../../../models/StudyStatus";
 import Time from "../../../models/Time";
 import { Timer } from "../../../models/Timer";
@@ -62,6 +63,8 @@ export default (props: Props) => {
 
     const onFinishRest = () => {
         console.log("休憩終わりました〜")
+        const player = new SoundPlayer()
+        player.playWhenRestEnd()
         props.onFinishRest()
     }
 

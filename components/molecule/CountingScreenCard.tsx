@@ -43,8 +43,6 @@ export default (props: Props) => {
                     {props.topTitle}
                 </TopStatement>
 
-                <Spacer space={20} />
-
                 <div style={{ position: "relative", width: "100%" }}>
                     <VerticalCenterColumn style={{ width: "10%", left: "3%", height: "100%", position: "absolute" }}>
                         <DoubleTriangles
@@ -60,13 +58,14 @@ export default (props: Props) => {
                     </div>
                 </div>
 
-                <Spacer space={20} />
+                <Spacer20 />
 
                 <VerticalCenterColumn>
                     {props.onClickStartStopButton && <StartStopButton onClick={props.onClickStartStopButton} initialStatus={props.initialButtonStatus} />}
                     {props.centerMessage && <CenterText>{props.centerMessage}</CenterText>}
                 </VerticalCenterColumn>
-                <Spacer space={10} />
+
+                <Spacer10 />
 
                 <VerticalCenterRow style={{ visibility: !props.canFinish ? "hidden" : "visible" }}>
                     <Button color="primary" variant="contained" onClick={props.onFinish} >
@@ -109,6 +108,7 @@ const TopStatement = styled.h1`
     color: ${MyColors.textBoldGray};
     font-size:20px;
     font-weight:600;
+    margin-bottom:20px;
 `
 
 const CenterText = styled.div`
@@ -117,4 +117,12 @@ const CenterText = styled.div`
     font-weight:600;
     margin-left:20px;
     margin-right:20px;
+`
+
+const Spacer20 = styled.div`
+height: 20px;
+`
+
+const Spacer10 = styled.div`
+height: 10px;
 `

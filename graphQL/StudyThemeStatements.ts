@@ -96,10 +96,11 @@ export const ResumeStudyMutation = gql`
 
 export const EndStudyMutation = gql`
     mutation($input:EndStudyInput) {
-        endStudyTheme(input: $input) {
+        endStudy(input: $input) {
             studyRecordId,
             studyThemeId,
-            studyTime
+            studyTime,
+            learned
         }
     }
 `

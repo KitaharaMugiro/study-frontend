@@ -65,6 +65,7 @@ export type EndStudyInput = {
   userId: Scalars['String'];
   studyThemeId: Scalars['String'];
   studyRecordId: Scalars['String'];
+  learned: Scalars['String'];
 };
 
 export type ResumeStudyInput = {
