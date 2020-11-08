@@ -21,10 +21,11 @@ export default (props: Props) => {
         if (props.studyStatus.isStudying()) {
             console.log("勉強中")
             setStudyOrRest("STUDY")
-        } else {
+        } else if (props.studyStatus.isResting()) {
             console.log("休憩中")
             setStudyOrRest("REST")
         }
+        setStudyOrRest("STUDY")
     }, [])
 
     const onFinishRest = () => {

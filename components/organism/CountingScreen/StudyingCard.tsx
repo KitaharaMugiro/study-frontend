@@ -38,9 +38,10 @@ export default (props: Props) => {
     //api
     const { data: studyRecordData, refetch: refetchStudyRecord } = useQuery(StudyRecordQuery, { variables: { studyThemeId: props.studyStatus.nowStudyTheme, studyRecordId: props.studyStatus.nowStudyRecord } })
     const studyRecord = studyRecordData?.StudyRecord as Required<StudyRecord>
-    const studyTime = new Time((studyRecord?.studyTime || 0) / 1000 + seconds.getValue())
-    const centerMessage = `総勉強時間: 約${studyTime.formatJapanese()}`
-
+    const studyTimeOnServer = new Time((studyRecord?.studyTime || 0) / 1000)
+    const centerMessageWhenPlay = `総勉強時間: 約${seconds.formatJapanese()}`
+    const centerMessageWhenPause = `総勉強時間: 約${studyTimeOnServer.formatJapanese()}`
+    const centerMessage = props.studyStatus.playStatus === "PAUSE" ? centerMessageWhenPlay : centerMessageWhenPause
     //query
     //studyThemeを取得
     const { data: studyThemeData } = useQuery(StudyThemeQuery, {
@@ -65,12 +66,6 @@ export default (props: Props) => {
             onFinishGoalTime()
         }
     }, [seconds])
-
-    useEffect(() => {
-        setInterval(() => {
-            refetchStudyRecord()
-        }, 60 * 1000)
-    }, [])
 
     const onFinishGoalTime = () => {
         console.log("勉強時間終わったよ〜")
@@ -153,6 +148,7 @@ export default (props: Props) => {
             studyRecordId: props.studyStatus.nowStudyRecord!
         }
         await pauseStudy({ variables: { input } })
+        await refetchStudyRecord()
     }
 
     const onClickStartButton = (prevStatus: StartStopButtonStatus, nowStatus: StartStopButtonStatus) => {
