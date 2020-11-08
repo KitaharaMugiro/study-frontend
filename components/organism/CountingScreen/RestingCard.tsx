@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { SoundPlayer } from "../../../models/SoundPlayer";
 import { StudyStatus } from "../../../models/StudyStatus";
@@ -70,6 +71,11 @@ export default (props: Props) => {
 
     return (
         <>
+
+            <Head>
+                <title>休憩中...{leftTime.format()}</title>
+            </Head>
+
             <CountingScreenCard
                 onClose={props.onClose}
                 onFinish={onFinishRest}

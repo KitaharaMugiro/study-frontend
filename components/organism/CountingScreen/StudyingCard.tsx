@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
+import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { PauseStudyInput, ResumeStudyInput, StudyRecord, StudyTheme } from "../../../graphQL/generated/types";
 import { EndStudyMutation, PauseStudyMutation, ResumeStudyMutation, StudyRecordQuery, StudyThemeQuery } from "../../../graphQL/StudyThemeStatements";
@@ -155,7 +156,11 @@ export default (props: Props) => {
             studyRecordId: props.studyStatus.nowStudyRecord!
         }
         await pauseStudy({ variables: { input } })
-        await refetchStudyRecord()
+        try {
+            await refetchStudyRecord()
+        } catch {
+            console.log("refetchStudyRecordエラー出たけど握り潰す")
+        }
     }
 
     const onClickStartButton = (prevStatus: StartStopButtonStatus, nowStatus: StartStopButtonStatus) => {
@@ -171,6 +176,10 @@ export default (props: Props) => {
 
     return (
         <>
+            <Head>
+                <title>勉強中...{leftTime.format()}</title>
+            </Head>
+
             <CountingScreenCard
                 onClose={props.onClose}
                 onFinish={onFinish}

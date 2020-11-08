@@ -32,8 +32,10 @@ export default (props: Props) => {
         } else if (props.studyStatus.isResting()) {
             console.log("休憩中")
             setStudyOrRest("REST")
+        } else {
+            console.log("初回")
+            setStudyOrRest("STUDY")
         }
-        setStudyOrRest("STUDY")
     }, [])
 
     const onFinishRest = () => {
