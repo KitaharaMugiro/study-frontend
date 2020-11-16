@@ -10,6 +10,7 @@ import { Center } from "../container/Center";
 import LearnedDialog from "../organism/CountingScreen/LearnedDialog";
 import RestingCard from "../organism/CountingScreen/RestingCard";
 import StudyingCard from "../organism/CountingScreen/StudyingCard";
+import MyAppBar from "./MyAppBar";
 
 interface Props {
     open: boolean
@@ -93,6 +94,7 @@ export default (props: Props) => {
 
     return (
         <Dialog fullScreen open={props.open} onClose={onClickFinish} >
+            <MyAppBar />
             <Background>
                 <Center>
                     {renderCard()}

@@ -3,6 +3,7 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { PauseStudyInput, ResumeStudyInput, StudyRecord, StudyTheme } from "../../../graphQL/generated/types";
 import { EndStudyMutation, PauseStudyMutation, ResumeStudyMutation, StudyRecordQuery, StudyThemeQuery } from "../../../graphQL/StudyThemeStatements";
+import useGraphQL from "../../../graphQL/useGraphQL";
 import useLocal from "../../../models/hooks/useLocal";
 import { SoundPlayer } from "../../../models/SoundPlayer";
 import { StudyStatus } from "../../../models/StudyStatus";
@@ -48,10 +49,7 @@ export default (props: Props) => {
 
     //query
     //studyThemeを取得
-    const { data: studyThemeData } = useQuery(StudyThemeQuery, {
-        variables: { userId, studyThemeId: props.studyStatus.nowStudyTheme }
-    });
-    const studyTheme = studyThemeData?.StudyTheme as Required<StudyTheme>
+    const studyTheme = useGraphQL.queryStudyTheme(props.studyStatus.nowStudyTheme)
 
     //mutation
     const [pauseStudy] = useMutation(PauseStudyMutation)

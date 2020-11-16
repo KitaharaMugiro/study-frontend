@@ -4,16 +4,18 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { AppInformation } from "../../const/AppInfomation";
 import styled from "styled-components";
 import { MyColors } from "../../const/MyColors";
+import useLocal, { deleteAllLocal } from "../../models/hooks/useLocal";
 
 
 export default () => {
     const FlexGrow = styled.div`
         flex-grow:1;
     `
-    // useEffect(() => {
 
-
-    // }, [])
+    const logout = () => {
+        deleteAllLocal()
+        location.reload()
+    }
 
     return (
         <FlexGrow>
@@ -25,7 +27,7 @@ export default () => {
                     <Typography variant="h6" style={{ flexGrow: 1 }}>
                         {AppInformation.name}
                     </Typography>
-                    {/* <Button color="inherit">{name}さん</Button> */}
+                    <Button color="inherit" onClick={logout}>ログアウト</Button>
                 </Toolbar>
             </AppBar>
         </FlexGrow>

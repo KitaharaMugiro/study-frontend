@@ -56,7 +56,11 @@ export default (props: Props) => {
 
     return (
         <div>
-            <Dialog open={props.open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <Dialog
+                open={props.open} onClose={handleClose} aria-labelledby="form-dialog-title"
+                disableBackdropClick
+                disableEscapeKeyDown
+            >
                 <DialogTitle id="form-dialog-title">ログイン/会員登録</DialogTitle>
                 <DialogContent>
                     <DialogContentText>

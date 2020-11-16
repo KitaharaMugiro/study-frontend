@@ -88,9 +88,9 @@ const Card = styled.div`
     position:relative;
     background-color:white;
     width:95vw;
-    height:100vh;
-    max-width:400px;
-    max-height:700px;
+    height:90vh;
+    max-width:370px;
+    max-height:620px;
     filter: drop-shadow(0.4rem 0.4rem 0.7rem rgba(0, 0, 0, 0.8));
 `
 

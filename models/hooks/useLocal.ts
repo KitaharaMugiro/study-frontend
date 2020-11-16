@@ -29,3 +29,7 @@ export const useLocalJson = (key: LocalStorageJsonKey, setValue: { [key: string]
 export const deleteLocal = (key: LocalStorageKey | LocalStorageJsonKey) => {
     localStorage.removeItem(key)
 }
+
+export const deleteAllLocal = () => {
+    localStorage.clear()
+}

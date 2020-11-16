@@ -1,4 +1,5 @@
 import { Howl, Howler } from 'howler';
+import { MySounds } from '../const/MySounds';
 export class SoundPlayer {
     baseUrl = "https://planmaker.s3-ap-northeast-1.amazonaws.com/audio"
     private play(filename: string) {
@@ -10,14 +11,14 @@ export class SoundPlayer {
     }
 
     playWhenStartStudy() {
-        this.play("info-girl1_info-girl1-ganbarimasyou1.mp3")
+        this.play(MySounds.startStudy)
     }
 
     playWhenStudyEnd() {
-        this.play("info-girl1_info-girl1-ganbattane1.mp3")
+        this.play(MySounds.studyEnd)
     }
 
     playWhenRestEnd() {
-        this.play("info-girl1_info-girl1-mouhitoikidesu1.mp3")
+        this.play(MySounds.restEnd)
     }
 }

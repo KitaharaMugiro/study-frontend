@@ -1,7 +1,8 @@
 import { Modal } from "@material-ui/core"
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { MyColors } from "../../const/MyColors"
+import useGraphQL from "../../graphQL/useGraphQL"
 import GoalFrame from "../organism/GoalSetting/GoalFrame"
 import MileStoneFrame from "../organism/GoalSetting/MileStoneFrame"
 import TitleFrame from "../organism/GoalSetting/TitleFrame"
@@ -9,18 +10,26 @@ import TitleFrame from "../organism/GoalSetting/TitleFrame"
 interface Props {
     open: boolean
     onClose: () => void
+    studyThemeId: string
 }
 
 export default (props: Props) => {
-    const [title, setTitle] = useState("")
+    //studyThemeを取得
+    const studyTheme = useGraphQL.queryStudyTheme(props.studyThemeId)
+
     const onRegister = () => {
         props.onClose()
     }
 
     const body = () => {
+        if (!studyTheme) return <div />
         return (
             <Frame>
-                <TitleFrame />
+                <TitleFrame
+                    title={studyTheme.title}
+                    status={studyTheme.listId}
+
+                />
 
                 <GoalFrame />
 

@@ -2,7 +2,13 @@ import styled from "styled-components"
 import DescriptionIcon from '@material-ui/icons/Description';
 import { MyColors } from "../../../const/MyColors";
 
-export default () => {
+interface Props {
+    title: string
+    status: string
+}
+
+export default (props: Props) => {
+    const { title, status } = props
 
     return (
         <Frame>
@@ -10,8 +16,8 @@ export default () => {
                 <DescriptionIcon />
             </Logo>
             <Title>
-                <MainText>英語の勉強</MainText>
-                <SubText>ステータス: Doing</SubText>
+                <MainText>{title}</MainText>
+                <SubText>ステータス: {status}</SubText>
             </Title>
         </Frame>
     )

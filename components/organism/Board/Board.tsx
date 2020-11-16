@@ -5,16 +5,13 @@ import { ListId, MutationStartStudyArgs, StudyRecord, StudyTheme } from "../../.
 import { StartStudyMutation } from "../../../graphQL/StudyThemeStatements";
 import useLocal from "../../../models/hooks/useLocal";
 import { StudyStatus } from "../../../models/StudyStatus";
+import ListViewModel from "../../../models/viewModel/ListViewModel";
 import CountingScreen from "../../templates/CountingScreen";
 import GoalSettingModal from "../../templates/GoalSettingModal";
 import List from "./List";
 
 interface Props {
-    lists: {
-        listId: ListId,
-        listTitle: string,
-        cards: StudyTheme[]
-    }[]
+    lists: ListViewModel[]
     refetch: () => void
 }
 
@@ -31,6 +28,7 @@ export default (props: Props) => {
 
     const onClickCard = (cardId: string) => {
         //ここまでpropsが伝播してくるのやだな〜
+        setOnClickedCardId(cardId)
         setOpenGoalSettingScreen(true)
     }
 
@@ -57,6 +55,7 @@ export default (props: Props) => {
 
     //persist含めた学習状況のステータス(現在学習中の勉強テーマ)
     const [studyStatus, setStudyStatus] = useState(new StudyStatus()) //名前が分かりにくい
+    const [onClickedCardId, setOnClickedCardId] = useState("") //これatomにできない？
 
     //勉強中であればモーダルを開く
     useEffect(() => {
@@ -92,6 +91,7 @@ export default (props: Props) => {
             <GoalSettingModal
                 open={openGoalSettingScreen}
                 onClose={onCloseGoalSettingScreen}
+                studyThemeId={onClickedCardId}
             />
         </div>
     )
