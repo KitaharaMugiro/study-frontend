@@ -13,9 +13,11 @@ interface Props {
     studyThemeId: string
 }
 
-export default (props: Props) => {
+const GoalSettingModal = (props: Props) => {
     //studyThemeを取得
-    const studyTheme = useGraphQL.queryStudyTheme(props.studyThemeId)
+    const queryStudyTheme = useGraphQL.queryStudyTheme(props.studyThemeId)
+    const studyTheme = queryStudyTheme?.studyTheme
+    if (queryStudyTheme?.loading) return <div />
 
     const onRegister = () => {
         props.onClose()
@@ -26,8 +28,8 @@ export default (props: Props) => {
         return (
             <Frame>
                 <TitleFrame
-                    title={studyTheme.title}
-                    status={studyTheme.listId}
+                    title={studyTheme.title!}
+                    status={studyTheme.listId!}
 
                 />
 
@@ -51,7 +53,9 @@ export default (props: Props) => {
             {body()}
         </Modal>
     )
-}
+};
+
+export default GoalSettingModal;
 
 const Frame = styled.div`
     position:absolute;

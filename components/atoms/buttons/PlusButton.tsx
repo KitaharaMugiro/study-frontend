@@ -23,11 +23,13 @@ interface Props {
     onClick: () => void
 }
 
-export default (props: Props) => {
+const PlusButton = (props: Props) => {
     return (
         <Border onClick={props.onClick}>
             <AddIcon style={{ color: MyColors.silver, fontSize: 40 }} />
         </Border>
     )
-}
+};
+
+export default PlusButton;
 

@@ -5,7 +5,7 @@ interface Props {
     space: number
 }
 
-export default (props: Props) => {
+const Spacer = (props: Props) => {
 
     const Spacer = styled.div`
         height: ${props.space}px;
@@ -13,4 +13,6 @@ export default (props: Props) => {
     return (
         <Spacer />
     )
-}
+};
+
+export default Spacer;

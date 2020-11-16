@@ -6,7 +6,7 @@ interface Props {
     centerText: string
 }
 
-export default (props: Props) => {
+const CircleProgress = (props: Props) => {
     const percent = props.progress * 100
     return (
         <CircularProgressbar
@@ -18,4 +18,6 @@ export default (props: Props) => {
         // })} 
         />
     )
-}
+};
+
+export default CircleProgress;

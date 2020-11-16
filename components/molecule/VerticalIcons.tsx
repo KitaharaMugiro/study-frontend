@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { VerticalCenterColumn } from "../container/VerticalCenter"
 import IconButton from "@material-ui/core/IconButton";
 
-export default () => {
+const VerticalIcons = () => {
     const menu = [
         { icon: "add_circle", title: "デイリータスク", notification: false, onClick: () => { } },
         { icon: "face", title: "デイリータスク", notification: true, onClick: () => { } },
@@ -38,7 +38,9 @@ export default () => {
             </VerticalCenterColumn>
         </Column>
     )
-}
+};
+
+export default VerticalIcons;
 
 const Column = styled.div`
     width:50px;

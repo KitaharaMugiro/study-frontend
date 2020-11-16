@@ -7,7 +7,7 @@ interface Props {
     status: string
 }
 
-export default (props: Props) => {
+const TitleFrame = (props: Props) => {
     const { title, status } = props
 
     return (
@@ -21,7 +21,9 @@ export default (props: Props) => {
             </Title>
         </Frame>
     )
-}
+};
+
+export default TitleFrame;
 
 const Frame = styled.div`
     display:flex;

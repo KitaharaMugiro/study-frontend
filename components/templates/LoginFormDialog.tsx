@@ -17,7 +17,7 @@ interface Props {
     handleOpen: (open: boolean) => void
 }
 
-export default (props: Props) => {
+const LoginFormDialog = (props: Props) => {
     const [email, onChangeEmail] = useForm("")
     const [password, onChangePassword] = useForm("")
     const [login] = useMutation(LoginMutation);
@@ -96,4 +96,6 @@ export default (props: Props) => {
             </Dialog>
         </div>
     );
-}
+};
+
+export default LoginFormDialog;

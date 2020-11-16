@@ -13,7 +13,7 @@ interface Props {
     onRegister: (text: string) => void
 }
 
-export default (props: Props) => {
+const LearnedDialog = (props: Props) => {
     const [text, setText] = useState("")
 
     const handleClose = () => {
@@ -50,4 +50,6 @@ export default (props: Props) => {
             </DialogActions>
         </Dialog>
     );
-}
+};
+
+export default LearnedDialog;

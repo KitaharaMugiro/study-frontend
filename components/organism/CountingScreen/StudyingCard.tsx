@@ -1,8 +1,8 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { PauseStudyInput, ResumeStudyInput, StudyRecord, StudyTheme } from "../../../graphQL/generated/types";
-import { EndStudyMutation, PauseStudyMutation, ResumeStudyMutation, StudyRecordQuery, StudyThemeQuery } from "../../../graphQL/StudyThemeStatements";
+import { PauseStudyInput, ResumeStudyInput } from "../../../graphQL/generated/types";
+import { PauseStudyMutation, ResumeStudyMutation } from "../../../graphQL/StudyThemeStatements";
 import useGraphQL from "../../../graphQL/useGraphQL";
 import useLocal from "../../../models/hooks/useLocal";
 import { SoundPlayer } from "../../../models/SoundPlayer";
@@ -15,7 +15,6 @@ interface Props {
     open: boolean
     onClose: () => void
     studyStatus: StudyStatus
-    onFinish: (title: string) => void
     onFinishGoalTime: () => void
 }
 
@@ -38,10 +37,16 @@ export default (props: Props) => {
     //状態系
     const userId = useLocal("USER_ID")!
 
+    //mutation
+    const [pauseStudy] = useMutation(PauseStudyMutation)
+    const [resumeStudy] = useMutation(ResumeStudyMutation)
+
+
     //api
-    const { data: studyRecordData, refetch: refetchStudyRecord } = useQuery(StudyRecordQuery, { variables: { studyThemeId: props.studyStatus.nowStudyTheme, studyRecordId: props.studyStatus.nowStudyRecord } })
-    const studyRecord = studyRecordData?.StudyRecord as Required<StudyRecord>
-    const studyTimeOnServer = new Time((studyRecord?.studyTime || 0) / 1000)
+    const queryStudyRecord = useGraphQL.queryStudyRecord(props.studyStatus.nowStudyTheme, props.studyStatus.nowStudyRecord)
+    const studyRecord = queryStudyRecord?.studyRecord
+    const studyTimeOnServer = new Time((studyRecord?.studyTime || 0))
+
     //const centerMessageWhenPlay = `総勉強時間: 約${seconds.formatJapanese()}` //これだと休憩後におかしいことになる
     const centerMessageWhenPlay = `` //一旦勉強中は何も表示しない
     const centerMessageWhenPause = `総勉強時間: 約${studyTimeOnServer.formatJapanese()}`
@@ -49,15 +54,11 @@ export default (props: Props) => {
 
     //query
     //studyThemeを取得
-    const studyTheme = useGraphQL.queryStudyTheme(props.studyStatus.nowStudyTheme)
-
-    //mutation
-    const [pauseStudy] = useMutation(PauseStudyMutation)
-    const [resumeStudy] = useMutation(ResumeStudyMutation)
+    const queryStudyTheme = useGraphQL.queryStudyTheme(props.studyStatus.nowStudyTheme)
+    const studyTheme = queryStudyTheme?.studyTheme
 
     const onFinish = () => {
         console.log("on finish")
-        props.onFinish("") //TODO: IDなどを渡す
         props.onClose()
     }
 
@@ -154,11 +155,8 @@ export default (props: Props) => {
             studyRecordId: props.studyStatus.nowStudyRecord!
         }
         await pauseStudy({ variables: { input } })
-        try {
-            await refetchStudyRecord()
-        } catch {
-            console.log("refetchStudyRecordエラー出たけど握り潰す")
-        }
+        if (queryStudyRecord?.refetchStudyRecord)
+            await queryStudyRecord?.refetchStudyRecord()
     }
 
     const onClickStartButton = (prevStatus: StartStopButtonStatus, nowStatus: StartStopButtonStatus) => {
@@ -172,6 +170,7 @@ export default (props: Props) => {
         }
     }
 
+    if (queryStudyRecord?.loading || queryStudyTheme?.loading) return <div />
     return (
         <>
             <Head>

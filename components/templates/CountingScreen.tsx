@@ -18,7 +18,7 @@ interface Props {
     onFinish: () => void
 }
 
-export default (props: Props) => {
+const CountingScreen = (props: Props) => {
     const [studyOrRest, setStudyOrRest] = useState<"STUDY" | "REST">("STUDY")
     const [openLearnedDialog, setOpenLearnedDialog] = useState(false)
 
@@ -62,7 +62,6 @@ export default (props: Props) => {
             return (<StudyingCard
                 open={props.open}
                 onClose={onClickFinish}
-                onFinish={onClickFinish}
                 studyStatus={props.studyStatus}
                 onFinishGoalTime={onFinishGoalTime}
             />)
@@ -88,6 +87,7 @@ export default (props: Props) => {
             }
         }
         const output = await endStudy({ variables: input })
+        console.log({ output })
         setOpenLearnedDialog(false)
         props.onFinish()
     }
@@ -108,7 +108,9 @@ export default (props: Props) => {
             />
         </Dialog>
     )
-}
+};
+
+export default CountingScreen;
 const Background = styled.div`
     width:100%;
     height:100%;

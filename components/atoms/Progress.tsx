@@ -5,8 +5,10 @@ interface Props {
     progress: number
 }
 
-export default (props: Props) => {
+const Progress = (props: Props) => {
     return (
         <LinearProgress variant="determinate" value={props.progress} />
     )
-}
+};
+
+export default Progress;

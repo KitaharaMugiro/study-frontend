@@ -14,7 +14,7 @@ interface Props {
 }
 
 
-export default (props: Props) => {
+const DoubleTriangles = (props: Props) => {
     return (
         <VerticalCenterColumn>
             <IconButton
@@ -30,4 +30,7 @@ export default (props: Props) => {
             </IconButton>
         </VerticalCenterColumn>
     )
-}
+};
+
+
+export default DoubleTriangles;

@@ -7,7 +7,7 @@ import { MyColors } from "../../const/MyColors";
 import useLocal, { deleteAllLocal } from "../../models/hooks/useLocal";
 
 
-export default () => {
+const MyAppBar = () => {
     const FlexGrow = styled.div`
         flex-grow:1;
     `
@@ -32,4 +32,7 @@ export default () => {
             </AppBar>
         </FlexGrow>
     )
-}
+};
+
+
+export default MyAppBar;

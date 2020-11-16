@@ -15,7 +15,7 @@ interface Props {
     refetch: () => void
 }
 
-export default (props: Props) => {
+const BoardComponent = (props: Props) => {
     //modal
     const [openCountingScreen, setOpenCountingScreen] = useState(false)
     const [openGoalSettingScreen, setOpenGoalSettingScreen] = useState(false)
@@ -95,7 +95,9 @@ export default (props: Props) => {
             />
         </div>
     )
-}
+};
+
+export default BoardComponent;
 
 const Board = styled.div`
   height: 100%;

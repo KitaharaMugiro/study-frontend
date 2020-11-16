@@ -27,7 +27,7 @@ interface Props {
     centerMessage?: string
 }
 
-export default (props: Props) => {
+const CountingScreenCard = (props: Props) => {
 
     return (
         <Card>
@@ -75,7 +75,9 @@ export default (props: Props) => {
             </VerticalCenterColumn>
         </Card>
     )
-}
+};
+
+export default CountingScreenCard;
 const Background = styled.div`
     width:100%;
     height:100%;

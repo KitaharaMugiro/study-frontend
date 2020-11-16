@@ -8,7 +8,7 @@ interface Props {
     onClick: (prev: StartStopButtonStatus, now: StartStopButtonStatus) => void
 }
 
-export default (props: Props) => {
+const StartStopButton = (props: Props) => {
     const [status, setStatus] = useState<StartStopButtonStatus>("PLAY")
     useEffect(() => {
         console.log(`button initial status = ${props.initialStatus}`)
@@ -65,4 +65,6 @@ export default (props: Props) => {
             {renderShape()}
         </span>
     )
-}
+};
+
+export default StartStopButton;

@@ -8,7 +8,7 @@ interface Props {
     onRegister: (title: string) => void
 }
 
-export default (props: Props) => {
+const CreateCardModal = (props: Props) => {
     const [title, setTitle] = useState("")
     const onRegister = () => {
         props.onRegister(title)
@@ -45,4 +45,6 @@ export default (props: Props) => {
             </DialogActions>
         </Dialog>
     )
-}
+};
+
+export default CreateCardModal;

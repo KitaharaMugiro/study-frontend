@@ -13,7 +13,7 @@ const GET_USER = gql`
     }
 `;
 
-export default () => {
+const Debug = () => {
   const result = useQuery(GET_USER, { variables: { userId: "b4730520-84dc-431e-af67-e91077bcaf7e" } })
   console.log(result)
   console.log(result.data)
@@ -25,3 +25,5 @@ export default () => {
     </FullScreen>
   );
 };
+
+export default Debug;

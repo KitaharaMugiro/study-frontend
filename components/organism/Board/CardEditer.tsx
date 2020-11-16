@@ -12,7 +12,7 @@ interface Props {
     adding: boolean
 }
 
-export default (props: Props) => {
+const CardEditer = (props: Props) => {
     const [text, setText] = useState("")
     useEffect(() => {
         setText(props.text)
@@ -50,7 +50,9 @@ export default (props: Props) => {
             />
         </div>
     );
-}
+};
+
+export default CardEditer;
 
 const Card = styled.div`
     min-height: 50px;

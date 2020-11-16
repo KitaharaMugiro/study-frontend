@@ -9,7 +9,7 @@ import { ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
 import { aggregateCards } from "../models/aggregateCards";
 import useLocal from '../models/hooks/useLocal';
 
-export default () => {
+const Index = () => {
   const [openLogin, setOpenLogin] = useState(false)
   const { data, loading, refetch: refetchStudyThemes } = useQuery<Query>(ListStudyThemeQuery)
   const cards = (data?.StudyThemes || []) as Required<StudyTheme[]>
@@ -45,7 +45,9 @@ export default () => {
       </RightBottom>
     </div>
   )
-}
+};
+
+export default Index;
 
 const RightBottom = styled.div`
   position:fixed;

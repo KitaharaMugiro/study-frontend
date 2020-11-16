@@ -23,7 +23,7 @@ interface Props {
     refetch: () => void
 }
 
-export default (props: Props) => {
+const ListComponent = (props: Props) => {
     //api
     const [updateStudyTheme] = useMutation(UpdateStudyThemeMutation)
     const [createStudyTheme] = useMutation(CreateStudyThemeMutation)
@@ -114,7 +114,9 @@ export default (props: Props) => {
             />
         </List >
     );
-}
+};
+
+export default ListComponent;
 
 const List = styled.div`
     background: #dfe3e6;

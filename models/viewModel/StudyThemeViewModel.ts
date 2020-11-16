@@ -1,5 +1,5 @@
 import { ListId, StudyTheme } from "../../graphQL/generated/types";
-import RecordViewModel from "./RecordViewModel";
+import { RecordViewModel } from "./RecordViewModel";
 
 export default class {
     studyThemeId?: string

@@ -1,16 +1,14 @@
+import { useMutation } from "@apollo/client"
 import { Button } from "@material-ui/core"
-import Paper from "@material-ui/core/Paper"
+import CreateIcon from '@material-ui/icons/Create'
 import React, { useState } from "react"
 import styled from "styled-components"
 import { ComponentsStyle } from "../../../const/ComponentsStyle"
 import { MyColors } from "../../../const/MyColors"
-import CreateIcon from '@material-ui/icons/Create';
-import CardEditer from "./CardEditer"
-import CountingScreen from "../../molecule/CountingScreenCard"
-import { useMutation } from "@apollo/client"
-import { DeleteStudyThemeMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements"
 import { DeleteStudyThemeInput, UpdateStudyThemeInput } from "../../../graphQL/generated/types"
+import { DeleteStudyThemeMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements"
 import useLocal from "../../../models/hooks/useLocal"
+import CardEditer from "./CardEditer"
 interface Props {
     title: string
     status: "TODO" | "DOING" | "DONE"
@@ -20,7 +18,7 @@ interface Props {
     refetch: () => void
 }
 
-export default (props: Props) => {
+const MyCard = (props: Props) => {
     const [editing, setEditing] = useState(false)
 
     const [updateTitle] = useMutation(UpdateStudyThemeMutation)
@@ -97,7 +95,9 @@ export default (props: Props) => {
             }
         </Card>
     )
-}
+};
+
+export default MyCard;
 
 const Card = styled.div`  
     position:relative;
