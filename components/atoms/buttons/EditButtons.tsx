@@ -8,7 +8,7 @@ import SaveIcon from '@material-ui/icons/Save';
 interface Props {
     handleSave: () => void
     saveLabel: string
-    handleDelete: () => void
+    handleDelete?: () => void
     handleCancel: () => void
 }
 

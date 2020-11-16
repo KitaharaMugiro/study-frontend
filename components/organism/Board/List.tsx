@@ -5,7 +5,7 @@ import { ListId, MutationCreateStudyThemeArgs, StudyTheme, UpdateStudyThemeInput
 import { CreateStudyThemeMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
 import { getNowDateISOString } from "../../../models/getNowDateISOString";
 import useLocal from "../../../models/hooks/useLocal";
-import StudyThemeViewModel from "../../../models/viewModel/StudyThemeViewModel";
+import { StudyThemeViewModel } from "../../../models/viewModel/StudyThemeViewModel";
 import { ArrowLeftButton, ArrowRightButton } from "../../atoms/buttons/ArrowButton";
 import PlusButton from "../../atoms/buttons/PlusButton";
 import { VerticalCenterColumn, VerticalCenterRow } from "../../container/VerticalCenter";

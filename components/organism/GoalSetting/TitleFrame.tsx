@@ -29,6 +29,7 @@ const Frame = styled.div`
     display:flex;
     //height:100px;
     padding:20px;
+    padding-bottom:0px;
 `
 
 const Logo = styled.div`

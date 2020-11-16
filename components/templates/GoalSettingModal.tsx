@@ -29,11 +29,12 @@ const GoalSettingModal = (props: Props) => {
             <Frame>
                 <TitleFrame
                     title={studyTheme.title!}
-                    status={studyTheme.listId!}
-
+                    status={studyTheme.listTitle!}
                 />
-
-                <GoalFrame />
+                <GoalFrame
+                    studyTheme={studyTheme}
+                    refetch={queryStudyTheme?.refetch!}
+                />
 
                 <MileStoneFrame />
             </Frame>

@@ -1,6 +1,7 @@
 export const MyColors = {
     theme: "#33BFFB",
     gray: "#8c92ac",
+    textGrayBackground: "#EBECEF",
     textBoldGray: "#172b4d",
     textShallowGray: "#5e6c84",
     silver: "#C0C0C0",

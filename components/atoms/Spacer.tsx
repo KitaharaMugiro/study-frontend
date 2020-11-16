@@ -1,18 +1,14 @@
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 
-interface Props {
-    space: number
-}
+export const Spacer20 = styled.div`
+    height:20px;
+`
 
-const Spacer = (props: Props) => {
+export const Spacer10 = styled.div`
+    height:10px;
+`
 
-    const Spacer = styled.div`
-        height: ${props.space}px;
-    `
-    return (
-        <Spacer />
-    )
-};
-
-export default Spacer;
+export const Spacer60 = styled.div`
+    height:60px;
+`

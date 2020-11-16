@@ -1,21 +1,22 @@
 import { useQuery } from "@apollo/client";
 import useLocal from "../models/hooks/useLocal";
 import { RecordViewModel } from "../models/viewModel/RecordViewModel";
-import StudyThemeViewModel from "../models/viewModel/StudyThemeViewModel";
+import { StudyThemeViewModel } from "../models/viewModel/StudyThemeViewModel";
 import { StudyRecord, StudyTheme } from "./generated/types";
 import { StudyRecordQuery, StudyThemeQuery } from "./StudyThemeStatements";
 
+//意味わかんねーけどこれ使うとぶっ壊れる。しね
 export default {
     queryStudyTheme(studyThemeId?: string) {
         if (!studyThemeId) return undefined
         const userId = useLocal("USER_ID")!
-        const { data: studyThemeData, loading } = useQuery(StudyThemeQuery, {
+        const { data: studyThemeData, loading, refetch } = useQuery(StudyThemeQuery, {
             variables: { userId, studyThemeId }
         });
         const studyTheme = studyThemeData?.StudyTheme as Required<StudyTheme>
-        // if (!studyTheme) return { loading }
-        // const studyThemeViewModel = new StudyThemeViewModel(studyTheme)
-        return { studyTheme, loading }
+        if (!studyTheme) return { loading }
+        const studyThemeViewModel = new StudyThemeViewModel(studyTheme)
+        return { studyTheme: studyThemeViewModel, loading, refetch }
     },
 
     queryStudyRecord(studyThemeId?: string, studyRecordId?: string) {

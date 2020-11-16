@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { MyColors } from "../../const/MyColors";
 import StartStopButton, { StartStopButtonStatus } from "../atoms/buttons/StartStopButton";
 import CircleProgress from "../atoms/CircleProgress";
-import Spacer from "../atoms/Spacer";
+import { Spacer10, Spacer20, Spacer60 } from "../atoms/Spacer";
 import { VerticalCenterColumn, VerticalCenterRow } from "../container/VerticalCenter";
 import DoubleTriangles from "./DoubleTriangles";
 interface Props {
@@ -38,7 +38,7 @@ const CountingScreenCard = (props: Props) => {
             </RightTop>
 
             <VerticalCenterColumn>
-                <Spacer space={60} />
+                <Spacer60 />
                 <TopStatement>
                     {props.topTitle}
                 </TopStatement>
@@ -119,12 +119,4 @@ const CenterText = styled.div`
     font-weight:600;
     margin-left:20px;
     margin-right:20px;
-`
-
-const Spacer20 = styled.div`
-height: 20px;
-`
-
-const Spacer10 = styled.div`
-height: 10px;
 `

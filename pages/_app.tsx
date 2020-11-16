@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import MyAppBar from '../components/templates/MyAppBar';
-import Spacer from '../components/atoms/Spacer';
 import { createClient } from '../graphQL/ApolloClient';
 import { ApolloProvider } from '@apollo/client';
 import "../css/background.css"
@@ -10,6 +9,7 @@ import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { MyColors } from '../const/MyColors';
 import { Provider as JotaiProvider } from 'jotai'
+import { Spacer60 } from '../components/atoms/Spacer';
 
 const theme = createMuiTheme({
     palette: {
@@ -64,7 +64,7 @@ export default function MyApp(props: AppProps) {
                     <ApolloProvider client={client}>
                         <MyAppBar />
 
-                        <Spacer space={50} />
+                        <Spacer60 />
                         <Flex>
                             <Component {...pageProps} />
                         </Flex>
