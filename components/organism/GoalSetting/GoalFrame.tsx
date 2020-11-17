@@ -9,6 +9,8 @@ import { UpdateStudyThemeInput } from "../../../graphQL/generated/types";
 import { textChangeRangeIsUnchanged } from "typescript";
 import useLocal from "../../../models/hooks/useLocal";
 import { StudyThemeViewModel } from "../../../models/viewModel/StudyThemeViewModel";
+import { Spacer10 } from "../../atoms/Spacer";
+import { MainText } from "../../atoms/MainText";
 
 interface Props {
     studyTheme: StudyThemeViewModel
@@ -39,6 +41,7 @@ const GoalFrame = (props: Props) => {
             </Logo>
             <Title>
                 <MainText>ゴール</MainText>
+                <Spacer10 />
                 <MaybeTextField
                     text={props.studyTheme.goal!}
                     onChangeText={onChangeGoalText}
@@ -66,10 +69,4 @@ const Logo = styled.div`
 
 const Title = styled.div`
     flex-grow:2;
-`
-
-const MainText = styled.div`
-    color : ${MyColors.textBoldGray};
-    font-size:20px;
-    font-weight:600;
 `

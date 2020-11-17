@@ -49,7 +49,8 @@ export const StudyThemeQuery = gql`
             title,
             listId
             clientUpdatedAt,
-            studyingTime
+            studyingTime,
+            goal
         }
     }
 `

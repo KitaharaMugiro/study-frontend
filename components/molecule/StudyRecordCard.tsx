@@ -1,0 +1,46 @@
+import { Button } from "@material-ui/core"
+import React from "react"
+import styled from "styled-components"
+import { ComponentsStyle } from "../../const/ComponentsStyle";
+import { MyColors } from "../../const/MyColors";
+import { BoldText, MainText } from "../atoms/MainText";
+interface Props {
+    title: string
+}
+
+const StudyRecordCard = (props: Props) => {
+    return (
+        <Card>
+            <MainText>
+                {props.title}
+            </MainText>
+            <div>
+                <BoldText>
+                    今回の勉強時間:
+                </BoldText>
+                {" "}34分
+            </div>
+            たくさんいろいろなことを学べて良かったです。次も頑張るぞ〜
+
+        </Card>
+    )
+};
+
+export default StudyRecordCard;
+
+const Card = styled.div`  
+    position:relative;
+    cursor: pointer;
+    background: white;
+    width: ${ComponentsStyle.CardWidth}px;
+    margin:5px;
+    padding:10px;
+
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 0 rgba(9, 45, 66, 0.25);
+    font-size: 15px;
+    overflow-wrap: break-word;
+    overflow-y: hidden;
+    /* min-height: 18px; */
+`

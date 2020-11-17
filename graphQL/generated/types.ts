@@ -48,6 +48,7 @@ export type UpdateStudyThemeInput = {
   title?: Maybe<Scalars['String']>;
   listId?: Maybe<ListId>;
   clientUpdatedAt?: Maybe<Scalars['String']>;
+  goal?: Maybe<Scalars['String']>;
 };
 
 export type StartStudyInput = {
@@ -102,6 +103,7 @@ export type StudyTheme = {
   clientUpdatedAt?: Maybe<Scalars['String']>;
   studyingTime?: Maybe<Scalars['Int']>;
   records?: Maybe<Array<Maybe<StudyRecord>>>;
+  goal?: Maybe<Scalars['String']>;
 };
 
 export type StudyRecord = {

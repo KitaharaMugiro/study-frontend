@@ -24,7 +24,7 @@ export class StudyThemeViewModel {
         this.clientUpdatedAt = new Date(card.clientUpdatedAt!)
         this.studyingTime = card.studyingTime!
         this.records = card.records?.map(r => new RecordViewModel(r!))!
-        this.goal = card.goal
+        this.goal = card.goal!
 
         //最悪のコピペ
         const listTitles: any = {
