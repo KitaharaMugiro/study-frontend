@@ -21,6 +21,10 @@ const BoardComponent = (props: Props) => {
     const [openGoalSettingScreen, setOpenGoalSettingScreen] = useState(false)
     const [startStudy] = useMutation(StartStudyMutation)
 
+    //persist含めた学習状況のステータス(現在学習中の勉強テーマ)
+    const [studyStatus, setStudyStatus] = useState(new StudyStatus()) //名前が分かりにくい
+    const [onClickedCardId, setOnClickedCardId] = useState("") //これatomにできない？
+
 
     const onCloseGoalSettingScreen = () => {
         setOpenGoalSettingScreen(false)
@@ -33,10 +37,13 @@ const BoardComponent = (props: Props) => {
     }
 
     const onFinishStudy = () => {
+        console.log("Board onFinishStudy")
         //学習が終了したらLocalStorageから消して作り直す
         setOpenCountingScreen(false)
         studyStatus.finish()
         setStudyStatus(new StudyStatus())
+        console.log("delete all study status")
+        window.location.reload()
     }
 
     const onClickStartStudy = async (studyThemeId: string) => {
@@ -52,10 +59,6 @@ const BoardComponent = (props: Props) => {
         console.log("open counting screen by cliecked button")
         setOpenCountingScreen(true)
     }
-
-    //persist含めた学習状況のステータス(現在学習中の勉強テーマ)
-    const [studyStatus, setStudyStatus] = useState(new StudyStatus()) //名前が分かりにくい
-    const [onClickedCardId, setOnClickedCardId] = useState("") //これatomにできない？
 
     //勉強中であればモーダルを開く
     useEffect(() => {

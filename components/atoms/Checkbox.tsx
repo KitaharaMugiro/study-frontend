@@ -1,11 +1,12 @@
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
-import React from "react"
+import Checkbox from '@material-ui/core/Checkbox';
+import React from "react";
+import { FlexCenter } from "./Flex";
 
 interface Props {
     check: boolean
     label: string
     onChange: (checked: boolean) => void
+    onClickLabel: () => void
 }
 
 
@@ -17,18 +18,14 @@ export const MyCheckbox = (props: Props) => {
 
     const className = props.check ? "strike-text" : ""
     return (
-        <FormControlLabel
-            style={{ height: 30 }}
-            classes={{ label: className }}
-            control={
-                <Checkbox
-                    checked={props.check}
-                    onChange={handleChange}
-                    name="checkedB"
-                    color="primary"
-                />
-            }
-            label={props.label}
-        />
+        <FlexCenter>
+            <Checkbox
+                checked={props.check}
+                onChange={handleChange}
+                name="checkedB"
+                color="primary"
+            />
+            <span className={className} onClick={props.onClickLabel}>{props.label}</span>
+        </FlexCenter>
     )
 }

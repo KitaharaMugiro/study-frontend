@@ -36,7 +36,8 @@ export const ListStudyThemeQuery = gql`
             title,
             listId
             clientUpdatedAt,
-            studyingTime
+            studyingTime,
+            goal
         }
     }
 `

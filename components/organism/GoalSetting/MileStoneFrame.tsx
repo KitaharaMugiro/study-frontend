@@ -5,13 +5,16 @@ import Progress from "../../atoms/Progress";
 import React from "react";
 import { MileStones } from "../../molecule/MileStones";
 import { Spacer10, Spacer20 } from "../../atoms/Spacer";
+import { MileStonesViewModel } from "../../../models/viewModel/MileStonesViewModel";
 
 interface Props {
-
+    studyThemeId: string
+    mileStones: MileStonesViewModel
+    refetch: () => void
+    disableAdd: boolean
 }
 
 const MileStoneFrame = (props: Props) => {
-
     return (
         <Frame>
             <Flex>
@@ -26,12 +29,17 @@ const MileStoneFrame = (props: Props) => {
             <Spacer10 />
             <div>
                 <ProgressValue>
-                    40%完了!
+                    {Math.ceil(props.mileStones.getProgress() * 100)}%完了!
                 </ProgressValue>
-                <Progress progress={40} />
+                <Progress progress={props.mileStones.getProgress() * 100} />
             </div>
 
-            <MileStones />
+            <MileStones
+                refetch={props.refetch}
+                studyThemeId={props.studyThemeId}
+                mileStones={props.mileStones.getSortedMileStones()}
+                disableAdd={props.disableAdd}
+            />
         </Frame>
     )
 };

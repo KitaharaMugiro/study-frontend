@@ -5,13 +5,23 @@ import React from "react";
 import { MainText } from "../../atoms/MainText";
 import { Spacer20 } from "../../atoms/Spacer";
 import StudyRecordCard from "../../molecule/StudyRecordCard";
+import { StudyRecordsViewModel } from "../../../models/viewModel/StudyRecordsViewModel";
 
-export const StudyRecordList = () => {
+interface Props {
+    studyRecords: StudyRecordsViewModel
+}
+
+export const StudyRecordList = (props: Props) => {
 
     const StudyRecordCards = () => {
-        const cards = ["aaa", "bbb", "ccc"]
-        return cards.map(c => {
-            return <StudyRecordCard title={c} />
+        return props.studyRecords.getSortedRecords().map(record => {
+            const title = record.getDateText()
+            const timeText = record.getStudyTimeText()
+            return <StudyRecordCard
+                title={title}
+                timeText={timeText}
+                learned={record.learned!}
+            />
         })
     }
 

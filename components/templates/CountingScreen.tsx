@@ -7,6 +7,7 @@ import { EndStudyMutation } from "../../graphQL/StudyThemeStatements";
 import useLocal from "../../models/hooks/useLocal";
 import { StudyStatus } from "../../models/StudyStatus";
 import { Center } from "../container/Center";
+import EndCard from "../organism/CountingScreen/EndCard";
 import LearnedDialog from "../organism/CountingScreen/LearnedDialog";
 import RestingCard from "../organism/CountingScreen/RestingCard";
 import StudyingCard from "../organism/CountingScreen/StudyingCard";
@@ -19,7 +20,7 @@ interface Props {
 }
 
 const CountingScreen = (props: Props) => {
-    const [studyOrRest, setStudyOrRest] = useState<"STUDY" | "REST">("STUDY")
+    const [studyOrRest, setStudyOrRest] = useState<"STUDY" | "REST" | "END">("STUDY")
     const [openLearnedDialog, setOpenLearnedDialog] = useState(false)
 
     //api
@@ -37,6 +38,7 @@ const CountingScreen = (props: Props) => {
             console.log("初回")
             setStudyOrRest("STUDY")
         }
+
     }, [])
 
     const onFinishRest = () => {
@@ -56,25 +58,6 @@ const CountingScreen = (props: Props) => {
         setOpenLearnedDialog(true)
     }
 
-    const renderCard = () => {
-        if (studyOrRest === "STUDY") {
-            console.log("")
-            return (<StudyingCard
-                open={props.open}
-                onClose={onClickFinish}
-                studyStatus={props.studyStatus}
-                onFinishGoalTime={onFinishGoalTime}
-            />)
-        } else {
-            return (<RestingCard
-                open={props.open}
-                onClose={onClickFinish}
-                studyStatus={props.studyStatus}
-                onFinishRest={onFinishRest}
-            />)
-        }
-    }
-
     const onLearnedRegister = async (text: string) => {
         console.log(`Learned = ${text}`)
         const userId = useLocal("USER_ID")!
@@ -86,10 +69,38 @@ const CountingScreen = (props: Props) => {
                 learned: text
             }
         }
-        const output = await endStudy({ variables: input })
-        console.log({ output })
+        await endStudy({ variables: input })
         setOpenLearnedDialog(false)
+        setStudyOrRest("END")
+    }
+
+    const onFinish = () => {
+        console.log("CountingScreen onFinish")
         props.onFinish()
+    }
+
+    const renderCard = () => {
+        if (studyOrRest === "STUDY") {
+            return (<StudyingCard
+                open={props.open}
+                onClose={onClickFinish}
+                studyStatus={props.studyStatus}
+                onFinishGoalTime={onFinishGoalTime}
+            />)
+        } else if (studyOrRest === "REST") {
+            return (<RestingCard
+                open={props.open}
+                onClose={onClickFinish}
+                studyStatus={props.studyStatus}
+                onFinishRest={onFinishRest}
+            />)
+        } else if (studyOrRest === "END") {
+            return (<EndCard
+                onFinish={onFinish}
+                studyThemeId={props.studyStatus.nowStudyTheme!}
+                studyRecordId={props.studyStatus.nowStudyRecord!}
+            />);
+        }
     }
 
     return (

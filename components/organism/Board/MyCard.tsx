@@ -10,7 +10,9 @@ import { DeleteStudyThemeMutation, UpdateStudyThemeMutation } from "../../../gra
 import useLocal from "../../../models/hooks/useLocal"
 import CardEditer from "./CardEditer"
 interface Props {
+    //これStudyThemeViewModelに置換えよ
     title: string
+    goal: string
     status: "TODO" | "DOING" | "DONE"
     studyThemeId: string
     onClickStartStudy: (studyThemeId: string) => void
@@ -76,7 +78,15 @@ const MyCard = (props: Props) => {
 
     return (
         <Card style={{ height }} onClick={() => props.onClick(props.studyThemeId)}>
-            {props.title}
+            <div>
+                <Title>
+                    {props.title}
+                </Title>
+
+                <SubText>
+                    {props.goal}
+                </SubText>
+            </div>
 
             <CardIcons>
                 <CardIcon onClick={startEditing}>
@@ -98,6 +108,16 @@ const MyCard = (props: Props) => {
 };
 
 export default MyCard;
+
+const Title = styled.div`
+    margin-right:20px;
+    font-size:18px;
+`
+
+const SubText = styled.div`
+    color:${MyColors.textShallowGray};
+    font-size:14px;
+`
 
 const Card = styled.div`  
     position:relative;

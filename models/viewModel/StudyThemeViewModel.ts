@@ -1,4 +1,5 @@
 import { ListId, StudyTheme } from "../../graphQL/generated/types";
+import Time from "../Time";
 import { RecordViewModel } from "./RecordViewModel";
 
 export class StudyThemeViewModel {
@@ -33,5 +34,10 @@ export class StudyThemeViewModel {
             "DONE": "完了"
         }
         this.listTitle = listTitles[this.listId.toString()]
+    }
+
+    getStudyTimeText() {
+        const time = new Time(this.studyingTime!)
+        return time.formatJapanese()
     }
 }

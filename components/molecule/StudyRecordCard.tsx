@@ -6,6 +6,8 @@ import { MyColors } from "../../const/MyColors";
 import { BoldText, MainText } from "../atoms/MainText";
 interface Props {
     title: string
+    timeText: string
+    learned: string
 }
 
 const StudyRecordCard = (props: Props) => {
@@ -18,10 +20,9 @@ const StudyRecordCard = (props: Props) => {
                 <BoldText>
                     今回の勉強時間:
                 </BoldText>
-                {" "}34分
+                {" " + props.timeText}
             </div>
-            たくさんいろいろなことを学べて良かったです。次も頑張るぞ〜
-
+            {props.learned}
         </Card>
     )
 };
@@ -30,7 +31,6 @@ export default StudyRecordCard;
 
 const Card = styled.div`  
     position:relative;
-    cursor: pointer;
     background: white;
     width: ${ComponentsStyle.CardWidth}px;
     margin:5px;

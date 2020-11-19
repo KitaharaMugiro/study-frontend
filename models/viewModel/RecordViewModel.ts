@@ -1,4 +1,6 @@
 import { StudyRecord } from "../../graphQL/generated/types";
+import { convertDateToJapanseString, convertDateToShortJapanseString, convertISOStringtoDate } from "../getNowDateISOString";
+import Time from "../Time";
 
 export class RecordViewModel {
     studyRecordId?: string
@@ -12,6 +14,15 @@ export class RecordViewModel {
         this.studyThemeId = record.studyThemeId!
         this.learned = record.learned!
         this.createdAt = new Date(record.createdAt!)
-        this.studyTime = record.studyTime! / 1000 //TODO: 1000で割るのやめたい
+        this.studyTime = record.studyTime!
+    }
+
+    getStudyTimeText() {
+        const time = new Time(this.studyTime!)
+        return time.formatJapanese()
+    }
+
+    getDateText() {
+        return convertDateToShortJapanseString(this.createdAt!)
     }
 }

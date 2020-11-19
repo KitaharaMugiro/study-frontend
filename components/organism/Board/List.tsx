@@ -97,6 +97,7 @@ const ListComponent = (props: Props) => {
                             onClick={(cardId) => props.onClickCard(cardId)}
                             key={card.studyThemeId!}
                             title={card.title!}
+                            goal={card.goal || ""}
                             status={props.listId}
                             studyThemeId={card.studyThemeId!}
                             onClickStartStudy={props.onClickStartStudy}

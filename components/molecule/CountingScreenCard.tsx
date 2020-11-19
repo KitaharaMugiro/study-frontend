@@ -6,6 +6,7 @@ import { MyColors } from "../../const/MyColors";
 import StartStopButton, { StartStopButtonStatus } from "../atoms/buttons/StartStopButton";
 import CircleProgress from "../atoms/CircleProgress";
 import { Spacer10, Spacer20, Spacer60 } from "../atoms/Spacer";
+import { RightTop10 } from "../container/Positions";
 import { VerticalCenterColumn, VerticalCenterRow } from "../container/VerticalCenter";
 import DoubleTriangles from "./DoubleTriangles";
 interface Props {
@@ -31,11 +32,11 @@ const CountingScreenCard = (props: Props) => {
 
     return (
         <Card>
-            <RightTop>
+            <RightTop10>
                 <IconButton aria-label="close" onClick={props.onClose}>
                     <CloseIcon fontSize="large" />
                 </IconButton>
-            </RightTop>
+            </RightTop10>
 
             <VerticalCenterColumn>
                 <Spacer60 />
@@ -94,12 +95,6 @@ const Card = styled.div`
     max-width:370px;
     max-height:620px;
     filter: drop-shadow(0.4rem 0.4rem 0.7rem rgba(0, 0, 0, 0.8));
-`
-
-const RightTop = styled.div`
-    position:absolute;
-    right:10px;
-    top:10px;
 `
 
 const TopStatement = styled.h1`
