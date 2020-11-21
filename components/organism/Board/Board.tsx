@@ -1,13 +1,11 @@
 import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ListId, MutationStartStudyArgs, StudyRecord, StudyTheme } from "../../../graphQL/generated/types";
+import { MutationStartStudyArgs, StudyRecord } from "../../../graphQL/generated/types";
 import { StartStudyMutation } from "../../../graphQL/StudyThemeStatements";
 import useLocal from "../../../models/hooks/useLocal";
 import { StudyStatus } from "../../../models/StudyStatus";
 import ListViewModel from "../../../models/viewModel/ListViewModel";
-import BasicBar from "../../atoms/graph/BasicBar";
-import StackedBar from "../../atoms/graph/StackedBar";
 import CountingScreen from "../../templates/CountingScreen";
 import GoalSettingModal from "../../templates/GoalSettingModal";
 import List from "./List";

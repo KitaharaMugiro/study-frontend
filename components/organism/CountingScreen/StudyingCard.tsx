@@ -195,7 +195,7 @@ export default (props: Props) => {
             </Head>
 
             <CountingScreenCard
-                onClose={props.onClose}
+                onClose={onClose}
                 onFinish={onFinish}
                 canFinish={canFinish}
                 finishButtonText="勉強を終了する"

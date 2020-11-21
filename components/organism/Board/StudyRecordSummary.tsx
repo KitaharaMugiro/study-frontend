@@ -4,6 +4,7 @@ import styled from "styled-components"
 import StackedBar from "../../atoms/graph/StackedBar"
 import { SectionText } from "../../atoms/SectionText"
 import { StudySummaryFrame } from "../../atoms/StudySumamryFrame"
+import ToBeComeWrap from "../../atoms/wrapper/ToBeComeWrap"
 import StudyRecordList from "../../molecule/StudyRecordList"
 
 export const StudyRecordSummary = () => {
@@ -11,8 +12,10 @@ export const StudyRecordSummary = () => {
         <MainFrame>
             <Frame>
                 <SectionText title="Summary" />
-
-                <StudySummaryFrame />
+                <Relative>
+                    <ToBeComeWrap />
+                    <StudySummaryFrame />
+                </Relative>
             </Frame>
 
             <Frame>
@@ -32,4 +35,8 @@ const MainFrame = styled.div`
 `
 const Frame = styled.div`
     width: 350px;
+`
+
+const Relative = styled.div`
+    position: relative;
 `

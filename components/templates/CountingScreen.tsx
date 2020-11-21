@@ -110,7 +110,7 @@ const CountingScreen = (props: Props) => {
     }
 
     return (
-        <Dialog fullScreen open={props.open} onClose={onClickFinish} >
+        <Dialog fullScreen open={props.open} >
             <MyAppBar />
             <Background>
                 <Center>
