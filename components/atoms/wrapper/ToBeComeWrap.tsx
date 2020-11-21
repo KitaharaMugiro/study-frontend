@@ -17,17 +17,7 @@ const Wrap = styled.div`
 	margin: auto;
 
     background-color:rgba(177,177,177, 0.4);
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(2px);
     text-align:center;
     z-index:10000;
-    /* padding:30%;
-    backdrop-filter: brightness(60%);
-    backdrop-filter: contrast(40%);
-    backdrop-filter: drop-shadow(4px 4px 10px blue);
-    backdrop-filter: grayscale(30%);
-    backdrop-filter: hue-rotate(120deg);
-    backdrop-filter: invert(70%);
-    backdrop-filter: opacity(20%);
-    backdrop-filter: sepia(90%);
-    backdrop-filter: saturate(80%); */
 `

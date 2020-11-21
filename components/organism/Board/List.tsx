@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { MyColors } from "../../../const/MyColors";
 import { ListId, MutationCreateStudyThemeArgs, StudyTheme, UpdateStudyThemeInput } from "../../../graphQL/generated/types";
 import { CreateStudyThemeMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
-import { getNowDateISOString } from "../../../models/getNowDateISOString";
+import { getNowDateISOString } from "../../../models/logics/getNowDateISOString";
 import useLocal from "../../../models/hooks/useLocal";
 import { StudyThemeViewModel } from "../../../models/viewModel/StudyThemeViewModel";
 import { ArrowLeftButton, ArrowRightButton } from "../../atoms/buttons/ArrowButton";

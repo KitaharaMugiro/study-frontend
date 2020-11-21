@@ -1,5 +1,5 @@
 import { StartStopButtonStatus } from "../components/atoms/buttons/StartStopButton"
-import { getNowDateISOString } from "./getNowDateISOString"
+import { getNowDateISOString } from "./logics/getNowDateISOString"
 import useLocal, { deleteLocal, useLocalJson } from "./hooks/useLocal"
 import Time from "./Time"
 

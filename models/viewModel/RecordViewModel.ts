@@ -1,5 +1,5 @@
 import { StudyRecord } from "../../graphQL/generated/types";
-import { convertDateToJapanseString, convertDateToShortJapanseString, convertISOStringtoDate } from "../getNowDateISOString";
+import { convertDateToJapanseString, convertDateToShortJapanseString, convertISOStringtoDate } from "../logics/getNowDateISOString";
 import Time from "../Time";
 
 export class RecordViewModel {

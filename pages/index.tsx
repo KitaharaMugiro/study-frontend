@@ -6,14 +6,14 @@ import VerticalIcons from "../components/molecule/VerticalIcons";
 import LoginFormDialog from '../components/templates/LoginFormDialog';
 import { Query, StudyTheme } from '../graphQL/generated/types';
 import { ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
-import { aggregateCards } from "../models/aggregateCards";
+import { aggregateCardsByList } from "../models/logics/aggregateCards";
 import useLocal from '../models/hooks/useLocal';
 
 const Index = () => {
   const [openLogin, setOpenLogin] = useState(false)
   const { data, loading, refetch: refetchStudyThemes } = useQuery<Query>(ListStudyThemeQuery)
   const cards = (data?.StudyThemes || []) as Required<StudyTheme[]>
-  const lists = aggregateCards(cards)
+  const lists = aggregateCardsByList(cards)
 
   useEffect(() => {
     const userId = useLocal("USER_ID")
