@@ -36,7 +36,7 @@ export const ListStudyThemeQuery = gql`
             title,
             listId
             clientUpdatedAt,
-            studyingTime,
+            totalStudyTime,
             goal
         }
     }
@@ -50,7 +50,7 @@ export const StudyThemeQuery = gql`
             title,
             listId
             clientUpdatedAt,
-            studyingTime,
+            totalStudyTime,
             goal
         }
     }

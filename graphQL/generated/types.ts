@@ -118,7 +118,7 @@ export type StudyTheme = {
   startDate?: Maybe<Scalars['String']>;
   listId?: Maybe<ListId>;
   clientUpdatedAt?: Maybe<Scalars['String']>;
-  studyingTime?: Maybe<Scalars['Float']>;
+  totalStudyTime?: Maybe<Scalars['Float']>;
   records?: Maybe<Array<Maybe<StudyRecord>>>;
   goal?: Maybe<Scalars['String']>;
 };

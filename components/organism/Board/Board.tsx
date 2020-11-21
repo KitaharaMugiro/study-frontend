@@ -6,9 +6,12 @@ import { StartStudyMutation } from "../../../graphQL/StudyThemeStatements";
 import useLocal from "../../../models/hooks/useLocal";
 import { StudyStatus } from "../../../models/StudyStatus";
 import ListViewModel from "../../../models/viewModel/ListViewModel";
+import BasicBar from "../../atoms/graph/BasicBar";
+import StackedBar from "../../atoms/graph/StackedBar";
 import CountingScreen from "../../templates/CountingScreen";
 import GoalSettingModal from "../../templates/GoalSettingModal";
 import List from "./List";
+import { StudyRecordSummary } from "./StudyRecordSummary";
 
 interface Props {
     lists: ListViewModel[]
@@ -39,10 +42,13 @@ const BoardComponent = (props: Props) => {
     const onFinishStudy = () => {
         console.log("Board onFinishStudy")
         //学習が終了したらLocalStorageから消して作り直す
-        setOpenCountingScreen(false)
         studyStatus.finish()
-        setStudyStatus(new StudyStatus())
+    }
+
+    const closeCountingScreen = () => {
         console.log("delete all study status")
+        setOpenCountingScreen(false)
+        setStudyStatus(new StudyStatus())
         window.location.reload()
     }
 
@@ -83,12 +89,16 @@ const BoardComponent = (props: Props) => {
                         onClickStartStudy={onClickStartStudy}
                     />
                 })}
+
+
+                <StudyRecordSummary />
             </Board>
 
             <CountingScreen
                 studyStatus={studyStatus}
                 open={openCountingScreen}
                 onFinish={onFinishStudy}
+                onClose={closeCountingScreen}
             />
 
             <GoalSettingModal
@@ -106,7 +116,7 @@ const Board = styled.div`
   height: 100%;
   /* height: 92%; */
   display: flex;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   -webkit-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;

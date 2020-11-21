@@ -9,7 +9,7 @@ export class StudyThemeViewModel {
     listId?: ListId
     listTitle?: string
     clientUpdatedAt?: Date
-    studyingTime?: number
+    totalStudyTime?: number
     records?: RecordViewModel[]
     goal?: string
 
@@ -23,7 +23,7 @@ export class StudyThemeViewModel {
         this.startDate = card.startDate!
         this.listId = card.listId!
         this.clientUpdatedAt = new Date(card.clientUpdatedAt!)
-        this.studyingTime = card.studyingTime!
+        this.totalStudyTime = card.totalStudyTime!
         this.records = card.records?.map(r => new RecordViewModel(r!))!
         this.goal = card.goal!
 
@@ -37,7 +37,7 @@ export class StudyThemeViewModel {
     }
 
     getStudyTimeText() {
-        const time = new Time(this.studyingTime!)
+        const time = new Time(this.totalStudyTime!)
         return time.formatJapanese()
     }
 }

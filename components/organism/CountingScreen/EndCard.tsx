@@ -43,7 +43,8 @@ export default (props: Props) => {
 
     if (queryStudyTheme?.loading) { return <div /> }
     if (queryMileStones?.loading) { return <div /> }
-
+    if (queryStudyRecord?.loading) { return <div /> }
+    if (queryUser?.loading) { return <div /> }
     return (
         <>
             <RightTop10>
@@ -60,8 +61,8 @@ export default (props: Props) => {
 
                 <StudyRecordFrame
                     studyRecord={studyRecord!}
-                    userStudyTimeText={studyTheme?.getStudyTimeText() || ""}
-                    themeStudyTimeText={user?.getStudyTimeText() || ""}
+                    userStudyTimeText={user?.getStudyTimeText() || ""}
+                    themeStudyTimeText={studyTheme?.getStudyTimeText() || ""}
                 />
 
                 {

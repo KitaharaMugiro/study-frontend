@@ -11,7 +11,6 @@ import { StudyRecordsQuery } from "./StudyRecordStatement";
 import { StudyRecordQuery, StudyThemeQuery } from "./StudyThemeStatements";
 import { UserQuery } from "./UserStatement";
 
-//意味わかんねーけどこれ使うとぶっ壊れる。しね
 export default {
     queryUser() {
         const userId = useLocal("USER_ID")!
@@ -39,7 +38,7 @@ export default {
     queryStudyRecord(studyThemeId?: string, studyRecordId?: string) {
         if (!studyThemeId) return undefined
         const { data: studyRecordData, refetch: refetchStudyRecord, error, loading } = useQuery(StudyRecordQuery,
-            { variables: { studyThemeId, studyRecordId } })
+            { variables: { studyThemeId, studyRecordId }, fetchPolicy: "no-cache" })
         const _studyRecord = studyRecordData?.StudyRecord as Required<StudyRecord>
         if (!_studyRecord) return { loading }
         const studyRecord = new RecordViewModel(_studyRecord)

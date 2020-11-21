@@ -17,6 +17,7 @@ interface Props {
     open: boolean
     studyStatus: StudyStatus
     onFinish: () => void
+    onClose: () => void
 }
 
 const CountingScreen = (props: Props) => {
@@ -54,8 +55,13 @@ const CountingScreen = (props: Props) => {
         props.studyStatus.setInitialStudyTime()
     }
 
-    const onClickFinish = () => {
-        setOpenLearnedDialog(true)
+    const onClickFinish = (forceFinish: boolean = false) => {
+        if (forceFinish) {
+            props.onFinish()
+            props.onClose()
+        } else {
+            setOpenLearnedDialog(true)
+        }
     }
 
     const onLearnedRegister = async (text: string) => {
@@ -72,11 +78,11 @@ const CountingScreen = (props: Props) => {
         await endStudy({ variables: input })
         setOpenLearnedDialog(false)
         setStudyOrRest("END")
+        props.onFinish()
     }
 
     const onFinish = () => {
-        console.log("CountingScreen onFinish")
-        props.onFinish()
+        props.onClose()
     }
 
     const renderCard = () => {

@@ -10,5 +10,6 @@ export const MyColors = {
     cardBackground: "#F4F5F7",
     hoverWhite: "#f5f6f7",
     hoverGray: "#DCDCDC",
-    white: "white"
+    white: "white",
+    backgroundGray: "#dfe3e6"
 }

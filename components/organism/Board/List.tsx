@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { MyColors } from "../../../const/MyColors";
 import { ListId, MutationCreateStudyThemeArgs, StudyTheme, UpdateStudyThemeInput } from "../../../graphQL/generated/types";
 import { CreateStudyThemeMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
 import { getNowDateISOString } from "../../../models/getNowDateISOString";
@@ -120,14 +121,13 @@ const ListComponent = (props: Props) => {
 export default ListComponent;
 
 const List = styled.div`
-    background: #dfe3e6;
+    background: ${MyColors.backgroundGray};
     flex-shrink: 0;
     width: 300px;
     height: fit-content;
     margin: 10px;
     margin-right: 0;
     border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
   `
 
 const ListTitle = styled.div`

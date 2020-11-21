@@ -13,7 +13,7 @@ import { StartStopButtonStatus } from "../../atoms/buttons/StartStopButton";
 import CountingScreenCard from "../../molecule/CountingScreenCard";
 interface Props {
     open: boolean
-    onClose: () => void
+    onClose: (forceFinish: boolean) => void
     studyStatus: StudyStatus
     onFinishGoalTime: () => void
 }
@@ -22,6 +22,7 @@ export default (props: Props) => {
 
     //timer
     const [timer, setTimer] = useState<Timer | undefined>(undefined)
+    const [notTouchedYet, setNotTouchedYet] = useState(true)
 
     //描画系
     const [canFinish, setCanFinish] = useState(false)
@@ -40,7 +41,6 @@ export default (props: Props) => {
     //mutation
     const [pauseStudy] = useMutation(PauseStudyMutation)
     const [resumeStudy] = useMutation(ResumeStudyMutation)
-
 
     //api
     const { data: studyRecordData, refetch: refetchStudyRecord } = useQuery(StudyRecordQuery,
@@ -65,7 +65,18 @@ export default (props: Props) => {
 
     const onFinish = () => {
         console.log("on finish")
-        props.onClose()
+        onClose()
+    }
+
+    const onClose = () => {
+        const notStudyYet = studyTimeOnServer.getValue() > 0 || timer //勉強時間が１秒でもあるかタイマーが存在しているか
+        if (notTouchedYet && notStudyYet) {
+            console.log("学習画面を強制的に閉じます")
+            props.onClose(true)
+        } else {
+            props.onClose(false)
+        }
+        setTimer(undefined)
     }
 
     //終わったらonFinishGoalTime
@@ -124,6 +135,7 @@ export default (props: Props) => {
 
     //ただTimerを動かす
     const startTimer = (startDate: Date = new Date()) => {
+        setNotTouchedYet(false)
         const player = new SoundPlayer()
         player.playWhenStartStudy()
 
