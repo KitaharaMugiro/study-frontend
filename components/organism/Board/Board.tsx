@@ -88,8 +88,10 @@ const BoardComponent = (props: Props) => {
                     />
                 })}
 
+                <ScrollableFrame>
 
-                <StudyRecordSummary />
+                    <StudyRecordSummary />
+                </ScrollableFrame>
             </Board>
 
             <CountingScreen
@@ -118,4 +120,10 @@ const Board = styled.div`
   -webkit-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+`
+
+const ScrollableFrame = styled.div`
+    height:fit-content;
+    max-height: 85vh;
+    overflow-y:scroll;
 `

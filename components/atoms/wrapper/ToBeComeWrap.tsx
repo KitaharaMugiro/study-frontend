@@ -19,5 +19,5 @@ const Wrap = styled.div`
     background-color:rgba(177,177,177, 0.4);
     backdrop-filter: blur(2px);
     text-align:center;
-    z-index:10000;
+    z-index:100;
 `

@@ -12,6 +12,22 @@ export const aggregateCardsByList = (cards: Required<StudyTheme[]>) => {
     return result
 }
 
-export const aggregateRecordsByWeek = (records: StudyRecordsViewModel) => {
-
+type GraphDataGroup = {
+    date: number,
+    studyTime: number
 }
+type GraphDataType = {
+    key: string
+    dataGroup: GraphDataGroup[]
+}
+
+export const aggregateRecordsByWeek = (records: StudyRecordsViewModel) => {
+    const result: GraphDataType[] = [{
+        key: "",
+        dataGroup: []
+    }]
+    for (var i = 0; i < 7; i++) {
+        result[0].dataGroup.push({ date: i, studyTime: 0 })
+    }
+    return result
+}  

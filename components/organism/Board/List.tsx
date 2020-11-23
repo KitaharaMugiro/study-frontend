@@ -125,6 +125,8 @@ const List = styled.div`
     flex-shrink: 0;
     width: 300px;
     height: fit-content;
+    max-height:85vh;
+    overflow-y:scroll;
     margin: 10px;
     margin-right: 0;
     border-radius: 10px;
