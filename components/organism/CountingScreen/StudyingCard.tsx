@@ -69,7 +69,7 @@ export default (props: Props) => {
     }
 
     const onClose = () => {
-        const notStudyYet = studyTimeOnServer.getValue() > 0 || timer //勉強時間が１秒でもあるかタイマーが存在しているか
+        const notStudyYet = !(studyTimeOnServer.getValue() > 0 || timer) //勉強時間が１秒でもあるかタイマーが存在しているか
         if (notTouchedYet && notStudyYet) {
             console.log("学習画面を強制的に閉じます")
             props.onClose(true)

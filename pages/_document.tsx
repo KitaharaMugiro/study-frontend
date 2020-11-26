@@ -26,12 +26,18 @@ export default class MyDocument extends Document<Props> {
             <Html lang="ja">
                 <Head>
                     <meta charSet="utf-8" />
+                    <script src="viewport-units-buggyfill.js"></script>
+                    <script>window.viewportUnitsBuggyfill.init();</script>
+
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+                        data-viewport-units-buggyfill="ignore"
                     />
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+                        data-viewport-units-buggyfill="ignore" />
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                        data-viewport-units-buggyfill="ignore" />
 
                     {this.props.styleTags}
                 </Head>

@@ -8,7 +8,6 @@ import { Query, StudyTheme } from '../graphQL/generated/types';
 import { ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
 import { aggregateCardsByList } from "../models/logics/aggregateCards";
 import useLocal from '../models/hooks/useLocal';
-
 const Index = () => {
   const [openLogin, setOpenLogin] = useState(false)
   const { data, loading, refetch: refetchStudyThemes } = useQuery<Query>(ListStudyThemeQuery)
