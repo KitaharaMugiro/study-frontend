@@ -89,7 +89,6 @@ const BoardComponent = (props: Props) => {
                 })}
 
                 <ScrollableFrame>
-
                     <StudyRecordSummary />
                 </ScrollableFrame>
             </Board>
