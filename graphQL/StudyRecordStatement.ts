@@ -10,3 +10,24 @@ export const StudyRecordsQuery = gql`
         }
     }
 `
+
+export const StudyRecordWithThemeQuery = gql`
+    query($userId: String) {
+        StudyRecordsByUser(userId:$userId) {
+            studyRecordId,
+            studyThemeId
+            learned,
+            createdAt,
+            studyTime
+        }
+        StudyThemes(userId:$userId) {
+            studyThemeId,
+            title,
+            listId
+            clientUpdatedAt,
+            totalStudyTime,
+            goal
+        }
+    }
+
+`

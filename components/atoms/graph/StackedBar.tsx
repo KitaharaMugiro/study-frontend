@@ -1,5 +1,9 @@
 import React from "react";
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryHistogram, VictoryLabel, VictoryStack, VictoryVoronoiContainer } from "victory";
+import useGraphQL from "../../../graphQL/useGraphQL";
+import useGraphQLSubscription from "../../../graphQL/useGraphQLSubscription";
+import { aggregateRecordsByWeek } from "../../../models/logics/aggregateCards";
+import getRecentDates from "../../../models/logics/getRecentDates";
 
 const sharedAxisStyles = {
     tickLabels: {
@@ -13,26 +17,9 @@ const sharedAxisStyles = {
 };
 
 export default () => {
-    const now = 7
-    const t1 = 6
-    const t2 = 5
-    const groupedData = [
-        { key: "数学", dataGroup: [{ date: t2, studyTime: 50 }, { date: now, studyTime: 60 }] },
-        { key: "英語", dataGroup: [{ date: t2, studyTime: 20 }, { date: now, studyTime: 20 }] },
-        { key: "音楽", dataGroup: [{ date: t1, studyTime: 20 }, { date: now, studyTime: 20 }] },
-        {
-            key: "", dataGroup: [
-                { date: 1, studyTime: 0 },
-                { date: 2, studyTime: 0 },
-                { date: 3, studyTime: 0 },
-                { date: 4, studyTime: 0 },
-                { date: 5, studyTime: 0 },
-                { date: 6, studyTime: 0 },
-                { date: 7, studyTime: 0 }
-
-            ]
-        }
-    ]
+    const { records, themes, loading } = useGraphQL.queryStudyRecordWithTheme()
+    if (loading) return <div />
+    const groupedData = aggregateRecordsByWeek(records, themes)
 
     return (
         <VictoryChart
@@ -86,7 +73,7 @@ export default () => {
 
             <VictoryAxis
                 tickCount={7}
-                tickValues={["12月27日", "12月28日", "12月29日", "12月30日", "1月1日", "1月2日", "1月3日"]}
+                tickValues={getRecentDates(7)}
                 style={sharedAxisStyles}
             />
 

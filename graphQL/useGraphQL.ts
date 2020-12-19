@@ -7,7 +7,7 @@ import { StudyThemeViewModel } from "../models/viewModel/StudyThemeViewModel";
 import { UserViewModel } from "../models/viewModel/UserViewModel";
 import { MileStone, StudyRecord, StudyTheme, User } from "./generated/types";
 import { MileStonesQuery } from "./MileStoneStatement";
-import { StudyRecordsQuery } from "./StudyRecordStatement";
+import { StudyRecordsQuery, StudyRecordWithThemeQuery } from "./StudyRecordStatement";
 import { StudyRecordQuery, StudyThemeQuery } from "./StudyThemeStatements";
 import { UserQuery } from "./UserStatement";
 
@@ -65,5 +65,16 @@ export default {
         if (!_records) return { loading }
         const studyRecords = new StudyRecordsViewModel(_records)
         return { studyRecords, refetch, loading }
+    },
+
+    queryStudyRecordWithTheme() {
+        const userId = useLocal("USER_ID")
+        const { data, refetch, error, loading } = useQuery(StudyRecordWithThemeQuery,
+            {
+                variables: { userId }, fetchPolicy: "no-cache"
+            })
+        const records = data?.StudyRecordsByUser as Required<StudyRecord[]>
+        const themes = data?.StudyThemes as Required<StudyTheme[]>
+        return { records, themes, refetch, loading }
     }
 }
