@@ -141,6 +141,14 @@ export type MileStone = {
   createdAt?: Maybe<Scalars['String']>;
 };
 
+export type StudySummary = {
+  __typename?: 'StudySummary';
+  avgStudyTime?: Maybe<Scalars['Float']>;
+  yourStudyTime?: Maybe<Scalars['Float']>;
+  maxStudyTime?: Maybe<Scalars['Float']>;
+  createdAt?: Maybe<Scalars['ID']>;
+};
+
 export enum ListId {
   Todo = 'TODO',
   Doing = 'DOING',
@@ -231,6 +239,7 @@ export type Query = {
   StudyRecord?: Maybe<StudyRecord>;
   StudyRecords?: Maybe<Array<Maybe<StudyRecord>>>;
   StudyRecordsByUser?: Maybe<Array<Maybe<StudyRecord>>>;
+  StudySummary?: Maybe<StudySummary>;
   MileStones?: Maybe<Array<Maybe<MileStone>>>;
 };
 
@@ -263,6 +272,11 @@ export type QueryStudyRecordsArgs = {
 
 
 export type QueryStudyRecordsByUserArgs = {
+  userId?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryStudySummaryArgs = {
   userId?: Maybe<Scalars['String']>;
 };
 

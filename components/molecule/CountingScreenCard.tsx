@@ -1,6 +1,7 @@
 import { Button, IconButton } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import React from "react";
+import { use100vh } from "react-div-100vh";
 import styled from "styled-components";
 import { MyColors } from "../../const/MyColors";
 import StartStopButton, { StartStopButtonStatus } from "../atoms/buttons/StartStopButton";
@@ -29,9 +30,10 @@ interface Props {
 }
 
 const CountingScreenCard = (props: Props) => {
-
+    const height = use100vh()
+    const ninthHeight = height ? height * 0.9 : "90vh"
     return (
-        <Card>
+        <Card style={{ height: ninthHeight }}>
             <RightTop10>
                 <IconButton aria-label="close" onClick={props.onClose}>
                     <CloseIcon fontSize="large" />
@@ -79,19 +81,11 @@ const CountingScreenCard = (props: Props) => {
 };
 
 export default CountingScreenCard;
-const Background = styled.div`
-    width:100%;
-    height:100%;
-    background: #159957;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #155799, #159957);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #155799, #159957); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-`
 
 const Card = styled.div`
     position:relative;
     background-color:white;
     width:95vw;
-    height:90vh;
     max-width:370px;
     max-height:620px;
     filter: drop-shadow(0.4rem 0.4rem 0.7rem rgba(0, 0, 0, 0.8));

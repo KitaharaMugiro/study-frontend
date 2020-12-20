@@ -5,9 +5,10 @@ import { RecordViewModel } from "../models/viewModel/RecordViewModel";
 import { StudyRecordsViewModel } from "../models/viewModel/StudyRecordsViewModel";
 import { StudyThemeViewModel } from "../models/viewModel/StudyThemeViewModel";
 import { UserViewModel } from "../models/viewModel/UserViewModel";
-import { MileStone, StudyRecord, StudyTheme, User } from "./generated/types";
+import { MileStone, StudyRecord, StudySummary, StudyTheme, User } from "./generated/types";
 import { MileStonesQuery } from "./MileStoneStatement";
 import { StudyRecordsQuery, StudyRecordWithThemeQuery } from "./StudyRecordStatement";
+import { StudySummaryQuery } from "./StudySummaryStatements";
 import { StudyRecordQuery, StudyThemeQuery } from "./StudyThemeStatements";
 import { UserQuery } from "./UserStatement";
 
@@ -76,5 +77,15 @@ export default {
         const records = data?.StudyRecordsByUser as Required<StudyRecord[]>
         const themes = data?.StudyThemes as Required<StudyTheme[]>
         return { records, themes, refetch, loading }
+    },
+
+    queryStudySummary() {
+        const userId = useLocal("USER_ID")
+        const { data, refetch, loading } = useQuery(StudySummaryQuery, {
+            variables: { userId }, fetchPolicy: "no-cache"
+        })
+        const summary = data?.StudySummary as Required<StudySummary>
+
+        return { summary, refetch, loading }
     }
 }

@@ -1,7 +1,13 @@
 import React from "react";
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryTheme } from "victory";
 
-export default () => {
+interface Props {
+    maxMinutes: number
+    yourMinutes: number
+    avgMinutes: number
+}
+
+export default (props: Props) => {
     return (
         <div>
             <VictoryChart
@@ -18,17 +24,17 @@ export default () => {
                 >
                     <VictoryBar
                         data={[
-                            { x: 1, y: 212.4 },
+                            { x: 1, y: props.maxMinutes },
                         ]}
                     />
                     <VictoryBar
                         data={[
-                            { x: 2, y: 98.4 },
+                            { x: 2, y: props.avgMinutes },
                         ]}
                     />
                     <VictoryBar
                         data={[
-                            { x: 3, y: 10.4 },
+                            { x: 3, y: props.yourMinutes },
                         ]}
                     />
                 </VictoryGroup>
