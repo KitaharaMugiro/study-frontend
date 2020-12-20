@@ -10,6 +10,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { MyColors } from '../const/MyColors';
 import { Provider as JotaiProvider } from 'jotai'
 import { Spacer60 } from '../components/atoms/Spacer';
+import Utils from '../models/logics/Utils';
 
 const theme = createMuiTheme({
     palette: {

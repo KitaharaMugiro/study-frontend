@@ -8,15 +8,11 @@ import { Query, StudyTheme } from '../graphQL/generated/types';
 import { ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
 import { aggregateCardsByList } from "../models/logics/aggregateCards";
 import useLocal from '../models/hooks/useLocal';
-import useGraphQLSubscription from "../graphQL/useGraphQLSubscription";
 const Index = () => {
   const [openLogin, setOpenLogin] = useState(false)
   const { data, loading, refetch: refetchStudyThemes } = useQuery<Query>(ListStudyThemeQuery)
   const cards = (data?.StudyThemes || []) as Required<StudyTheme[]>
   const lists = aggregateCardsByList(cards)
-
-  const { message, loading: messageLoading } = useGraphQLSubscription.newMessage()
-  console.log({ message })
 
   useEffect(() => {
     const userId = useLocal("USER_ID")

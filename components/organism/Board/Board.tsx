@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
+import { use100vh } from "react-div-100vh";
 import styled from "styled-components";
 import { MutationStartStudyArgs, StudyRecord } from "../../../graphQL/generated/types";
 import { StartStudyMutation } from "../../../graphQL/StudyThemeStatements";
@@ -71,6 +72,10 @@ const BoardComponent = (props: Props) => {
         }
     }, [props.lists])
 
+
+    const height = use100vh()
+    const listMaxHeight = height ? height * 0.85 : '85vh'
+
     return (
         <div>
             <Board>
@@ -88,7 +93,7 @@ const BoardComponent = (props: Props) => {
                     />
                 })}
 
-                <ScrollableFrame>
+                <ScrollableFrame style={{ maxHeight: listMaxHeight }}>
                     <StudyRecordSummary />
                 </ScrollableFrame>
             </Board>
@@ -123,6 +128,5 @@ const Board = styled.div`
 
 const ScrollableFrame = styled.div`
     height:fit-content;
-    max-height: 85vh;
     overflow-y:scroll;
 `

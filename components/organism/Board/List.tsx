@@ -12,6 +12,7 @@ import PlusButton from "../../atoms/buttons/PlusButton";
 import { VerticalCenterColumn, VerticalCenterRow } from "../../container/VerticalCenter";
 import CreateCardModal from "../../templates/CreateCardModal";
 import MyCard from "./MyCard";
+import { use100vh } from 'react-div-100vh'
 
 interface Props {
     listId: ListId
@@ -82,8 +83,11 @@ const ListComponent = (props: Props) => {
         return <div />
     }
 
+    const height = use100vh()
+    const listMaxHeight = height ? height * 0.85 : '85vh'
+
     return (
-        <List>
+        <List style={{ maxHeight: listMaxHeight }}>
             <ListTitle onClick={props.toggleEditingTitle}>
                 {props.listTitle}
             </ListTitle>
@@ -125,7 +129,6 @@ const List = styled.div`
     flex-shrink: 0;
     width: 300px;
     height: fit-content;
-    max-height:85vh;
     overflow-y:scroll;
     margin: 10px;
     margin-right: 0;

@@ -26,9 +26,6 @@ export default class MyDocument extends Document<Props> {
             <Html lang="ja">
                 <Head>
                     <meta charSet="utf-8" />
-                    <script src="viewport-units-buggyfill.js"></script>
-                    <script>window.viewportUnitsBuggyfill.init();</script>
-
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

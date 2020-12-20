@@ -24,6 +24,11 @@ type GraphDataType = {
 
 //テーマごとに集計している。
 export const aggregateRecordsByWeek = (records: StudyRecord[], themes: StudyTheme[] = []) => {
+    if (records === undefined) return []
+    if (themes === undefined) return []
+    console.log("aggregateRecordsByWeek")
+    console.log(records)
+    console.log(themes)
     const result: GraphDataType[] = []
     for (const record of records) {
         const themeName = themes.find(theme => theme.studyThemeId === record.studyThemeId)?.title || "unknown"

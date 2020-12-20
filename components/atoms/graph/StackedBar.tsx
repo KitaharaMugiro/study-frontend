@@ -1,7 +1,6 @@
 import React from "react";
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryHistogram, VictoryLabel, VictoryStack, VictoryVoronoiContainer } from "victory";
 import useGraphQL from "../../../graphQL/useGraphQL";
-import useGraphQLSubscription from "../../../graphQL/useGraphQLSubscription";
 import { aggregateRecordsByWeek } from "../../../models/logics/aggregateCards";
 import getRecentDates from "../../../models/logics/getRecentDates";
 
@@ -57,8 +56,8 @@ export default () => {
                         return { ...d, key }
                     })
                     return (
-
                         <VictoryBar
+                            key={key}
                             data={data}
                             x="date"
                             y="studyTime"
