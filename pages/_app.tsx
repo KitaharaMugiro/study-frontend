@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
-import { AppProps } from 'next/app';
-import MyAppBar from '../components/templates/MyAppBar';
-import { createClient } from '../graphQL/ApolloClient';
 import { ApolloProvider } from '@apollo/client';
-import "../css/background.css"
-import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { MyColors } from '../const/MyColors';
-import { Provider as JotaiProvider } from 'jotai'
+import { Provider as JotaiProvider } from 'jotai';
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { Spacer60 } from '../components/atoms/Spacer';
-import Utils from '../models/logics/Utils';
+import MyAppBar from '../components/templates/MyAppBar';
+import { MyColors } from '../const/MyColors';
+import "../css/background.css";
+import { createClient } from '../graphQL/ApolloClient';
 
 const theme = createMuiTheme({
     palette: {
@@ -51,27 +50,35 @@ export default function MyApp(props: AppProps) {
         }
     }, []);
 
+    const renderClientSide = (client: any) => {
+        if (!client) return
+        return (<ThemeProvider theme={theme}>
+            <JotaiProvider>
+                <ApolloProvider client={client}>
+                    <MyAppBar />
+                    <Spacer60 />
+                    <Flex>
+                        <Component {...pageProps} />
+                    </Flex>
+                </ApolloProvider>
+            </JotaiProvider>
+        </ThemeProvider>)
+    }
 
-    if (client === null) return "wait"
-    console.log(client)
+
     return (
         <React.Fragment>
             <Head>
-                <title>My page</title>
+                <title>Study Room</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-            </Head>
-            <ThemeProvider theme={theme}>
-                <JotaiProvider>
-                    <ApolloProvider client={client}>
-                        <MyAppBar />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:site" content="https://d3ljbqx864ivof.cloudfront.net" />
+                <meta name="twitter:title" content="Study Room" />
+                <meta name="twitter:description" content="勉強に集中をしたい人向けの勉強管理ツール" />
+                <meta name="twitter:image" content='https://planmaker.s3-ap-northeast-1.amazonaws.com/ogp/studyroom_ogp.png' />
 
-                        <Spacer60 />
-                        <Flex>
-                            <Component {...pageProps} />
-                        </Flex>
-                    </ApolloProvider>
-                </JotaiProvider>
-            </ThemeProvider>
+            </Head>
+            {renderClientSide(client)}
         </React.Fragment>
     );
 }

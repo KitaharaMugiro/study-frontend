@@ -6,12 +6,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import Alert from "@material-ui/lab/Alert";
 import React, { useState } from 'react';
-import { LoginInput, LoginOutput, RegisterInput } from '../../graphQL/generated/types';
-import { LoginMutation, RegisterMutation } from '../../graphQL/LoginStatements';
+import { ConnectUserInput, LoginInput, LoginOutput } from '../../graphQL/generated/types';
+import { ConnectUserMutation, LoginMutation } from '../../graphQL/LoginStatements';
 import useForm from '../../models/hooks/useForm';
 import useLocal from '../../models/hooks/useLocal';
-import Alert from '@material-ui/lab/Alert';
 import { REGISTER_TYPE } from "../../models/logics/user/REGISTER_TYPE";
 
 interface Props {
@@ -19,31 +19,39 @@ interface Props {
     handleOpen: (open: boolean) => void
 }
 
-const LoginFormDialog = (props: Props) => {
+const SignupFormDialog = (props: Props) => {
     const [email, onChangeEmail] = useForm("")
     const [password, onChangePassword] = useForm("")
     const [login] = useMutation(LoginMutation);
+    const [connect] = useMutation(ConnectUserMutation)
     const [errorMessage, setErrorMessage] = useState("")
 
     const handleClose = () => {
         props.handleOpen(false);
     };
 
-    const onClickLoginOrRegister = async () => {
+    const onClickRegister = async () => {
         console.log("login挑戦")
         const input: LoginInput = { email, password }
         const { data } = await login({ variables: { input } })
         const user: LoginOutput = data?.login
-        console.log(user)
         if (user.success) {
-            console.log(`login成功！ id =  ${user.user?.userId}`)
-            useLocal("USER_ID", user?.user?.userId)
-            useLocal("Name", user?.user?.name)
-            useLocal("REGISTER_TYPE", REGISTER_TYPE.Registered)
-            handleClose()
-            window.location.reload()
+            setErrorMessage("すでにユーザが存在します")
         } else {
-            setErrorMessage("ログイン失敗")
+            console.log("login失敗/会員登録を開始")
+            const userId = useLocal("USER_ID")
+            const input: ConnectUserInput = { userId, email, password }
+            const result = await connect({ variables: { input } })
+            const user: LoginOutput = result.data.connectUser
+            if (user) {
+                console.log(`会員登録成功 id =  ${user.user?.userId}`)
+                useLocal("USER_ID", user.user?.userId)
+                useLocal("Name", user.user?.name)
+                useLocal("REGISTER_TYPE", REGISTER_TYPE.Registered)
+                handleClose()
+            } else {
+                setErrorMessage("会員登録失敗")
+            }
         }
     }
 
@@ -52,10 +60,10 @@ const LoginFormDialog = (props: Props) => {
             <Dialog
                 open={props.open} onClose={handleClose} aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">ログイン</DialogTitle>
+                <DialogTitle id="form-dialog-title">会員登録</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        ログイン
+                        会員登録をして別のデバイスでアクセスしよう
                      </DialogContentText>
 
                     <TextField
@@ -78,11 +86,12 @@ const LoginFormDialog = (props: Props) => {
                         fullWidth
                     />
                     {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={onClickLoginOrRegister} color="primary">
-                        ログイン
+                    <Button onClick={onClickRegister} color="primary">
+                        会員登録
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -90,4 +99,4 @@ const LoginFormDialog = (props: Props) => {
     );
 };
 
-export default LoginFormDialog;
+export default SignupFormDialog;

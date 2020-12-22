@@ -26,3 +26,17 @@ export const RegisterMutation = gql`
         }
     }
 `
+
+export const ConnectUserMutation = gql`
+    mutation($input: ConnectUserInput) {
+        connectUser(input: $input) {
+          message,
+          success,
+          user {
+            name,
+            userId,
+            totalStudyTime
+          }
+        }
+    }
+`

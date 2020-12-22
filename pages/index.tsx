@@ -1,29 +1,47 @@
 import { useQuery } from "@apollo/client";
+import { useAtom } from "jotai";
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
-import Board from '../components/organism/Board/Board';
 import VerticalIcons from "../components/molecule/VerticalIcons";
+import Board from '../components/organism/Board/Board';
 import LoginFormDialog from '../components/templates/LoginFormDialog';
+import SignupFormDialog from "../components/templates/SignupFormDialog";
 import { Query, StudyTheme } from '../graphQL/generated/types';
 import { ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
-import { aggregateCardsByList } from "../models/logics/aggregateCards";
+import { openSigninModalAtom, openSignupModalAtom } from "../models/atoms/openSigninModalAtom";
 import useLocal from '../models/hooks/useLocal';
+import { aggregateCardsByList } from "../models/logics/aggregateCards";
+import checkLogin from "../models/logics/user/checkLogin";
+import useRegisterTemporaryUser from "../models/logics/user/useRegisterTemporaryUser";
+
 const Index = () => {
-  const [openLogin, setOpenLogin] = useState(false)
   const { data, loading, refetch: refetchStudyThemes } = useQuery<Query>(ListStudyThemeQuery)
   const cards = (data?.StudyThemes || []) as Required<StudyTheme[]>
   const lists = aggregateCardsByList(cards)
+  const regiseterTemporaryUser = useRegisterTemporaryUser()
+
+  const [openSignin, setOpenSigninModalAtom] = useAtom(openSigninModalAtom)
+  const [openSignup, setOpenSignupModalAtom] = useAtom(openSignupModalAtom)
+
 
   useEffect(() => {
-    const userId = useLocal("USER_ID")
-    if (userId) {
-      //signin
-      setOpenLogin(false)
-      refetchStudyThemes({ userId })
-    } else {
-      //no signin
-      setOpenLogin(true)
-    }
+    //check sign in 
+    checkLogin(
+      (userId: string) => {
+        //login
+        refetchStudyThemes({ userId })
+      },
+      async () => {
+        //no login
+        //temporary register user
+        const userId = await regiseterTemporaryUser()
+        refetchStudyThemes({ userId })
+      },
+      (userId: string) => {
+        //temporary login
+        refetchStudyThemes({ userId })
+      }
+    )
   }, [])
 
   const refetch = () => {
@@ -33,7 +51,8 @@ const Index = () => {
 
   return (
     <div>
-      <LoginFormDialog open={openLogin} handleOpen={setOpenLogin} />
+      <LoginFormDialog open={openSignin} handleOpen={setOpenSigninModalAtom} />
+      <SignupFormDialog open={openSignup} handleOpen={setOpenSignupModalAtom} />
 
       <Board
         refetch={refetch}

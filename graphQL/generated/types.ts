@@ -30,6 +30,12 @@ export type RegisterInput = {
   password?: Maybe<Scalars['String']>;
 };
 
+export type ConnectUserInput = {
+  userId?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+};
+
 export type CreateStudyThemeInput = {
   userId: Scalars['String'];
   title: Scalars['String'];
@@ -159,6 +165,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   login?: Maybe<LoginOutput>;
   registerUser?: Maybe<LoginOutput>;
+  connectUser?: Maybe<LoginOutput>;
   createStudyTheme?: Maybe<StudyTheme>;
   deleteStudyTheme?: Maybe<StudyTheme>;
   updateStudyTheme?: Maybe<StudyTheme>;
@@ -179,6 +186,11 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterUserArgs = {
   input?: Maybe<RegisterInput>;
+};
+
+
+export type MutationConnectUserArgs = {
+  input?: Maybe<ConnectUserInput>;
 };
 
 
