@@ -32,7 +32,7 @@ export default (props: Props) => {
     const [seconds, setSeconds] = useState<Time>(new Time(0)) //何の時間・・・？
     const [goalTime, setGoalTime] = useState<Time>(new Time(0)) //勉強すべき時間
 
-    //残り時間。本当に？
+    //残り時間
     const leftTime = new Time(goalTime.seconds - seconds.seconds)
 
     //状態系
@@ -46,8 +46,6 @@ export default (props: Props) => {
     const { data: studyRecordData, refetch: refetchStudyRecord } = useQuery(StudyRecordQuery,
         { variables: { studyThemeId: props.studyStatus.nowStudyTheme, studyRecordId: props.studyStatus.nowStudyRecord } })
     const studyRecord = studyRecordData?.StudyRecord as Required<StudyRecord>
-    // const queryStudyRecord = useGraphQL.queryStudyRecord(props.studyStatus.nowStudyTheme, props.studyStatus.nowStudyRecord)
-    // const studyRecord = queryStudyRecord?.studyRecord
     const studyTimeOnServer = new Time((studyRecord?.studyTime || 0))
 
     // const queryStudyTheme = useGraphQL.queryStudyTheme(props.studyStatus.nowStudyTheme)
@@ -98,15 +96,18 @@ export default (props: Props) => {
 
     //ここのロジックどうにかならないかな
     const initialize = () => {
+        refetchStudyRecord()
         console.log("CountingScreen-initialize")
-        console.log(props.studyStatus)
-        setCanFinish(false)
+        if (studyTimeOnServer.getValue() > 0) {
+            setCanFinish(true)
+        } else {
+            setCanFinish(false)
+        }
 
         if (props.studyStatus.isStudying()) {
             //set study status
             setGoalTime(props.studyStatus.goalTime)
             setButtonStatus(props.studyStatus.playStatus)
-
             //計測中であればタイマーを動かす
             if (props.studyStatus.playStatus === "PAUSE") {
                 startTimer(props.studyStatus.clickedPlayButtonDate)

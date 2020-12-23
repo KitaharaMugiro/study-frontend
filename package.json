@@ -34,6 +34,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/shortid": "0.0.29",
     "@types/styled-components": "^5.1.4",
+    "@types/uuid": "^8.3.0",
     "apollo-link-ws": "^1.0.20",
     "babel-plugin-styled-components": "^1.11.1",
     "graphql": "^15.4.0",

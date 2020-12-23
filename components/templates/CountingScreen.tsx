@@ -39,7 +39,6 @@ const CountingScreen = (props: Props) => {
             console.log("初回")
             setStudyOrRest("STUDY")
         }
-
     }, [])
 
     const onFinishRest = () => {

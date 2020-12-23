@@ -15,7 +15,7 @@ export default (props: Props) => {
                 height={200}
                 padding={40}
                 theme={VictoryTheme.grayscale}
-                domain={{ y: [0, 300], x: [0, 4] }}
+                domain={{ y: [0, props.maxMinutes], x: [0, 4] }}
             >
                 <VictoryGroup horizontal
                     // offset={30}
