@@ -74,8 +74,9 @@ export default {
             {
                 variables: { userId }, fetchPolicy: "no-cache"
             })
-        const records = data?.StudyRecordsByUser as Required<StudyRecord[]>
+        const _records = data?.StudyRecordsByUser as Required<StudyRecord[]>
         const themes = data?.StudyThemes as Required<StudyTheme[]>
+        const records = _records?.filter(r => r.studyTime !== 0)
         return { records, themes, refetch, loading }
     },
 
@@ -85,7 +86,6 @@ export default {
             variables: { userId }, fetchPolicy: "no-cache"
         })
         const summary = data?.StudySummary as Required<StudySummary>
-
         return { summary, refetch, loading }
     }
 }

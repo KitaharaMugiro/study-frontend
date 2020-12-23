@@ -26,26 +26,27 @@ type GraphDataType = {
 export const aggregateRecordsByWeek = (records: StudyRecord[], themes: StudyTheme[] = []) => {
     if (records === undefined) return []
     if (themes === undefined) return []
-    console.log("aggregateRecordsByWeek")
-    console.log(records)
-    console.log(themes)
     const result: GraphDataType[] = []
     for (const record of records) {
         const themeName = themes.find(theme => theme.studyThemeId === record.studyThemeId)?.title || "unknown"
         const date = convertISOStringtoDate(record.createdAt || "")
-        if (new Date().getMonth() !== date.getMonth()) continue
-        if (new Date().getFullYear() !== date.getFullYear()) continue
+        if ((new Date().getTime() - date.getTime()) > 7 * 24 * 60 * 60 * 1000) continue
         const termDay = (new Date().getDate() - date.getDate())
-        const graphDate = 8 - termDay
+        const graphDate = 7 - termDay
 
         const existData = result.find(r => r.key === themeName)
         if (existData) {
-            existData.dataGroup.push(
-                {
-                    date: graphDate,
-                    studyTime: Math.floor((record.studyTime || 0) / 60)
-                }
-            )
+            const existDate = existData.dataGroup.find(r => r.date === graphDate)
+            if (existDate) {
+                existDate.studyTime += Math.floor((record.studyTime || 0) / 60)
+            } else {
+                existData.dataGroup.push(
+                    {
+                        date: graphDate,
+                        studyTime: Math.floor((record.studyTime || 0) / 60)
+                    }
+                )
+            }
         } else {
             result.push(
                 {
@@ -58,6 +59,9 @@ export const aggregateRecordsByWeek = (records: StudyRecord[], themes: StudyThem
             )
         }
 
+        for (const studyTheme of result) {
+            studyTheme.dataGroup.sort((a, b) => a.date - b.date)
+        }
     }
 
 

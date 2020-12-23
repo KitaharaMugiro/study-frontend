@@ -12,7 +12,7 @@ export class StudyRecordsViewModel {
             return
         }
         this.studyThemeId = records[0].studyThemeId!
-        this.records = records.map(m => new RecordViewModel(m))
+        this.records = records.filter(r => r.studyTime !== 0).map(m => new RecordViewModel(m))
     }
 
     getSortedRecords() {

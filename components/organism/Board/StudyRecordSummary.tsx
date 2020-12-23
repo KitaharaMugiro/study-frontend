@@ -13,7 +13,6 @@ export const StudyRecordSummary = () => {
             <Frame>
                 <SectionText title="Summary" />
                 <Relative>
-                    {/* <ToBeComeWrap /> */}
                     <StudySummaryFrame />
                 </Relative>
             </Frame>

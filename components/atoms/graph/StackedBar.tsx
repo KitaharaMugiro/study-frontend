@@ -19,6 +19,8 @@ export default () => {
     const { records, themes, loading } = useGraphQL.queryStudyRecordWithTheme()
     if (loading) return <div />
     const groupedData = aggregateRecordsByWeek(records, themes)
+    console.log("groupedData")
+    console.log(groupedData)
 
     return (
         <VictoryChart

@@ -23,11 +23,13 @@ export default (records: StudyRecord[], themes: StudyTheme[]): GroupbyDayDataGro
         const themeName = themes.find(theme => theme.studyThemeId === record.studyThemeId)?.title || "unknown"
         const dateText = convertDateToJapanseStringYearMonthDay(date)
         const existData = result.find(r => r.dateText === dateText)
+        const studyTime = record.studyTime || 0
+        const timeText = studyTime < 60 ? Math.floor(studyTime) + "秒" : Math.floor(studyTime / 60) + "分"
         if (existData) {
             existData.dataGroup.push({
                 title: themeName,
                 learned: record.learned || "",
-                timeText: Math.floor((record.studyTime || 0) / 60) + "分"
+                timeText: timeText
             })
         } else {
             const data = {
@@ -36,7 +38,7 @@ export default (records: StudyRecord[], themes: StudyTheme[]): GroupbyDayDataGro
                 dataGroup: [{
                     title: themeName,
                     learned: record.learned || "",
-                    timeText: Math.floor((record.studyTime || 0) / 60) + "分"
+                    timeText: timeText
                 }]
             }
             result.push(data)

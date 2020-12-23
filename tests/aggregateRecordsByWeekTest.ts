@@ -58,7 +58,7 @@ describe('aggregateRecordsByWeek', () => {
             expect(result[0].key).toBe("数学")
             let i = 0
             for (const d of result[0].dataGroup) {
-                expect(d.date).toBe(8)
+                expect(d.date).toBe(7)
                 expect(d.studyTime).toBe(100)
                 i++
             }
@@ -99,12 +99,10 @@ describe('aggregateRecordsByWeek', () => {
             //describe
             expect(result).toHaveLength(2)
             expect(result[0].key).toBe("数学")
-            let i = 0
-            for (const d of result[0].dataGroup) {
-                expect(d.date).toBe(8)
-                expect(d.studyTime).toBe(100)
-                i++
-            }
+            expect(result[0].dataGroup).toHaveLength(1)
+            expect(result[0].dataGroup[0].date).toBe(7)
+            expect(result[0].dataGroup[0].studyTime).toBe(300)
+
         })
     })
 
@@ -139,12 +137,14 @@ describe('aggregateRecordsByWeek', () => {
             //describe
             expect(result).toHaveLength(2)
             expect(result[0].key).toBe("数学")
-            let i = 0
-            for (const d of result[0].dataGroup) {
-                expect(d.date).toBe(8 - i)
-                expect(d.studyTime).toBe(100)
-                i++
-            }
+
+            //昨日
+            expect(result[0].dataGroup[0].date).toBe(6)
+            expect(result[0].dataGroup[0].studyTime).toBe(100)
+            //今日
+            expect(result[0].dataGroup[1].date).toBe(7)
+            expect(result[0].dataGroup[1].studyTime).toBe(100)
+
         })
     })
 
@@ -183,17 +183,51 @@ describe('aggregateRecordsByWeek', () => {
             expect(result[1].key).toBe("英語")
             let i = 0
             for (const d of result[0].dataGroup) {
-                expect(d.date).toBe(8)
+                expect(d.date).toBe(7)
                 expect(d.studyTime).toBe(100)
                 i++
             }
             i = 0
             for (const d of result[1].dataGroup) {
-                expect(d.date).toBe(7)
+                expect(d.date).toBe(6)
                 expect(d.studyTime).toBe(100)
                 i++
             }
         })
     })
 
+
+    describe("数学の勉強を今日2回した場合", () => {
+        it("数学のデータは統合され、勉強時間が加算される", () => {
+            //arrange
+            const today = new Date()
+            const records: StudyRecord[] = [{
+                studyRecordId: "record",
+                studyThemeId: "math",
+                learned: "楽しい",
+                createdAt: today.toISOString(),
+                studyTime: 100 * 60
+            },
+            {
+                studyRecordId: "record",
+                studyThemeId: "math",
+                learned: "楽しい",
+                createdAt: today.toISOString(),
+                studyTime: 100 * 60
+            }]
+            const themes: StudyTheme[] = [
+                { studyThemeId: "math", title: "数学" },
+            ]
+
+            //act
+            const result = aggregateRecordsByWeek(records, themes)
+
+            //describe
+            expect(result).toHaveLength(2)
+            expect(result[0].key).toBe("数学")
+            let i = 0
+            expect(result[0].dataGroup).toHaveLength(1)
+            expect(result[0].dataGroup[0].studyTime).toBe(200)
+        })
+    })
 });
