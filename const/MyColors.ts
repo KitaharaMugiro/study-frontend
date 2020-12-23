@@ -11,5 +11,5 @@ export const MyColors = {
     hoverWhite: "#f5f6f7",
     hoverGray: "#DCDCDC",
     white: "white",
-    backgroundGray: "#dfe3e6"
+    backgroundGray: "#ebecf0"
 }

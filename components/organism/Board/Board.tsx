@@ -133,9 +133,11 @@ const Board = styled.div`
   -webkit-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  overflow-x:scroll;
 `
 
 const ScrollableFrame = styled.div`
     height:fit-content;
     overflow-y:scroll;
+    min-width:380px;
 `

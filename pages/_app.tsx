@@ -78,7 +78,9 @@ export default function MyApp(props: AppProps) {
                 <meta name="twitter:image" content='https://planmaker.s3-ap-northeast-1.amazonaws.com/ogp/studyroom_ogp.png' />
 
             </Head>
-            {renderClientSide(client)}
+            <Background>
+                {renderClientSide(client)}
+            </Background>
         </React.Fragment>
     );
 }
@@ -86,5 +88,15 @@ export default function MyApp(props: AppProps) {
 const Flex = styled.div`
 display : flex;
 flex-grow: 2;
+`
 
+const Background = styled.div`
+  background-image: url("https://images.unsplash.com/photo-1594066018459-0cfeb17156a5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2700&q=80");
+  height: 100%;
+  min-height:100vh;
+  position: relative;
+  z-index: 1;
+  background-position: 50%;
+  background-size: cover;
+  overflow:hidden;
 `

@@ -33,6 +33,7 @@ export const aggregateRecordsByWeek = (records: StudyRecord[], themes: StudyThem
         if ((new Date().getTime() - date.getTime()) > 7 * 24 * 60 * 60 * 1000) continue
         const termDay = (new Date().getDate() - date.getDate())
         const graphDate = 7 - termDay
+        if (graphDate <= 0) continue
 
         const existData = result.find(r => r.key === themeName)
         if (existData) {

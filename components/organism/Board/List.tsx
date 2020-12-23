@@ -84,35 +84,36 @@ const ListComponent = (props: Props) => {
     }
 
     const height = use100vh()
-    const listMaxHeight = height ? height * 0.85 : '85vh'
+    const listMaxHeight = height ? height * 0.8 : '80vh'
 
     return (
-        <List style={{ maxHeight: listMaxHeight }}>
+        <List>
             <ListTitle onClick={props.toggleEditingTitle}>
                 {props.listTitle}
             </ListTitle>
+            <Scrollable style={{ maxHeight: listMaxHeight }}>
+                <VerticalCenterColumn>
+                    {renderPlusButton()}
 
-            <VerticalCenterColumn>
-                {renderPlusButton()}
+                    {props.cards.map((card, index) => (
+                        <VerticalCenterRow key={card.studyThemeId}>
+                            {props.listId !== "TODO" && <ArrowLeftButton onClick={() => changeStatus(card.studyThemeId!, -1)} />}
+                            <MyCard
+                                onClick={(cardId) => props.onClickCard(cardId)}
+                                key={card.studyThemeId!}
+                                title={card.title!}
+                                goal={card.goal || ""}
+                                status={props.listId}
+                                studyThemeId={card.studyThemeId!}
+                                onClickStartStudy={props.onClickStartStudy}
+                                refetch={props.refetch}
+                            />
+                            {props.listId !== "DONE" && <ArrowRightButton onClick={() => changeStatus(card.studyThemeId!, 1)} />}
+                        </VerticalCenterRow>
+                    ))}
+                </VerticalCenterColumn>
 
-                {props.cards.map((card, index) => (
-                    <VerticalCenterRow key={card.studyThemeId}>
-                        {props.listId !== "TODO" && <ArrowLeftButton onClick={() => changeStatus(card.studyThemeId!, -1)} />}
-                        <MyCard
-                            onClick={(cardId) => props.onClickCard(cardId)}
-                            key={card.studyThemeId!}
-                            title={card.title!}
-                            goal={card.goal || ""}
-                            status={props.listId}
-                            studyThemeId={card.studyThemeId!}
-                            onClickStartStudy={props.onClickStartStudy}
-                            refetch={props.refetch}
-                        />
-                        {props.listId !== "DONE" && <ArrowRightButton onClick={() => changeStatus(card.studyThemeId!, 1)} />}
-                    </VerticalCenterRow>
-                ))}
-            </VerticalCenterColumn>
-
+            </Scrollable>
             <CreateCardModal
                 open={openCreateCard}
                 onClose={() => setOpenCreateCard(false)}
@@ -129,15 +130,24 @@ const List = styled.div`
     flex-shrink: 0;
     width: 300px;
     height: fit-content;
-    overflow-y:scroll;
-    margin: 10px;
+    margin: 15px;
     margin-right: 0;
     border-radius: 10px;
+    overflow-y:scroll;
   `
+
+const Scrollable = styled.div`
+    overflow-y:scroll;
+    height: fit-content;
+`
 
 const ListTitle = styled.div`
     cursor: pointer;
     padding: 10px;
     overflow-wrap: break-word;
+    font-size:20px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 500;
+    line-height: 1.6;
   `
 

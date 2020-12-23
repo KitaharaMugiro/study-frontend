@@ -34,6 +34,7 @@ const MainFrame = styled.div`
 `
 const Frame = styled.div`
     width: 350px;
+    background-color:white;
 `
 
 const Relative = styled.div`

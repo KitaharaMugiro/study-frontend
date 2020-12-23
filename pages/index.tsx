@@ -50,18 +50,17 @@ const Index = () => {
   }
 
   return (
-    <div>
+    <Scrollable>
       <LoginFormDialog open={openSignin} handleOpen={setOpenSigninModalAtom} />
       <SignupFormDialog open={openSignup} handleOpen={setOpenSignupModalAtom} />
 
       <Board
         refetch={refetch}
         lists={lists}></Board>
-
       <RightBottom>
         <VerticalIcons />
       </RightBottom>
-    </div>
+    </Scrollable>
   )
 };
 
@@ -71,4 +70,8 @@ const RightBottom = styled.div`
   position:fixed;
   right:20px;
   bottom:0px;
+`
+
+const Scrollable = styled.div`
+  overflow-x:scroll;
 `
