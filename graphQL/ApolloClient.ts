@@ -16,29 +16,10 @@ export function createClient(initialState: any) {
         uri: URI_ENDPOINT, // Server URL (must be absolute)
     })
 
-    const mock = "ws://localhost:4000"
-    const wsUrl = "ws://subsc-publi-56p3fp6993ag-1378467411.ap-northeast-1.elb.amazonaws.com"
-    const wsLink = new WebSocketLink({
-        uri: mock,
-        options: {
-            reconnect: true
-        }
-    });
-    const splitLink = split(
-        ({ query }) => {
-            const definition = getMainDefinition(query);
-            return (
-                definition.kind === 'OperationDefinition' &&
-                definition.operation === 'subscription'
-            );
-        },
-        wsLink,
-        httpLink,
-    );
     return new ApolloClient({
         // connectToDevTools: IS_BROWSER,
         // ssrMode: !IS_BROWSER, // Disables forceFetch on the server (so queries are only run once)
-        link: splitLink,
+        link: httpLink,
         cache: new InMemoryCache().restore(initialState || {})
     });
 }
