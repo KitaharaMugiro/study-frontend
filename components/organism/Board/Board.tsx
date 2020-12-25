@@ -1,11 +1,12 @@
 import { useMutation } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { use100vh } from "react-div-100vh";
 import styled from "styled-components";
 import { MutationStartStudyArgs, StudyRecord, UpdateStudyThemeInput } from "../../../graphQL/generated/types";
 import { StartStudyMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
 import useLocal from "../../../models/hooks/useLocal";
 import { getNowDateISOString } from "../../../models/logics/getNowDateISOString";
+import { Scroller } from "../../../models/Scroller";
 import { StudyStatus } from "../../../models/StudyStatus";
 import ListViewModel from "../../../models/viewModel/ListViewModel";
 import CountingScreen from "../../templates/CountingScreen";
@@ -83,25 +84,38 @@ const BoardComponent = (props: Props) => {
         }
     }, [props.lists])
 
+    const ref = useRef(null)
+    useEffect(() => {
+        if (ref.current) {
+            const _ref: any = ref!.current!
+            let WindowWidth = window.outerWidth
+            if (WindowWidth < 500) {
+                _ref.scrollLeft = 250
+            }
+        }
+    }, [ref])
+
 
     const height = use100vh()
     const listMaxHeight = height ? height * 0.85 : '85vh'
     const boardHeight = height ? height * 0.93 : '93vh'
     return (
         <FullScreen style={{ height: boardHeight }}>
-            <Board>
+            <Board ref={ref}>
                 {props.lists.map((list, index) => {
-                    return <List
-                        refetch={props.refetch}
-                        listTitle={list.listTitle}
-                        cards={list.cards}
-                        listId={list.listId}
-                        key={list.listId}
-                        index={index}
-                        onClickCard={onClickCard}
-                        toggleEditingTitle={() => { }}
-                        onClickStartStudy={onClickStartStudy}
-                    />
+                    const _ref = list.listId === "TODO" ? ref : null
+                    return (
+                        <List
+                            refetch={props.refetch}
+                            listTitle={list.listTitle}
+                            cards={list.cards}
+                            listId={list.listId}
+                            key={list.listId}
+                            index={index}
+                            onClickCard={onClickCard}
+                            toggleEditingTitle={() => { }}
+                            onClickStartStudy={onClickStartStudy}
+                        />)
                 })}
 
                 <ScrollableFrame style={{ maxHeight: listMaxHeight }}>
