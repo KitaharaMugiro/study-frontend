@@ -86,7 +86,7 @@ const BoardComponent = (props: Props) => {
 
     const height = use100vh()
     const listMaxHeight = height ? height * 0.85 : '85vh'
-    const boardHeight = height ? height * 0.9 : '90vh'
+    const boardHeight = height ? height * 0.93 : '93vh'
     return (
         <FullScreen style={{ height: boardHeight }}>
             <Board>

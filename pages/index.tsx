@@ -56,7 +56,6 @@ const Index = () => {
     <Scrollable>
       <LoginFormDialog open={openSignin} handleOpen={setOpenSigninModalAtom} />
       <SignupFormDialog open={openSignup} handleOpen={setOpenSignupModalAtom} />
-
       <Board
         refetch={refetch}
         lists={lists}></Board>
@@ -77,4 +76,6 @@ const RightBottom = styled.div`
 
 const Scrollable = styled.div`
   overflow-x:scroll;
+  position: relative;
+  flex-grow: 1;
 `

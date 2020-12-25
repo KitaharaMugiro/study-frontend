@@ -50,21 +50,20 @@ export default function MyApp(props: AppProps) {
         }
     }, []);
 
+
     const renderClientSide = (client: any) => {
         if (!client) return
         return (<ThemeProvider theme={theme}>
             <JotaiProvider>
                 <ApolloProvider client={client}>
-                    <MyAppBar />
-                    <Spacer60 />
                     <Flex>
+                        <MyAppBar />
                         <Component {...pageProps} />
                     </Flex>
                 </ApolloProvider>
             </JotaiProvider>
         </ThemeProvider>)
     }
-
 
     return (
         <React.Fragment>
@@ -87,6 +86,10 @@ export default function MyApp(props: AppProps) {
 const Flex = styled.div`
 display : flex;
 flex-grow: 2;
+flex-direction: column;
+overflow:hidden;
+overscroll-behavior: none;
+-webkit-overflow-scrolling: none;
 `
 
 const Background = styled.div`
@@ -98,4 +101,7 @@ const Background = styled.div`
   background-position: 50%;
   background-size: cover;
   overflow:hidden;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: none;
+  touch-action: none;
 `
