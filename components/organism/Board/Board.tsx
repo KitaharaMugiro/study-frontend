@@ -86,9 +86,9 @@ const BoardComponent = (props: Props) => {
 
     const height = use100vh()
     const listMaxHeight = height ? height * 0.85 : '85vh'
-
+    const boardHeight = height ? height * 0.9 : '90vh'
     return (
-        <div>
+        <FullScreen style={{ height: boardHeight }}>
             <Board>
                 {props.lists.map((list, index) => {
                     return <List
@@ -121,11 +121,14 @@ const BoardComponent = (props: Props) => {
                 onClose={onCloseGoalSettingScreen}
                 studyThemeId={onClickedCardId}
             />
-        </div>
+        </FullScreen>
     )
 };
 
 export default BoardComponent;
+
+const FullScreen = styled.div`
+`
 
 const Board = styled.div`
   height: 100%;

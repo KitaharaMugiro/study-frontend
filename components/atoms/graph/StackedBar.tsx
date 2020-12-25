@@ -18,6 +18,7 @@ const sharedAxisStyles = {
 export default () => {
     const { records, themes, loading } = useGraphQL.queryStudyRecordWithTheme()
     if (loading) return <div />
+    if (records === undefined || records.length === 0) return <div />
     const groupedData = aggregateRecordsByWeek(records, themes)
     console.log("groupedData")
     console.log(groupedData)

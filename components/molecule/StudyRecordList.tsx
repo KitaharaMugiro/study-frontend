@@ -10,6 +10,7 @@ import shortid from 'shortid';
 export default () => {
     const { records, themes, loading } = useGraphQL.queryStudyRecordWithTheme()
     if (loading) return <div />
+    if (records === undefined || records.length === 0) return <div />
     const data = groupbyRecords(records, themes)
 
     const renderList = () => {
