@@ -55,6 +55,7 @@ const BoardComponent = (props: Props) => {
     }
 
     const onClickStartStudy = async (studyThemeId: string) => {
+        useLocal("CLICKED_STUDY", "true")
         //api
         const userId = useLocal("USER_ID")!
         const input: MutationStartStudyArgs = { input: { userId, studyThemeId } }

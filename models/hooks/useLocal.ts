@@ -1,4 +1,4 @@
-type LocalStorageKey = "USER_ID" | "Name" | "REGISTER_TYPE" | "CLICKED_CARD"
+type LocalStorageKey = "USER_ID" | "Name" | "REGISTER_TYPE" | "CLICKED_CARD" | "CLICKED_STUDY"
 type LocalStorageJsonKey = "StudyStatus"
 
 export default (key: LocalStorageKey, setValue: string | undefined = undefined) => {
