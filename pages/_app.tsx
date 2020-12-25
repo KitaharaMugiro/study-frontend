@@ -76,7 +76,6 @@ export default function MyApp(props: AppProps) {
                 <meta name="twitter:title" content="Study Room" />
                 <meta name="twitter:description" content="勉強に集中をしたい人向けの勉強管理ツール" />
                 <meta name="twitter:image" content='https://planmaker.s3-ap-northeast-1.amazonaws.com/ogp/studyroom_ogp.png' />
-
             </Head>
             <Background>
                 {renderClientSide(client)}

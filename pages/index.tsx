@@ -2,14 +2,13 @@ import { useQuery } from "@apollo/client";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
-import CoachMarks from "../components/atoms/coachmarks/CoachMarks";
 import VerticalIcons from "../components/molecule/VerticalIcons";
 import Board from '../components/organism/Board/Board';
 import LoginFormDialog from '../components/templates/LoginFormDialog';
 import SignupFormDialog from "../components/templates/SignupFormDialog";
 import { Query, StudyTheme } from '../graphQL/generated/types';
 import { ListStudyThemeQuery } from '../graphQL/StudyThemeStatements';
-import { openSigninModalAtom, openSignupModalAtom, tutorialRef } from "../models/atoms/openSigninModalAtom";
+import { openSigninModalAtom, openSignupModalAtom } from "../models/atoms/openSigninModalAtom";
 import useLocal from '../models/hooks/useLocal';
 import { aggregateCardsByList } from "../models/logics/aggregateCards";
 import checkLogin from "../models/logics/user/checkLogin";
@@ -50,6 +49,9 @@ const Index = () => {
     refetchStudyThemes({ userId })
   }
 
+  if (loading) {
+    return (<div />)
+  }
   return (
     <Scrollable>
       <LoginFormDialog open={openSignin} handleOpen={setOpenSigninModalAtom} />

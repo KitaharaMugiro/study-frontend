@@ -100,8 +100,10 @@ const ListComponent = (props: Props) => {
         if (props.cards.length !== 0) {
             const clickedCard = useLocal("CLICKED_CARD")
             const clickedStudy = useLocal("CLICKED_STUDY")
-            if (clickedCard && !clickedStudy) {
-                return (<TutorialCard>↑<br />学習するをクリックして勉強開始！</TutorialCard>)
+            if (clickedCard) {
+                if (!clickedStudy) {
+                    return (<TutorialCard>↑<br />学習するをクリックして勉強開始！</TutorialCard>)
+                }
             }
         }
     }
