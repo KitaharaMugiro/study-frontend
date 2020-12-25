@@ -76,6 +76,20 @@ const MyCard = (props: Props) => {
 
     const height = props.status === "DONE" ? ComponentsStyle.CardDoneHeight : ComponentsStyle.CardHeight
 
+    const clickedCard = useLocal("CLICKED_CARD")
+    if (!clickedCard) {
+        //一度もクリックしたことがない場合はシンプル表示にする
+        return (
+            <Card style={{ height }} onClick={() => props.onClick(props.studyThemeId)}>
+                <div>
+                    <Title>
+                        {props.title}
+                    </Title>
+                </div>
+            </Card>
+        )
+    }
+
     return (
         <Card style={{ height }} onClick={() => props.onClick(props.studyThemeId)}>
             <div>

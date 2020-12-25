@@ -49,6 +49,7 @@
     "react-apollo": "^3.1.5",
     "react-beautiful-dnd": "^13.0.0",
     "react-circular-progressbar": "^2.0.3",
+    "react-coach-mark": "^1.0.0",
     "react-div-100vh": "^0.5.6",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",

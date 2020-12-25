@@ -83,6 +83,22 @@ const ListComponent = (props: Props) => {
         return <div />
     }
 
+    const renderTutorialCard = () => {
+        if (props.listId === "DOING") {
+            if (props.cards.length === 0) {
+                return (<TutorialCard>↑<br />今勉強していることを追加しよう</TutorialCard>)
+            }
+        }
+
+        if (props.cards.length !== 0) {
+            const clickedCard = useLocal("CLICKED_CARD")
+            if (!clickedCard) {
+                return (<TutorialCard>↑<br />カードをクリックして目標を書き込もう</TutorialCard>)
+            }
+        }
+
+    }
+
     const height = use100vh()
     const listMaxHeight = height ? height * 0.8 : '80vh'
 
@@ -94,7 +110,6 @@ const ListComponent = (props: Props) => {
             <Scrollable style={{ maxHeight: listMaxHeight }}>
                 <VerticalCenterColumn>
                     {renderPlusButton()}
-
                     {props.cards.map((card, index) => (
                         <VerticalCenterRow key={card.studyThemeId}>
                             {props.listId !== "TODO" && <ArrowLeftButton onClick={() => changeStatus(card.studyThemeId!, -1)} />}
@@ -111,6 +126,8 @@ const ListComponent = (props: Props) => {
                             {props.listId !== "DONE" && <ArrowRightButton onClick={() => changeStatus(card.studyThemeId!, 1)} />}
                         </VerticalCenterRow>
                     ))}
+
+                    {renderTutorialCard()}
                 </VerticalCenterColumn>
 
             </Scrollable>
@@ -151,3 +168,10 @@ const ListTitle = styled.div`
     line-height: 1.6;
   `
 
+const TutorialCard = styled.div`
+    padding:20px;
+    background:${MyColors.theme};
+    text-align:center;
+    color:white;
+    font-size:30px;
+`

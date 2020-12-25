@@ -35,6 +35,7 @@ const BoardComponent = (props: Props) => {
     }
 
     const onClickCard = (cardId: string) => {
+        useLocal("CLICKED_CARD", "true")
         //ここまでpropsが伝播してくるのやだな〜
         setOnClickedCardId(cardId)
         setOpenGoalSettingScreen(true)
