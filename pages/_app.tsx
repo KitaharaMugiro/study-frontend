@@ -4,6 +4,7 @@ import { Provider as JotaiProvider } from 'jotai';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
+import { use100vh } from 'react-div-100vh';
 import styled from 'styled-components';
 import { Spacer60 } from '../components/atoms/Spacer';
 import MyAppBar from '../components/templates/MyAppBar';
@@ -42,6 +43,9 @@ export default function MyApp(props: AppProps) {
         setClient(client)
     }, [])
 
+    const _height = use100vh()
+    const height = _height ? _height : '100vh'
+
     useEffect(() => {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side');
@@ -64,7 +68,6 @@ export default function MyApp(props: AppProps) {
             </JotaiProvider>
         </ThemeProvider>)
     }
-
     return (
         <React.Fragment>
             <Head>
@@ -76,7 +79,7 @@ export default function MyApp(props: AppProps) {
                 <meta name="twitter:description" content="勉強に集中をしたい人向けの勉強管理ツール" />
                 <meta name="twitter:image" content='https://planmaker.s3-ap-northeast-1.amazonaws.com/ogp/studyroom_ogp.png' />
             </Head>
-            <Background>
+            <Background style={{ height: height }}>
                 {renderClientSide(client)}
             </Background>
         </React.Fragment>
@@ -88,20 +91,18 @@ display : flex;
 flex-grow: 2;
 flex-direction: column;
 overflow:hidden;
-overscroll-behavior: none;
--webkit-overflow-scrolling: none;
+overscroll-behavior: contain;
+-webkit-overflow-scrolling: contain;
 `
 
 const Background = styled.div`
   background-image: url("https://images.unsplash.com/photo-1594066018459-0cfeb17156a5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2700&q=80");
-  height: 100%;
-  min-height:100vh;
   position: relative;
   z-index: 1;
   background-position: 50%;
   background-size: cover;
   overflow:hidden;
-  overscroll-behavior: none;
-  -webkit-overflow-scrolling: none;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: contain;
   touch-action: none;
 `
