@@ -35,10 +35,6 @@ const GoalSettingModal = (props: Props) => {
     if (queryStudyTheme?.loading) return <div />
     if (queryStudyRecords?.loading) return <div />
 
-    const onRegister = () => {
-        props.onClose()
-    }
-
     if (!studyTheme) return <div />
     return (
         <Dialog

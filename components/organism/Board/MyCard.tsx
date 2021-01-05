@@ -111,7 +111,7 @@ const MyCard = (props: Props) => {
             {
                 props.status !== "DONE" && (
                     <RightBottom>
-                        <Button variant="contained" color="primary" onClick={onClickStartStudy}>
+                        <Button variant="outlined" color="primary" onClick={onClickStartStudy}>
                             学習を始める
                         </Button>
                     </RightBottom>

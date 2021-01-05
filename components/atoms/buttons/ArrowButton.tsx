@@ -2,26 +2,25 @@ import styled from "styled-components"
 import { MyColors } from "../../../const/MyColors"
 
 export const ArrowLeftButton = styled.div`
-width: 0;
-height: 0;
-border-style: solid;
-border-width: 40px 20px 40px 0;
-border-color: transparent  ${MyColors.theme} transparent transparent;
+  width: 30px;
+  height: 30px;
+  border: 5px solid;
+  border-color:  transparent transparent ${MyColors.theme}  ${MyColors.theme};
+  transform: rotate(45deg);
+  margin-right:-20px;
 :hover {
-    border-color: transparent  ${MyColors.theme} transparent transparent;
     filter: brightness(50%);
-
     }
 `
 
 export const ArrowRightButton = styled.div`
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 40px 0 40px 20px;
-    border-color: transparent transparent transparent  ${MyColors.theme};
+  width: 30px;
+  height: 30px;
+  border: 5px solid;
+  border-color: ${MyColors.theme}  ${MyColors.theme} transparent transparent;
+  transform: rotate(45deg);
+  margin-left:-20px;
     :hover {
-        border-color: transparent transparent transparent ${MyColors.theme};
         filter: brightness(50%);
     }
 `
