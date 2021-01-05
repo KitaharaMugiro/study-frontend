@@ -124,6 +124,7 @@ const MyCard = (props: Props) => {
 export default MyCard;
 
 const Title = styled.div`
+    color:${MyColors.textColor};
     margin-right:20px;
     font-size:18px;
 `
@@ -136,7 +137,7 @@ const SubText = styled.div`
 const Card = styled.div`  
     position:relative;
     cursor: pointer;
-    background: white;
+    background: ${MyColors.frameColor};
     display: flex;
     width: ${ComponentsStyle.CardWidth}px;
     margin:5px;
@@ -179,11 +180,11 @@ const CardIcon = styled.div`
   justify-content: center;
   border-radius: 5px;
   margin: 1px;
-  color: rgba(0, 0, 0, 0.5);
-  background: #f5f6f7;
+  color: ${MyColors.textColor};
+  background: ${MyColors.frameColor};
   opacity: 0.9;
   :hover{
   opacity: 1;
-  background: rgba(220, 220, 220, 1);
+  filter: blightness(80%);
 }
 `

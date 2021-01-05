@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { AppInformation } from "../../const/AppInfomation";
+import { MyColors } from "../../const/MyColors";
 import { openSigninModalAtom, openSignupModalAtom } from "../../models/atoms/openSigninModalAtom";
 import useLocal, { deleteAllLocal } from "../../models/hooks/useLocal";
 import { REGISTER_TYPE } from "../../models/logics/user/REGISTER_TYPE";
@@ -34,12 +35,12 @@ const MyAppBar = () => {
     const renderButton = () => {
         const type = useLocal("REGISTER_TYPE") || REGISTER_TYPE.Temporary
         if (type === REGISTER_TYPE.Registered) {
-            return (<Button color="inherit" onClick={logout}>ログアウト</Button>)
+            return (<Button style={{ color: MyColors.textColor }} onClick={logout}>ログアウト</Button>)
         } else if (type === REGISTER_TYPE.Temporary) {
             return (
                 <div>
-                    <Button color="inherit" onClick={signin}>ログイン</Button>
-                    <Button color="inherit" onClick={signup}>会員登録</Button>
+                    <Button style={{ color: MyColors.textColor }} onClick={signin}>ログイン</Button>
+                    <Button style={{ color: MyColors.textColor }} onClick={signup}>会員登録</Button>
                 </div>
             )
         }
@@ -47,12 +48,12 @@ const MyAppBar = () => {
 
     return (
         <FlexGrow>
-            <AppBar position="static" color="primary">
+            <AppBar position="static" color="transparent">
                 <Toolbar>
                     {/* <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton> */}
-                    <Typography variant="h6" style={{ flexGrow: 1 }}>
+                    <Typography variant="h6" style={{ flexGrow: 1, color: MyColors.textColor }}>
                         {AppInformation.name}
                     </Typography>
 

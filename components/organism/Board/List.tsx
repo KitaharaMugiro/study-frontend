@@ -160,6 +160,8 @@ const List = styled.div`
     margin-right: 0;
     border-radius: 10px;
     overflow-y:scroll;
+    border-style:solid;
+    border-color: ${MyColors.boarderColor};
   `
 
 const Scrollable = styled.div`
@@ -171,6 +173,7 @@ const ListTitle = styled.div`
     cursor: pointer;
     padding: 10px;
     overflow-wrap: break-word;
+    color:${MyColors.textColor};
     font-size:20px;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     font-weight: 500;

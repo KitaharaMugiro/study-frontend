@@ -49,20 +49,6 @@ const EditButtonsFrame = styled.div`
     display: flex;
     align-items: baseline;
 `
-const EditButton = styled.div` 
-    cursor: pointer;
-    box-shadow: 0 1px 0 0 #3f6f21;
-    width: fit-content;
-    margin: 0 5px 10px;
-    padding: 6px 12px;
-    border-radius: 5px;
-    color: white;
-    font-weight: 700;
-    outline: none;
-    :hover {
-    opacity: 0.7;
-  }
-  `
 
 const EditButtonCancel = styled.div`
     cursor: pointer;
