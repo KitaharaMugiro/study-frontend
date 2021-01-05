@@ -152,7 +152,7 @@ const ListComponent = (props: Props) => {
 export default ListComponent;
 
 const List = styled.div`
-    background: ${MyColors.backgroundGray};
+    background: ${MyColors.background};
     flex-shrink: 0;
     width: 300px;
     height: fit-content;

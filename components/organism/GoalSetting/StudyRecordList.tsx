@@ -1,11 +1,10 @@
-import styled from "styled-components"
-import { MyColors } from "../../../const/MyColors"
 import NotesIcon from '@material-ui/icons/Notes';
 import React from "react";
+import styled from "styled-components";
+import { StudyRecordsViewModel } from "../../../models/viewModel/StudyRecordsViewModel";
 import { MainText } from "../../atoms/MainText";
 import { Spacer20 } from "../../atoms/Spacer";
 import StudyRecordCard from "../../molecule/StudyRecordCard";
-import { StudyRecordsViewModel } from "../../../models/viewModel/StudyRecordsViewModel";
 
 interface Props {
     studyRecords: StudyRecordsViewModel

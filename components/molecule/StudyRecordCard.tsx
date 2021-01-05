@@ -1,8 +1,6 @@
-import { Button } from "@material-ui/core"
-import React from "react"
-import styled from "styled-components"
+import React from "react";
+import styled from "styled-components";
 import { ComponentsStyle } from "../../const/ComponentsStyle";
-import { MyColors } from "../../const/MyColors";
 import { BoldText, MainText } from "../atoms/MainText";
 interface Props {
     title: string

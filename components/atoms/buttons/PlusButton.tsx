@@ -8,14 +8,14 @@ const Border = styled.div`
     border-radius: 25px;
     margin:5px;
     padding:10px;
-    border: 2px dotted ${MyColors.silver};
+    border: 2px dotted ${MyColors.boarderColor};
     width: ${ComponentsStyle.CardWidth}px;
     height: ${ComponentsStyle.CardHeight}px;
     display: grid;
     place-content: center;
     cursor: pointer;
     :hover {
-        background-color:${MyColors.hoverGray};
+        filter: brightness(80%);
     }
 `
 
@@ -26,7 +26,7 @@ interface Props {
 const PlusButton = (props: Props) => {
     return (
         <Border onClick={props.onClick}>
-            <AddIcon style={{ color: MyColors.silver, fontSize: 40 }} />
+            <AddIcon style={{ color: MyColors.boarderColor, fontSize: 40 }} />
         </Border>
     )
 };

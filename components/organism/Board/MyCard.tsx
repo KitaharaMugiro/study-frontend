@@ -129,7 +129,7 @@ const Title = styled.div`
 `
 
 const SubText = styled.div`
-    color:${MyColors.textShallowGray};
+    color:${MyColors.subTextColor};
     font-size:14px;
 `
 
@@ -151,7 +151,7 @@ const Card = styled.div`
     /* min-height: 18px; */
 
     :hover {
-        background: ${MyColors.hoverWhite};
+        filter: brightness(80%);
     }
 `
 

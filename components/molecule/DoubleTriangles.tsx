@@ -2,7 +2,6 @@ import IconButton from '@material-ui/core/IconButton';
 import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
 import DetailsIcon from '@material-ui/icons/Details';
 import React from 'react';
-import { MyColors } from '../../const/MyColors';
 import { VerticalCenterColumn } from '../container/VerticalCenter';
 
 interface Props {

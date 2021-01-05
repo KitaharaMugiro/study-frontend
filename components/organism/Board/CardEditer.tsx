@@ -58,5 +58,5 @@ const Card = styled.div`
     min-height: 50px;
     padding-left: 8px;
     padding-right: 15px;
-    background:${MyColors.white};
+    background:${MyColors.boarderColor};
 `

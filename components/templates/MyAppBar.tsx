@@ -1,13 +1,11 @@
-import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from "@material-ui/core"
-import React, { useEffect } from "react"
-import MenuIcon from '@material-ui/icons/Menu';
-import { AppInformation } from "../../const/AppInfomation";
+import { AppBar, Button, Toolbar, Typography } from "@material-ui/core";
+import { useAtom } from "jotai";
+import React from "react";
 import styled from "styled-components";
-import { MyColors } from "../../const/MyColors";
+import { AppInformation } from "../../const/AppInfomation";
+import { openSigninModalAtom, openSignupModalAtom } from "../../models/atoms/openSigninModalAtom";
 import useLocal, { deleteAllLocal } from "../../models/hooks/useLocal";
 import { REGISTER_TYPE } from "../../models/logics/user/REGISTER_TYPE";
-import { useAtom } from "jotai";
-import { openSigninModalAtom, openSignupModalAtom } from "../../models/atoms/openSigninModalAtom";
 
 
 const MyAppBar = () => {

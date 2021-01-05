@@ -1,16 +1,14 @@
-import styled from "styled-components";
-import { MyColors } from "../../../const/MyColors";
+import { useMutation } from "@apollo/client";
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import React from "react";
-import MaybeTextField from "../../molecule/MaybeTextField";
-import { useMutation } from "@apollo/client";
-import { UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
+import styled from "styled-components";
 import { UpdateStudyThemeInput } from "../../../graphQL/generated/types";
-import { textChangeRangeIsUnchanged } from "typescript";
+import { UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
 import useLocal from "../../../models/hooks/useLocal";
 import { StudyThemeViewModel } from "../../../models/viewModel/StudyThemeViewModel";
-import { Spacer10 } from "../../atoms/Spacer";
 import { MainText } from "../../atoms/MainText";
+import { Spacer10 } from "../../atoms/Spacer";
+import MaybeTextField from "../../molecule/MaybeTextField";
 
 interface Props {
     studyTheme: StudyThemeViewModel

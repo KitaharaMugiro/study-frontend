@@ -89,6 +89,6 @@ const GoalSettingModal = (props: Props) => {
 export default GoalSettingModal;
 
 const Frame = styled.div`
-    background-color: ${MyColors.cardBackground};
+    background-color: ${MyColors.frameColor};
     min-height: 500px;
 `

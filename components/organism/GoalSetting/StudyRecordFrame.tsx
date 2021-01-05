@@ -71,13 +71,13 @@ const Title = styled.div`
 `
 
 const MainText = styled.div`
-    color : ${MyColors.textBoldGray};
+    color : ${MyColors.textColor};
     font-size:20px;
     font-weight:600;
 `
 
 const SubText = styled.div`
-    color : ${MyColors.textShallowGray};
+    color : ${MyColors.subTextColor};
 `
 
 const BoldText = styled.span`
@@ -85,5 +85,5 @@ const BoldText = styled.span`
 `
 
 const ColoredText = styled.span`
-    color:${MyColors.themeText}
+    color:${MyColors.theme}
 `

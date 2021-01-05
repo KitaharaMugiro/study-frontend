@@ -91,6 +91,6 @@ export default (props: Props) => {
 
 
 const Frame = styled.div`
-    background-color: ${MyColors.cardBackground};
+    background-color: ${MyColors.frameColor};
     min-height: 500px;
 `

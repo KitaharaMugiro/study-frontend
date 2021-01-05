@@ -1,6 +1,4 @@
 import React from "react"
-import styled from "styled-components"
-import { MyColors } from "../../const/MyColors"
 import useGraphQL from "../../graphQL/useGraphQL"
 import Time from "../../models/Time"
 import HorizontalBar from "./graph/HorizontalBar"

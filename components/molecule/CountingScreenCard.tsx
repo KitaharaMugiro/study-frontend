@@ -96,14 +96,14 @@ const TopStatement = styled.h1`
     margin-right:60px;
     text-align:center;
     display: inline-block;
-    color: ${MyColors.textBoldGray};
+    color: ${MyColors.textColor};
     font-size:20px;
     font-weight:600;
     margin-bottom:20px;
 `
 
 const CenterText = styled.div`
-    color: ${MyColors.textBoldGray};
+    color: ${MyColors.textColor};
     font-size:16px;
     font-weight:600;
     margin-left:20px;
