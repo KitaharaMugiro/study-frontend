@@ -49,7 +49,7 @@ const GoalSettingModal = (props: Props) => {
             onClose={props.onClose}
         >
             <RightTop10>
-                <IconButton aria-label="close" onClick={props.onClose}>
+                <IconButton aria-label="close" onClick={props.onClose} style={{ color: MyColors.textColor }}>
                     <CloseIcon fontSize="large" />
                 </IconButton>
             </RightTop10>

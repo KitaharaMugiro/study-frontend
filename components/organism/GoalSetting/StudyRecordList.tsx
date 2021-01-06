@@ -1,6 +1,7 @@
 import NotesIcon from '@material-ui/icons/Notes';
 import React from "react";
 import styled from "styled-components";
+import { MyColors } from '../../../const/MyColors';
 import { StudyRecordsViewModel } from "../../../models/viewModel/StudyRecordsViewModel";
 import { MainText } from "../../atoms/MainText";
 import { Spacer20 } from "../../atoms/Spacer";
@@ -28,7 +29,7 @@ export const StudyRecordList = (props: Props) => {
         <Frame>
             <Flex>
                 <Logo>
-                    <NotesIcon />
+                    <NotesIcon style={{ color: MyColors.textColor }} />
                 </Logo>
                 <Title>
                     <MainText>学習履歴</MainText>

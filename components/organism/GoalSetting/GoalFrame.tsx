@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import React from "react";
 import styled from "styled-components";
+import { MyColors } from "../../../const/MyColors";
 import { UpdateStudyThemeInput } from "../../../graphQL/generated/types";
 import { UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
 import useLocal from "../../../models/hooks/useLocal";
@@ -35,7 +36,7 @@ const GoalFrame = (props: Props) => {
     return (
         <Frame>
             <Logo>
-                <DirectionsRunIcon />
+                <DirectionsRunIcon style={{ color: MyColors.textColor }} />
             </Logo>
             <Title>
                 <MainText>ゴール</MainText>

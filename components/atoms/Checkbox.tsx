@@ -1,5 +1,8 @@
+
 import Checkbox from '@material-ui/core/Checkbox';
 import React from "react";
+import styled from 'styled-components';
+import { MyColors } from '../../const/MyColors';
 import { FlexCenter } from "./Flex";
 
 interface Props {
@@ -25,7 +28,11 @@ export const MyCheckbox = (props: Props) => {
                 name="checkedB"
                 color="primary"
             />
-            <span className={className} onClick={props.onClickLabel}>{props.label}</span>
+            <Text className={className} onClick={props.onClickLabel}>{props.label}</Text>
         </FlexCenter>
     )
 }
+
+const Text = styled.span`
+    color: ${MyColors.textColor}
+`

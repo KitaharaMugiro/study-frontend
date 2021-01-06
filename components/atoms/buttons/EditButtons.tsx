@@ -4,6 +4,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import styled from "styled-components";
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
+import { MyColors } from "../../../const/MyColors";
 
 interface Props {
     handleSave: () => void
@@ -37,7 +38,7 @@ const EditButtons = ({ handleSave, saveLabel, handleDelete, handleCancel }: Prop
         )}
         <EditButtonCancel tabIndex={0} onClick={handleCancel}>
             <IconButton aria-label="delete">
-                <CancelIcon />
+                <CancelIcon style={{ color: MyColors.textColor }} />
             </IconButton>
         </EditButtonCancel>
     </EditButtonsFrame>

@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 import React, { useState } from "react"
 import styled from "styled-components"
+import { MyColors } from "../../const/MyColors"
 import { CreateMileStoneInput, DeleteMileStoneInput, UpdateMileStoneInput } from "../../graphQL/generated/types"
 import { CreateMileStoneMutation, DeleteMileStoneMutation, UpdateMileStoneMutation } from "../../graphQL/MileStoneStatement"
 import { MileStoneViewModel } from "../../models/viewModel/MileStonesViewModel"
@@ -118,21 +119,23 @@ export const MileStones = (props: Props) => {
 
             {!props.disableAdd &&
                 <Margin20>
-                    <TextField
-                        id="outlined-basic"
-                        label="ゴールまでの途中地点を入力"
-                        variant="outlined"
-                        fullWidth
-                        value={newMileStoneTitle}
-                        onChange={(event) => setNewMileStoneTitle(event.target.value)}
-                    />
+                    <div style={{ backgroundColor: MyColors.subTextColor }}>
+                        <TextField
+                            id="outlined-basic"
+                            label="ゴールまでの途中地点を入力"
+                            variant="outlined"
+                            fullWidth
+                            value={newMileStoneTitle}
+                            onChange={(event) => setNewMileStoneTitle(event.target.value)}
+                        />
+                    </div>
                     <Spacer10 />
                     <Button
                         color="primary"
-                        variant="contained"
+                        variant="outlined"
                         onClick={onCreateMileStone}>
                         追加
-                        </Button>
+                    </Button>
                 </Margin20>
             }
         </div>)

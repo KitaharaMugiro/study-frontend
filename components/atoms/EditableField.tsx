@@ -6,6 +6,7 @@ import { Spacer10 } from "./Spacer"
 import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
 import styled from "styled-components"
 import EditButtons from "./buttons/EditButtons"
+import { MyColors } from "../../const/MyColors"
 
 interface Props {
     intialValue: string
@@ -27,11 +28,13 @@ export const EditableField = (props: Props) => {
                     checked={props.check}
                     name="checkedB"
                     color="primary" />
-                <TextField
-                    value={text}
-                    onChange={(event) => setText(event.target.value)}
-                    fullWidth
-                    id="standard-basic" />
+                <div style={{ backgroundColor: MyColors.subTextColor, width: "100%" }}>
+                    <TextField
+                        value={text}
+                        onChange={(event) => setText(event.target.value)}
+                        fullWidth
+                        id="standard-basic" />
+                </div>
                 <Spacer10 />
             </FlexCenter>
             <MarginLeft>

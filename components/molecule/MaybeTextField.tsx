@@ -60,13 +60,12 @@ const Card = styled.div`
     min-height: 50px;
     padding-left: 8px;
     padding-right: 15px;
-    background:${MyColors.frameColor};
+    background-color:white;
 `
 
 const Frame = styled.div`
     padding:10px;
     min-height:50px;
-    background-color:${MyColors.frameColor};
     margin-right:30px;
-
+    background-color:${MyColors.subTextColor};
 `

@@ -19,7 +19,7 @@ const MileStoneFrame = (props: Props) => {
         <Frame>
             <Flex>
                 <Logo>
-                    <FlightTakeoffIcon />
+                    <FlightTakeoffIcon style={{ color: MyColors.textColor }} />
                 </Logo>
                 <Title>
                     <MainText>マイルストーン</MainText>

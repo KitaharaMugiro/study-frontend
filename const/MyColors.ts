@@ -4,7 +4,7 @@ export const MyColors = {
     textColor: "#ffffff",
     subTextColor: "#8b98a5",
     frameColor: "#1b2632",
-    boarderColor: "#ffffff"
+    boarderColor: "#ffffff",
 }
 
 export const MyFonts = {

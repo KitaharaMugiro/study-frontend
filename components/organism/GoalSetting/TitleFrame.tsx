@@ -13,7 +13,7 @@ const TitleFrame = (props: Props) => {
     return (
         <Frame>
             <Logo>
-                <DescriptionIcon />
+                <DescriptionIcon style={{ color: MyColors.textColor }} />
             </Logo>
             <Title>
                 <MainText>{title}</MainText>
@@ -27,7 +27,6 @@ export default TitleFrame;
 
 const Frame = styled.div`
     display:flex;
-    //height:100px;
     padding:20px;
     padding-bottom:0px;
 `
@@ -42,11 +41,11 @@ const Title = styled.div`
 `
 
 const MainText = styled.div`
-    color : ${MyColors.textBoldGray};
+    color : ${MyColors.textColor};
     font-size:20px;
     font-weight:600;
 `
 
 const SubText = styled.div`
-    color : ${MyColors.textShallowGray};
+    color : ${MyColors.subTextColor};
 `
