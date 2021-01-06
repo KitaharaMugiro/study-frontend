@@ -1,6 +1,7 @@
 
 import React from "react"
 import styled from "styled-components"
+import { MyColors } from "../../../const/MyColors"
 import StackedBar from "../../atoms/graph/StackedBar"
 import { SectionText } from "../../atoms/SectionText"
 import { StudySummaryFrame } from "../../atoms/StudySumamryFrame"
@@ -34,7 +35,7 @@ const MainFrame = styled.div`
 `
 const Frame = styled.div`
     width: 350px;
-    background-color:white;
+    /* background-color:${MyColors.background}; */
 `
 
 const Relative = styled.div`

@@ -1,4 +1,6 @@
 import React from "react"
+import styled from "styled-components"
+import { MyColors } from "../../const/MyColors"
 import useGraphQL from "../../graphQL/useGraphQL"
 import Time from "../../models/Time"
 import HorizontalBar from "./graph/HorizontalBar"
@@ -21,15 +23,19 @@ export const StudySummaryFrame = () => {
                 yourMinutes={yourStudyTime.getValue() / 60}
 
             />
-            <div>
+            <Text>
                 <BoldText>あなたの今週の勉強時間: </BoldText> {yourStudyTime.formatJapanese()}
-            </div>
-            <div>
+            </Text>
+            <Text>
                 <BoldText>全国の平均勉強時間: </BoldText> {avgStudyTime.formatJapanese()}
-            </div>
-            <div>
+            </Text>
+            <Text>
                 <BoldText>全国で一番頑張っている人: </BoldText> {maxStudyTime.formatJapanese()}
-            </div>
+            </Text>
         </GrayRoundFrame>
     )
 }
+
+const Text = styled.div`
+    color: ${MyColors.textColor}
+`

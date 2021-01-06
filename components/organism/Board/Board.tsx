@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import React, { useEffect, useRef, useState } from "react";
 import { use100vh } from "react-div-100vh";
 import styled from "styled-components";
+import { MyColors } from "../../../const/MyColors";
 import { MutationStartStudyArgs, StudyRecord, UpdateStudyThemeInput } from "../../../graphQL/generated/types";
 import { StartStudyMutation, UpdateStudyThemeMutation } from "../../../graphQL/StudyThemeStatements";
 import useLocal from "../../../models/hooks/useLocal";

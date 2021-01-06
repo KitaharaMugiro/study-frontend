@@ -5,6 +5,7 @@ export const MyColors = {
     subTextColor: "#8b98a5",
     frameColor: "#1b2632",
     boarderColor: "#ffffff",
+    highlight: "#5F6527"
 }
 
 export const MyFonts = {

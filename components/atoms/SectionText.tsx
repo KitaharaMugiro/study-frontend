@@ -19,6 +19,6 @@ export const SectionText = (props: Props) => {
 const Bar = styled.div`
     width:50px;
     height:10px;
-    background-color:${MyColors.background};
+    background-color:${MyColors.highlight};
     margin-bottom:10px;
 `

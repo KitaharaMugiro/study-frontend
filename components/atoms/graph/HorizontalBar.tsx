@@ -1,5 +1,8 @@
+
 import React from "react";
+import styled from "styled-components";
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryTheme } from "victory";
+import { MyColors } from "../../../const/MyColors";
 
 interface Props {
     maxMinutes: number
@@ -7,9 +10,21 @@ interface Props {
     avgMinutes: number
 }
 
+const sharedAxisStyles = {
+    tickLabels: {
+        fill: MyColors.textColor
+    },
+    axisLabel: {
+        fill: MyColors.textColor
+    },
+    axis: {
+        stroke: MyColors.textColor
+    },
+};
+
 export default (props: Props) => {
     return (
-        <div>
+        <Frame>
             <VictoryChart
                 width={350}
                 height={200}
@@ -19,7 +34,7 @@ export default (props: Props) => {
             >
                 <VictoryGroup horizontal
                     // offset={30}
-                    style={{ data: { width: 20 } }}
+                    style={{ ...sharedAxisStyles, data: { width: 20 } }}
                     colorScale={["brown", "tomato", "gold"]}
                 >
                     <VictoryBar
@@ -41,15 +56,21 @@ export default (props: Props) => {
 
                 <VictoryAxis
                     dependentAxis
+                    style={{ ...sharedAxisStyles }}
                 />
 
 
                 <VictoryAxis
                     crossAxis
                     tickValues={["Max", "Avg", "You"]}
+                    style={{ ...sharedAxisStyles }}
                 />
             </VictoryChart>
-        </div>
+        </Frame>
     );
 
 }
+
+const Frame = styled.div`
+    margin-bottom:10px;
+`
